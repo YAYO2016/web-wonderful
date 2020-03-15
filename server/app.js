@@ -1,44 +1,21 @@
-const Koa = require('koa')
-const app = new Koa()
-const views = require('koa-views')
-const json = require('koa-json')
-const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
-const logger = require('koa-logger')
+/**
+ * Created by yanyue on 2020/3/13 21:54
+ */
+const express = require('express');
+//创建express应用
+const app = express();
+//引入body-parser，用来传递post请求的数据
+const bodyParser = require('body-parser');
+//使用body-parser中间件
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-const index = require('./routes/index')
-const users = require('./routes/users')
+//导入路由
+const router = require("./router/index");
+app.use("/", router);
 
-// error handler
-onerror(app)
-
-// middlewares
-app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
-}))
-app.use(json())
-app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
-
-app.use(views(__dirname + '/views', {
-  extension: 'pug'
-}))
-
-// logger
-app.use(async (ctx, next) => {
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-})
-
-// routes
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
-
-// error-handling
-app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx)
+//启动项目服务
+const server = app.listen(7005,'localhost', function () {
+    const {address, port} = server.address();
+    console.log(`Http server is running on http://${address}:${port}"`);
 });
-
-module.exports = app

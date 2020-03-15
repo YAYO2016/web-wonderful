@@ -41,7 +41,7 @@ module.exports = {
             // npm i sass-resources-loader -D
             // ,不然的话只能使用样式，而无法使用方法和变量
             sass: {
-                prependData: `@import "@/common/style/common.scss";`
+                prependData: `@import "@/common/style/variable.scss";`
             }
         }
     },
@@ -58,7 +58,7 @@ module.exports = {
         hotOnly: false,
         proxy: { // 配置跨域
             '/api': {
-                target: 'http://localhost:5000/',
+                target: 'http://localhost:7005/',
                 ws: true,
                 changOrigin: true,
                 pathRewrite: {

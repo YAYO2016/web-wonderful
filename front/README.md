@@ -34,7 +34,7 @@ npm install --save normalize.css
 Normalize.css是一个小的CSS文件，它在HTML元素的默认样式中提供了更好的跨浏览器一致性。这是一个现代化的，HTML5就绪的，可以替代传统的CSS重置。
 
 安装elementUI
-npm element-ui -S
+npm i element-ui -S
 
 安装babel-polyfill
 npm i babel-polyfill -S
@@ -44,4 +44,17 @@ npm i babel-polyfill -S
 npm i axios@0.18.0 -S
 发送ajax请求使用
 
+安装vue-fragment，就是一个便签占位符，但是在页面中却不显示
+npm i -s vue-fragment
+import Fragment from 'vue-fragment'
+Vue.use(Fragment.Plugin)
 
+时间日期常用工具类
+npm i  moment -S
+
+cookies工具类
+npm i  js-cookie -S
+
+安装vuex-persistedstate
+npm install --save vuex-persistedstate
+vuex的数据持久化
