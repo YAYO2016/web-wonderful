@@ -19,9 +19,6 @@ import api from './api/index';
 Vue.prototype.$api = api;
 
 
-
-
-
 Vue.config.productionTip = false;
 
 new Vue({
