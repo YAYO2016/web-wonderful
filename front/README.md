@@ -41,5 +41,7 @@ npm i babel-polyfill -S
 解决ie9和一些低版本的高级浏览器对es6新语法并不支持
 
 安装axios
-npm axios -S
+npm i axios@0.18.0 -S
 发送ajax请求使用
+
+
