@@ -51,6 +51,9 @@ const user = {
         clearCurrentState: ({commit}) => {
             removeToken();
             commit('SET_TOKEN', "");
+            commit('SET_USERINFO', {});
+            commit('SET_ROLES', []);
+            localStorage.removeItem("userInfo");
             commit('SET_ACCESSEDROUTES', []);
             commit('SER_ROUTES', []);
             commit('SET_USER', {});

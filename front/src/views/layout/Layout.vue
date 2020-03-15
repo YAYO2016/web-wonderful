@@ -33,6 +33,8 @@
 
 <style lang='scss' scoped>
     .Layout {
-
+        .el-header {
+            background-color: $white;
+        }
     }
 </style>

@@ -48,12 +48,19 @@ export const asyncRoutes = [
         component: Layout,
         name: 'Video',
         redirect: '/video/videoManage',
+        meta: {title: '视频', icon: 'fa fa-video-camera',roles:["editor","admin"]},
         children: [
             {
                 path: '/video/videoManage',
                 component: () => import('@/views/videoManage/VideoManage'),
                 name: 'VideoManage',
                 meta: {title: '视频管理', icon: 'fa fa-video-camera',roles:["editor","admin"]}
+            },
+            {
+                path: '/video/videoPlay',
+                component: () => import('@/views/videoManage/VideoPlay'),
+                name: 'VideoPlay',
+                meta: {title: '视频播放', icon: 'fa fa-video-camera',roles:["editor","admin"]}
             }
         ]
     },

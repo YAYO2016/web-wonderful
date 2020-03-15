@@ -41,7 +41,7 @@ module.exports = {
             // npm i sass-resources-loader -D
             // ,不然的话只能使用样式，而无法使用方法和变量
             sass: {
-                prependData: `@import "@/common/style/variable.scss";`
+                prependData: `@import "@/common/style/common.scss";`
             }
         }
     },

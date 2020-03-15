@@ -2,6 +2,10 @@
     <el-menu
             class="el-menu-slide"
             :default-active="$router.currentRoute.path"
+            :background-color="variables.menuBg"
+            :text-color="variables.menuText"
+            :active-text-color="variables.menuActiveText"
+            :collapse="isCollapse"
             router
     >
         <template v-for="item in routes"
@@ -22,7 +26,7 @@
                 </template>
                 <!--子菜单名称-->
                 <el-menu-item v-for="child in item.children" :index='child.path' :key="child.path">
-                    <i v-if="child.meta.icon" :class="`fa fa-${child.meta.icon}`"></i>
+                    <i v-if="child.meta.icon" :class="`${child.meta.icon}`"></i>
                     <span v-if="child.meta&&child.meta.title" slot="title">{{child.meta.title}}</span>
                 </el-menu-item>
             </el-submenu>
@@ -34,6 +38,7 @@
     /**
      * Created by yanyue on 2020/3/15 15:59
      */
+    import variables from '@/common/style/variables.scss'
     import {mapState} from 'vuex'
 
     export default {
@@ -43,9 +48,16 @@
         },
         computed: {
             ...mapState('user', ['routes']),
-
+            isCollapse() {
+                return this.$store.state.common.isCollapse
+            },
+            variables() {
+                return variables;
+            }
         },
-        methods: {}
+        methods: {
+
+        }
     }
 </script>
 
