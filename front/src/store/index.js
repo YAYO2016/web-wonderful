@@ -14,7 +14,7 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 }, {});
 
 //实现vuex的数据持久化  默认是放置在localStorage中的
-import createPersistedState from 'vuex-persistedstate';
+//import createPersistedState from 'vuex-persistedstate';
 //如果想放置搭配sessionStorage中，如下配置
 /*
 const createPersistedState =
@@ -30,5 +30,6 @@ export default new Vuex.Store({
   getters,
   modules,
   strict: false, //是否可以不通过mutations去修改state数据 //strict
-  plugins: debug ? [createLogger(), createPersistedState()] : [createPersistedState()],
+  //plugins: debug ? [createLogger(), createPersistedState()] : [createPersistedState()],
+  plugins: debug ? [createLogger()] : [],
 })

@@ -83,7 +83,7 @@ http.interceptors.request.use(config => {
     return config
 }, error => {
 
-    store.dispatch('common/set_loading', false);
+    //store.dispatch('common/set_loading', false);
     loadingCount = 0;
 
     Promise.reject(error)
@@ -105,7 +105,7 @@ http.interceptors.response.use(
         }
     },
     error => {
-        store.dispatch('common/set_loading', false);
+        //store.dispatch('common/set_loading', false);
         loadingCount = 0;
 
         let errorMessage = error.message;

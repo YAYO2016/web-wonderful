@@ -58,3 +58,7 @@ npm i  js-cookie -S
 安装vuex-persistedstate
 npm install --save vuex-persistedstate
 vuex的数据持久化
+
+icon图标工具包
+npm i less less-loader css-loader style-loader file-loader -D
+npm i font-awesome -S

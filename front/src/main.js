@@ -36,6 +36,10 @@ Vue.use(backbase);
 import rules from './common/js/rules';
 Vue.prototype.$rules = rules;
 
+//导入font-awesome
+import 'font-awesome/css/font-awesome.min.css'
+
+
 Vue.config.productionTip = false;
 
 new Vue({

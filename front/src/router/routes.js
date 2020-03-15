@@ -35,7 +35,7 @@ export const constantRoutes = [
     },
     //404错误页面
     {
-        path: '*',
+        path: '/404',
         name: 'noFound',
         component: NoFound,
     },
@@ -53,7 +53,7 @@ export const asyncRoutes = [
                 path: '/video/videoManage',
                 component: () => import('@/views/videoManage/VideoManage'),
                 name: 'VideoManage',
-                meta: {title: '视频管理', icon: 'video-play',roles:["editor"]}
+                meta: {title: '视频管理', icon: 'fa fa-video-camera',roles:["editor","admin"]}
             }
         ]
     },
@@ -67,10 +67,13 @@ export const asyncRoutes = [
                 path: '/user/userManage',
                 component: () => import('@/views/userManage/UserManage'),
                 name: 'UserManage',
-                meta: {title: '用户管理', icon: 'user',roles:["admin"]}
+                meta: {title: '用户管理', icon: 'el-icon-s-custom',roles:["admin"]}
             }
         ]
     },
+
+    // 404一定要放到最后面，不然会被之前的拦截掉
+    { path: '*', redirect: '/404', hidden: true }
 
 
 ];

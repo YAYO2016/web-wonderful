@@ -9,7 +9,7 @@
             <!--单个元素的-->
             <el-menu-item v-if="item.children.length == 1" :index="item.children[0].path"
                           :key="item.children[0].path">
-                <i v-if="item.children[0].meta.icon" :class="`fa fa-${item.children[0].meta.icon}`"></i>
+                <i v-if="item.children[0].meta.icon" :class="`${item.children[0].meta.icon}`"></i>
                 <span slot="title">{{item.children[0].meta.title}}</span>
             </el-menu-item>
 
@@ -17,7 +17,7 @@
             <el-submenu v-else :index="item.children[0].path" :key="item.children[0].path">
                 <!--父目录名称-->
                 <template slot="title">
-                    <i v-if="item.meta.icon" :class="`fa fa-${item.meta.icon}`"></i>
+                    <i v-if="item.meta.icon" :class="`${item.meta.icon}`"></i>
                     <span v-if="item.meta&&item.meta.title" slot="title">{{item.meta.title}}</span>
                 </template>
                 <!--子菜单名称-->
@@ -35,6 +35,7 @@
      * Created by yanyue on 2020/3/15 15:59
      */
     import {mapState} from 'vuex'
+
     export default {
         name: "Aside",
         data() {
@@ -51,5 +52,15 @@
 <style lang='scss' scoped>
     .el-menu {
         height: 100%;
+    }
+    .el-menu-slide {
+        border-right: none;
+
+        i {
+            margin-right: 5px;
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+        }
     }
 </style>

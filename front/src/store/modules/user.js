@@ -5,7 +5,7 @@
  * Created by yanyue on 2019-11-16 11:21
  */
 import {constantRoutes, asyncRoutes} from "../../router/routes";
-import router from '@/router'
+import router, {resetRouter} from '@/router'
 import {setToken, removeToken, filterAsyncRoutes} from "../../common/js/permission";
 
 const user = {
@@ -13,6 +13,7 @@ const user = {
     state: {
         token: '',
         userInfo: {},
+        roles: [],
         accessedRoutes: [],
         routes: [],
     },
@@ -23,6 +24,9 @@ const user = {
         SET_USERINFO(state, payload) {
             state.userInfo = payload;
         },
+        SET_ROLES(state, payload) {
+            state.roles = payload;
+        },
         SET_ACCESSEDROUTES(state, payload) {
             state.accessedRoutes = payload;
         },
@@ -32,15 +36,17 @@ const user = {
     },
     actions: {
         setUserInfo: ({commit, state}, userInfo) => {
+
             setToken(userInfo.token);
             commit('SET_TOKEN', userInfo.token);
             commit('SET_USERINFO', userInfo);
+            commit('SET_ROLES', userInfo.roles);
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
             //这里对路由进行权限过滤
             let accessedRoutes = filterAsyncRoutes(asyncRoutes, userInfo.roles);
             commit('SET_ACCESSEDROUTES', accessedRoutes);
-            //将过滤后的异步路由添加到总的路由中
-            router.addRoutes(accessedRoutes);
             commit('SER_ROUTES', new Set(constantRoutes.concat(state.accessedRoutes)));
+            router.addRoutes(state.accessedRoutes);
         },
         clearCurrentState: ({commit}) => {
             removeToken();
@@ -48,6 +54,7 @@ const user = {
             commit('SET_ACCESSEDROUTES', []);
             commit('SER_ROUTES', []);
             commit('SET_USER', {});
+            resetRouter();
         },
     },
     getters: {}
