@@ -1,12 +1,13 @@
 <template>
     <el-container class="Layout" style="height: 100%">
-        <el-aside width="200px">
+        <el-aside width="auto">
             <Aside/>
         </el-aside>
         <el-container>
             <el-header>
                 <Header/>
             </el-header>
+            <Tabs></Tabs>
             <el-main>
                 <router-view/>
             </el-main>
@@ -20,10 +21,11 @@
      */
     import Header from './components/header/Header'
     import Aside from './components/aside/Aside'
+    import Tabs from './components/tabs/Tabs'
 
     export default {
         name: "Layout",
-        components: {Header, Aside},
+        components: {Header, Aside,Tabs},
         data() {
             return {}
         },

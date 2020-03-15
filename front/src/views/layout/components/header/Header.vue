@@ -1,7 +1,9 @@
 <template>
     <div class='Header'>
         <div class="left-content">
-            <el-button type="primary" icon="el-icon-menu"></el-button>
+            <el-button type="primary" icon="el-icon-menu"
+            @click="$store.dispatch('common/collapseMenu')"
+            ></el-button>
             <!--面包屑-->
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item v-for="bread in breadCrumbItems" :key="bread.path"
@@ -54,7 +56,6 @@
         methods: {
             initBreadCrumbItems(router) {
                 let vm = this;
-                console.log(router);
                 //根路由title
                 let breadCrumbItems = [{path: '/', title: '后台管理系统'}];
                 //let breadCrumbItems = [{path: '/', title: '首页'}];

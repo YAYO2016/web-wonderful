@@ -1,6 +1,6 @@
 <template>
     <el-menu
-            class="el-menu-slide"
+            class="el-menu-vertical-demo el-menu-slide"
             :default-active="$router.currentRoute.path"
             :background-color="variables.menuBg"
             :text-color="variables.menuText"
@@ -11,8 +11,9 @@
         <template v-for="item in routes"
                   v-if="!item.hidden && item.children && item.children.length > 0">
             <!--单个元素的-->
-            <el-menu-item v-if="item.children.length == 1" :index="item.children[0].path"
-                          :key="item.children[0].path">
+            <el-menu-item v-if="item.children.length === 1" :index="item.children[0].path"
+                          :key="item.children[0].path"
+                          @click="clickMenu(item.children[0])">
                 <i v-if="item.children[0].meta.icon" :class="`${item.children[0].meta.icon}`"></i>
                 <span slot="title">{{item.children[0].meta.title}}</span>
             </el-menu-item>
@@ -25,7 +26,8 @@
                     <span v-if="item.meta&&item.meta.title" slot="title">{{item.meta.title}}</span>
                 </template>
                 <!--子菜单名称-->
-                <el-menu-item v-for="child in item.children" :index='child.path' :key="child.path">
+                <el-menu-item v-for="child in item.children" :index='child.path' :key="child.path"
+                              @click="clickMenu(child)">
                     <i v-if="child.meta.icon" :class="`${child.meta.icon}`"></i>
                     <span v-if="child.meta&&child.meta.title" slot="title">{{child.meta.title}}</span>
                 </el-menu-item>
@@ -56,7 +58,10 @@
             }
         },
         methods: {
-
+            clickMenu(item){
+                let vm = this;
+                vm.$store.dispatch('common/selectMenu', item)
+            }
         }
     }
 </script>
@@ -74,5 +79,9 @@
             text-align: center;
             font-size: 18px;
         }
+    }
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
+        width: 200px;
+        min-height: 400px;
     }
 </style>
