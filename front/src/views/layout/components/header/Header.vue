@@ -13,6 +13,7 @@
             </el-breadcrumb>
         </div>
         <div class="right-content">
+            <ScreenFull></ScreenFull>
             <!--用户相关-->
             <el-dropdown trigger="click">
                 <span class="el-dropdown-link"><img :src="userImg" class="user"/></span>
@@ -30,9 +31,11 @@
      * Created by yanyue on 2020/3/15 15:59
      */
     import {mapState} from 'vuex'
+    import ScreenFull from '@/components/screenfull/Screenfull'
 
     export default {
         name: "Header",
+        components:{ScreenFull},
         data() {
             return {
                 userImg: require('@/assets/imgs/visitor.jpg'),
@@ -108,6 +111,10 @@
             }
         }
 
+    }
+
+    .el-dropdown{
+        vertical-align: middle;
     }
 
     .el-breadcrumb__item {

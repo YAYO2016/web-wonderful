@@ -1,10 +1,10 @@
 <template>
-    <el-container class="Layout" style="height: 100%">
+    <el-container class="Layout">
         <el-aside width="auto">
             <Aside/>
         </el-aside>
         <el-container>
-            <el-header>
+            <el-header :style="{height:`${variables.headerHeight}`}">
                 <Header/>
             </el-header>
             <Tabs></Tabs>
@@ -22,6 +22,7 @@
     import Header from './components/header/Header'
     import Aside from './components/aside/Aside'
     import Tabs from './components/tabs/Tabs'
+    import variables from '@/common/style/variables.scss'
 
     export default {
         name: "Layout",
@@ -29,12 +30,18 @@
         data() {
             return {}
         },
+        computed:{
+            variables() {
+                return variables;
+            }
+        },
         methods: {}
     }
 </script>
 
 <style lang='scss' scoped>
     .Layout {
+        height: 100%;
         .el-header {
             position: relative;
             background-color: $white;

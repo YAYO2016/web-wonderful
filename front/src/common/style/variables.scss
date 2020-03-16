@@ -10,6 +10,7 @@ $yellow:#FEC171;
 $panGreen: #30B08F;
 
 //tabs
+$headerHeight:54px;
 $tabsHeight:34px;
 
 // sidebar
@@ -25,9 +26,9 @@ $subMenuHover:#001528;
 
 $sideBarWidth: 210px;
 
-// the :export directive is the magic sauce for webpack
-// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+//如果想通过computed方法输出的变量，必须在这边写到处才生效
 :export {
+  headerHeight:$headerHeight;
   menuText: $menuText;
   menuActiveText: $menuActiveText;
   subMenuActiveText: $subMenuActiveText;

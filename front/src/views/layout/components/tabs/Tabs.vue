@@ -48,7 +48,7 @@
 
 <style lang='scss' scoped>
     .Tabs {
-        padding: 0 5px;
+        padding: 0 15px;
         height: $tabsHeight;
         line-height:$tabsHeight ;
         background: $white;
