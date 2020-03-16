@@ -48,8 +48,11 @@
 
 <style lang='scss' scoped>
     .Tabs {
-        padding: 20px;
+        padding: 0 5px;
         height: $tabsHeight;
+        line-height:$tabsHeight ;
+        background: $white;
+        border-bottom: 1px solid #d8dce5;
 
         .el-tag {
             margin-right: 15px;

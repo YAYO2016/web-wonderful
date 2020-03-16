@@ -36,7 +36,15 @@
 <style lang='scss' scoped>
     .Layout {
         .el-header {
+            position: relative;
             background-color: $white;
+            box-shadow: 0 1px 4px rgba(0,21,41,0.08);
+
+        }
+        .el-main{
+            padding: 32px;
+            background-color: #f0f2f5;
+            position: relative;
         }
     }
 </style>
