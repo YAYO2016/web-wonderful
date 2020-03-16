@@ -25,7 +25,7 @@ const common = {
             state.tabsList.splice(result, 1)
         },
         selectMenu:({commit, state}, payload) => {
-            console.log(payload);
+            //console.log(payload);
             //tabList中不存在的话就新增下
             let result = state.tabsList.findIndex(item => item.name === payload.name);
             result === -1 ? state.tabsList.push(payload) : null;

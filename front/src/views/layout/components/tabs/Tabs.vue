@@ -7,7 +7,7 @@
                 :closable="tag.name !== 'Home'"
                 :disable-transitions="false"
                 @close="handleClose(tag)"
-                @click="changeMenu(tag)"
+                @click="clickMenu(tag)"
                 :effect="$route.name === tag.name ? 'dark' : 'plain'"
         >
             <!--:closable="tag.meta.name !== 'Home'"  首页不给关闭-->
@@ -37,9 +37,10 @@
                 let vm = this;
                 vm.$store.dispatch("common/closeTab",tag);
             },
-            changeMenu(item) {
+            clickMenu(item) {
                 let vm = this;
                 vm.$router.push({name: item.name});
+                vm.$store.dispatch('common/selectMenu', item)
             }
         }
     }
@@ -48,6 +49,7 @@
 <style lang='scss' scoped>
     .Tabs {
         padding: 20px;
+        height: $tabsHeight;
 
         .el-tag {
             margin-right: 15px;

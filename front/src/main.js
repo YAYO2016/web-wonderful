@@ -39,6 +39,10 @@ Vue.prototype.$rules = rules;
 //导入font-awesome
 import 'font-awesome/css/font-awesome.min.css'
 
+//引入全局的moment
+import moment from 'moment'
+Object.defineProperty(Vue.prototype, '$moment', { value: moment })
+//使用this.$moment().format('HH:mm')
 
 Vue.config.productionTip = false;
 

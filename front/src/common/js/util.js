@@ -1249,7 +1249,7 @@ const util = {
 
             /*获取兄弟节点*/
             siblings(ele) {
-                console.log(ele.parentNode);
+                //console.log(ele.parentNode);
                 var chid = ele.parentNode.children, eleMatch = [];
                 for (var i = 0, len = chid.length; i < len; i++) {
                     if (chid[i] != ele) {
@@ -1601,7 +1601,7 @@ const util = {
                 }
                 this.insertAtCursor(dom, val);
                 dom.focus();
-                console.log(posLen);
+                //console.log(posLen);
                 dom.setSelectionRange(dom.value.length, cursorPosition + (posLen || val.length));
             }
             ,
