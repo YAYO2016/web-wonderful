@@ -71,11 +71,13 @@
                 vm.breadCrumbItems = breadCrumbItems;
             },
             collapseMenu() {
-                this.$store.dispatch('common/collapseMenu')
+                let vm = this;
+                vm.$store.dispatch('common/collapseMenu')
             },
             logOut() {
                 let vm = this;
                 vm.$store.dispatch('user/clearCurrentState');
+                vm.$store.dispatch('common/clearTabs');
                 location.reload()
             }
         }

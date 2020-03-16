@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import {constantRoutes, asyncRoutes} from './routes';
 import store from '../store'
 import {filterAsyncRoutes, getToken} from '../common/js/permission';
+import util from '../common/js/util'
 
 // 解决控制台 在使用ElementUi时点击同一个路由，页面报错
 const originalPush = VueRouter.prototype.push;
@@ -35,16 +36,20 @@ router.beforeEach(async (to, from, next) => {
                 next()
             } else {
                 try {
-                    store.dispatch("user/setUserInfo", JSON.parse(localStorage.userInfo));
+                    store.dispatch("user/setUserInfo",util.StorageFn.getLocal('userInfo'));
+                    store.dispatch("common/getTabs");
                     next({...to, replace: true})
                 } catch (e) {
                     store.dispatch("user/clearCurrentState");
+                    store.dispatch("common/clearTabs");
                     // 用户没有登录
                     next('/login')
                 }
             }
 
         } else {
+            store.dispatch("user/clearCurrentState");
+            store.dispatch("common/clearTabs");
             // 用户没有登录
             next('/login')
         }

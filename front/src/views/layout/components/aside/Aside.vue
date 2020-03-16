@@ -1,7 +1,7 @@
 <template>
     <el-menu
             class="el-menu-vertical-demo el-menu-slide"
-            :default-active="$router.currentRoute.path"
+            :default-active="$route.path"
             :background-color="variables.menuBg"
             :text-color="variables.menuText"
             :active-text-color="variables.menuActiveText"

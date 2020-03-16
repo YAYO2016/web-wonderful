@@ -56,7 +56,6 @@ const user = {
             localStorage.removeItem("userInfo");
             commit('SET_ACCESSEDROUTES', []);
             commit('SER_ROUTES', []);
-            commit('SET_USER', {});
             resetRouter();
         },
     },
