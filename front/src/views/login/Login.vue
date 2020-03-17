@@ -40,6 +40,8 @@
         name: "login",
         data() {
             return {
+                redirect: undefined,
+                otherQuery: {},
                 loading: false,
                 backgroundImg: require('@/assets/imgs/bg.jpg'),
                 loginForm: {
@@ -57,8 +59,28 @@
                 }
             }
         },
+        watch: {
+            $route: {
+                handler: function(route) {
+                    const query = route.query
+                    if (query) {
+                        this.redirect = query.redirect
+                        this.otherQuery = this.getOtherQuery(query)
+                    }
+                },
+                immediate: true
+            }
+        },
         methods: {
             ...mapActions('user', ['setUserInfo']),
+            getOtherQuery(query) {
+                return Object.keys(query).reduce((acc, cur) => {
+                    if (cur !== 'redirect') {
+                        acc[cur] = query[cur]
+                    }
+                    return acc
+                }, {})
+            },
             submitForm(formName) {
                 let vm = this;
                 //表单验证函数
@@ -71,7 +93,7 @@
                             type: 'success'
                         });
                         //注册成功，跳转到登录页面
-                        vm.$router.push('/');
+                        vm.$router.push({ path: this.redirect || '/', query: vm.otherQuery });
                         vm.loading = false;
                     }).catch(() => {
                         vm.loading = false;

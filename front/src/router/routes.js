@@ -14,6 +14,18 @@ const NoFound = () => import('@/views/error-pages/404NoFound');
  **/
 
 export const constantRoutes = [
+    //重定向路由放在第一位
+    {
+        path: '/redirect',
+        component: Layout,
+        hidden: true,
+        children: [
+            {
+                path: '/redirect/:path(.*)',
+                component: () => import('@/views/redirect/Redirect')
+            }
+        ]
+    },
     {
         path: '/login',
         component: () => import('@/views/login/Login'),

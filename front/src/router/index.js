@@ -43,7 +43,7 @@ router.beforeEach(async (to, from, next) => {
                     store.dispatch("user/clearCurrentState");
                     store.dispatch("common/clearTabs");
                     // 用户没有登录
-                    next('/login')
+                    next(`/login?redirect=${to.path}`)
                 }
             }
 
@@ -51,7 +51,7 @@ router.beforeEach(async (to, from, next) => {
             store.dispatch("user/clearCurrentState");
             store.dispatch("common/clearTabs");
             // 用户没有登录
-            next('/login')
+            next(`/login?redirect=${to.path}`)
         }
     }
 });

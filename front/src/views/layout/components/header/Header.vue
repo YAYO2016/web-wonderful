@@ -81,7 +81,8 @@
                 let vm = this;
                 vm.$store.dispatch('user/clearCurrentState');
                 vm.$store.dispatch('common/clearTabs');
-                location.reload()
+                vm.$router.push(`/login?redirect=${this.$route.fullPath}`)
+                //location.reload()
             }
         }
     }
