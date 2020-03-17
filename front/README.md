@@ -65,3 +65,6 @@ npm i font-awesome -S
 
 screenfull 实现网页全屏
 npm i screenfull@4.2.0 -S
+
+安装echarts
+npm i  echarts -S

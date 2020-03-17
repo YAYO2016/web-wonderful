@@ -34,14 +34,22 @@
             </div>
             <el-card shadow="hover">
                 <!--echart图标-->
-                <div style="height: 280px"></div>
+                <ECharts style="height: 280px"
+                         :chartData="echartData.order">
+                    >
+                </ECharts>
             </el-card>
             <div class="graph">
                 <el-card shadow="hover">
-                    <div style="height: 260px"></div>
+                    <ECharts style="height: 260px"
+                             :chartData="echartData.user">
+                    </ECharts>
                 </el-card>
                 <el-card shadow="hover">
-                    <div style="height: 260px"></div>
+                    <ECharts style="height: 260px"
+                             :chartData="echartData.video"
+                             :isAxisChart="false">
+                    </ECharts>
                 </el-card>
             </div>
         </el-col>
@@ -49,10 +57,12 @@
 </template>
 
 <script>
-    import {mapState} from 'vuex'
+    import {mapState} from 'vuex';
+    import ECharts from '@/components/echarts/ECharts';
 
     export default {
         name: "Home",
+        components: {ECharts},
         data() {
             return {
                 userImg: require('../../assets/imgs/user.png'),
@@ -102,14 +112,17 @@
                     totalBuy: '总购买'
                 },
                 echartData: {
+                    //订单
                     order: {
                         xData: [],
                         series: []
                     },
+                    //用户
                     user: {
                         xData: [],
                         series: []
                     },
+                    //视频
                     video: {
                         series: []
                     }
@@ -127,7 +140,39 @@
             getTableData() {
                 let vm = this;
                 vm.$api.getTableData().then(res => {
-                    vm.tableData = res.data.list;
+                    //表格数据
+                    vm.tableData = res.data.tableData;
+                    //订单折线图
+                    const order = res.data.orderData;
+                    vm.echartData.order.xData = order.date;
+                    // 第一步取出series中的name部分——键名
+                    let keyArray = Object.keys(order.data[0]);
+                    // 第二步，循环添加数据
+                    keyArray.forEach(key => {
+                        this.echartData.order.series.push({
+                            name: key === 'wechat' ? '小程序' : key,
+                            data: order.data.map(item => item[key]),
+                            type: 'line'
+                        })
+                    });
+                    // 用户柱状图
+                    vm.echartData.user.xData = res.data.userData.map(item => item.date)
+                    vm.echartData.user.series.push({
+                        name: '新增用户',
+                        data: res.data.userData.map(item => item.new),
+                        type: 'bar'
+                    })
+                    vm.echartData.user.series.push({
+                        name: '活跃用户',
+                        data: res.data.userData.map(item => item.active),
+                        type: 'bar',
+                        barGap: 0
+                    })
+                    // 视频饼图
+                    vm.echartData.video.series.push({
+                        data: res.data.videoData,
+                        type: 'pie'
+                    })
                 })
             }
 
