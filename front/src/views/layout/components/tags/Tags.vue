@@ -1,5 +1,5 @@
 <template>
-    <div class='Tabs'>
+    <div class='Tags'>
         <el-tag
                 :key="tag.name"
                 size="small"
@@ -47,7 +47,7 @@
 </script>
 
 <style lang='scss' scoped>
-    .Tabs {
+    .Tags {
         padding: 0 15px;
         height: $tabsHeight;
         line-height:$tabsHeight ;

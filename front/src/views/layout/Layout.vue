@@ -7,7 +7,7 @@
             <el-header :style="{height:`${variables.headerHeight}`}">
                 <Header/>
             </el-header>
-            <Tabs></Tabs>
+            <Tags></Tags>
             <el-main>
                 <router-view/>
             </el-main>
@@ -21,12 +21,12 @@
      */
     import Header from './components/header/Header'
     import Aside from './components/aside/Aside'
-    import Tabs from './components/tabs/Tabs'
+    import Tags from './components/tags/Tags'
     import variables from '@/common/style/variables.scss'
 
     export default {
         name: "Layout",
-        components: {Header, Aside,Tabs},
+        components: {Header, Aside,Tags},
         data() {
             return {}
         },

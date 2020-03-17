@@ -53,14 +53,10 @@
 </script>
 
 <style lang='scss' scoped>
-    .Screenfull{
-        display: inline-block;
-        padding: 0 20px;
-        vertical-align: middle;
+    .Screenfull {
         i {
             cursor: pointer;
             fill: #5a5e66;
-            font-size: 20px;
         }
     }
 

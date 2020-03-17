@@ -13,15 +13,22 @@
             </el-breadcrumb>
         </div>
         <div class="right-content">
-            <ScreenFull></ScreenFull>
-            <!--用户相关-->
-            <el-dropdown trigger="click">
-                <span class="el-dropdown-link"><img :src="userImg" class="user"/></span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>个人中心</el-dropdown-item>
-                    <el-dropdown-item @click.native="logOut">退出</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
+            <div class="content-item">
+                <ScreenFull></ScreenFull>
+            </div>
+            <div  class="content-item">
+                <!--用户相关-->
+                <el-dropdown trigger="click">
+                    <span class="el-dropdown-link"><img :src="userImg" class="user"/></span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>个人中心</el-dropdown-item>
+                        <el-dropdown-item @click.native="logOut">退出</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+            <!--<div class="content-item">-->
+                <!--<i class="el-icon-question"></i>-->
+            <!--</div>-->
         </div>
     </div>
 </template>
@@ -31,7 +38,7 @@
      * Created by yanyue on 2020/3/15 15:59
      */
     import {mapState} from 'vuex'
-    import ScreenFull from '@/components/screenfull/Screenfull'
+    import ScreenFull from '../../../../components/screenfull/Screenfull'
 
     export default {
         name: "Header",
@@ -105,6 +112,16 @@
         }
 
         .right-content {
+            .content-item{
+                display: inline-block;
+                height: 100%;
+                line-height: 100%;
+                vertical-align: middle;
+                padding: 0 10px;
+                i{
+                    font-size: 20px;
+                }
+            }
             .user {
                 width: 40px;
                 height: 40px;
@@ -115,7 +132,11 @@
     }
 
     .el-dropdown{
-        vertical-align: middle;
+
+    }
+
+    .el-icon-question{
+        color: $yellow;
     }
 
     .el-breadcrumb__item {
