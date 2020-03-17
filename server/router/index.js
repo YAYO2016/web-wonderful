@@ -7,6 +7,8 @@ const express = require("express");
 const boom = require("boom");
 
 const userRouter = require("./user");
+const home = require("./home");
+
 
 const {CODE_ERROR} = require("../utils/constant");
 
@@ -19,7 +21,7 @@ router.get('/',(req,res)=>{
 
 //导入user路由模块
 router.use('/users',userRouter);
-
+router.use('/home',home);
 /**
  * 集中处理404请求的中间件
  * 注意：该中间件必须放在正常的处理流程的后面
