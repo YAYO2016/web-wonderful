@@ -92,7 +92,9 @@
                             message: res.message,
                             type: 'success'
                         });
-                        //注册成功，跳转到登录页面
+                        //注册成功，跳转到首页
+                        //vm.$router.push("/");
+                        //也可以跳转到login之后的redirect页面，看需求而定
                         vm.$router.push({ path: this.redirect || '/', query: vm.otherQuery });
                         vm.loading = false;
                     }).catch(() => {
