@@ -10,7 +10,7 @@
                     </div>
                 </div>
                 <div class="login-info">
-                    <p>上次登录时间：<span>2019-10-20</span></p>
+                    <p>上次登录时间：<span>{{$moment().format('YYYY-MM-DD HH:mm:ss')}}</span></p>
                     <p>上次登录地点：<span>南京</span></p>
                 </div>
             </el-card>
