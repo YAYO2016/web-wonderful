@@ -77,6 +77,40 @@ export const asyncRoutes = [
         ]
     },
     {
+        path: '/form', name: 'form',
+        redirect: '/forminput',
+        meta: {title: '表单类型', icon: 'fa fa-wpforms'},
+        show: true,
+        component: Layout,
+        children: [
+            {
+                path: '/form/forminput',
+                name: 'forminput',
+                meta: {title: '表单输入', icon: 'fa  fa-pencil-square-o'},
+                component: () => import('@/views/form/FormInput'),
+            },
+            {
+                path: '/form/formdate',
+                name: 'formdate',
+                meta: {title: '日期格式輸入', icon: 'fa fa-calendar'},
+                component: () => import('@/views/form/FormDate'),
+            },
+            {
+                path: '/form/formtable',
+                name: 'formtable',
+                meta: {title: '表格', icon: 'fa fa-table'},
+                component: () => import('@/views/form/FormTable'),
+            },
+            {
+                path: '/form/formrules',
+                name: 'formrules',
+                meta: {title: '表单校验', icon: 'fa fa-wpforms'},
+                component: () => import('@/views/form/FormRules'),
+            },
+
+        ]
+    },
+    {
         path: '/user',
         component: Layout,
         name: 'User',

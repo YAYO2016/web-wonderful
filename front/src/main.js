@@ -46,6 +46,21 @@ import 'moment/locale/zh-cn'
 Object.defineProperty(Vue.prototype, '$moment', { value: moment })
 //使用this.$moment().format('HH:mm')
 
+
+//js的计算库，可以避免精度丢失
+import { create, all } from 'mathjs';
+const mathjs = create(all);
+mathjs.config({
+  number: 'BigNumber',
+  // 'number' (default),
+  precision: 20
+  //BigNumbers的最大有效位数
+});
+
+//全局使用自定义的UI的组件
+import GUI from './components/plugins';
+Vue.use(GUI);
+
 Vue.config.productionTip = false;
 
 new Vue({

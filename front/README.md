@@ -68,3 +68,6 @@ npm i screenfull@4.2.0 -S
 
 安装echarts
 npm i  echarts -S
+
+安装mathjs：//js的计算库，可以避免精度丢失
+npm i mathjs -S
