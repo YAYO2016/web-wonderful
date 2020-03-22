@@ -8,6 +8,8 @@
             :collapse="isCollapse"
             router
     >
+        <h3 class="title" v-show="!isCollapse">严跃后台管理系统</h3>
+        <h3 class="title" v-show="isCollapse">严跃</h3>
         <template v-for="item in routes"
                   v-if="!item.hidden && item.children && item.children.length > 0">
             <!--单个元素的-->
@@ -58,7 +60,7 @@
             }
         },
         methods: {
-            clickMenu(item){
+            clickMenu(item) {
                 let vm = this;
                 vm.$store.dispatch('common/selectMenu', item)
             }
@@ -69,7 +71,14 @@
 <style lang='scss' scoped>
     .el-menu {
         height: 100%;
+
+        .title {
+            color: $white;
+            text-align: center;
+            line-height: $headerHeight;
+        }
     }
+
     .el-menu-slide {
         border-right: none;
 
@@ -80,6 +89,7 @@
             font-size: 18px;
         }
     }
+
     .el-menu-vertical-demo:not(.el-menu--collapse) {
         width: 200px;
         min-height: 400px;
