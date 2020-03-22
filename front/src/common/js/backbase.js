@@ -21,9 +21,9 @@ const install = function (Vue, options) {
 
     Vue.prototype.rowSexFormat = (row, column) => {
         let sex = row[column.property];
-        if (sex === 'MALE') {
+        if (sex === 1) {
             return "男";
-        } else if (sex === 'FEMALE') {
+        } else if (sex === 0) {
             return "女";
         } else {
             return "";

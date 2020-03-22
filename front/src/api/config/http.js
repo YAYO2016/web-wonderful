@@ -40,7 +40,6 @@ function startLoading() {
     }
     loadingCount++;
 
-
 }
 
 function endLoading() {

@@ -6,6 +6,8 @@ import GDialog from './dialog/Dialog';
 import GECharts from './echarts/ECharts';
 import GSplit from './split/Split';
 import GUploadFiile from './uploadfile/UploadFile'
+import GTable from './table/Table'
+import GPagination from './pagination/Pagination'
 
 export default {
     install(Vue, options) {
@@ -13,5 +15,7 @@ export default {
         Vue.component('g-split', GSplit);
         Vue.component('g-upload-file',GUploadFiile);
         Vue.component('g-echarts',GECharts);
+        Vue.component('g-table',GTable);
+        Vue.component('g-pagination',GPagination);
     }
 };
