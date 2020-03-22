@@ -3,6 +3,7 @@
  */
 
 import GDialog from './dialog/Dialog';
+import GECharts from './echarts/ECharts';
 import GSplit from './split/Split';
 import GUploadFiile from './uploadfile/UploadFile'
 
@@ -11,5 +12,6 @@ export default {
         Vue.component('g-dialog', GDialog);
         Vue.component('g-split', GSplit);
         Vue.component('g-upload-file',GUploadFiile);
+        Vue.component('g-echarts',GECharts);
     }
 };

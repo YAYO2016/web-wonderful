@@ -44,39 +44,53 @@
 
                 //有坐标轴配置
                 axisOption: {
+                    //图例设置：展示了不同系列的标记，点击图例会显示和隐藏相关系列的显示
                     legend: {
+                        //图例的公用文本样式
                         textStyle: {
+                            //颜色设置
                             color: '#333'
                         }
                     },
+                    //grid 直角坐标系内绘图网格
                     grid: {
+                        //往左偏移20%  默认10%
                         left: '20%'
                     },
+                    //提示框组件：实现悬浮显示的效果
                     tooltip: {
+                        //trigger 触发类型  axis坐标轴触发
                         trigger: 'axis'
                     },
                     xAxis: {
                         type: 'category',
                         data: [],
+                        //x轴线配置
                         axisLine: {
+                            //轴的颜色配置
                             lineStyle: {
                                 color: '#17b3a3'
                             }
                         },
+                        //x轴的标签设置
                         axisLabel: {
+                            //标签颜色
                             color: '#333'
                         }
                     },
                     yAxis: [
                         {
                             type: 'value',
+                            //y轴线配置
                             axisLine: {
+                                //轴的颜色配置
                                 lineStyle: {
                                     color: '#17b3a3'
                                 }
                             }
                         }
                     ],
+                    //多个数据的颜色设置
                     color: [
                         '#2ec7c9',
                         '#b6a2de',
@@ -104,9 +118,12 @@
 
                 //没有坐标轴配置
                 normalOption: {
+                    //提示框组件：实现悬浮显示的效果
                     tooltip: {
+                        //触发时机 item 数据项图形触发
                         trigger: 'item'
                     },
+                    //多个数据的颜色设置
                     color: ['#0f78f4', '#dd536b', '#9462e5', '#a6a6a6', '#e1bb22', '#39c362', '#3ed1cf'],
                     series: []
                 },
@@ -150,7 +167,7 @@
         watch: {
             //数据发生变化的话，就重新更新下echart图
             chartData: {
-                handler: function() {
+                handler: function () {
                     this.initChart()
                 },
                 deep: true

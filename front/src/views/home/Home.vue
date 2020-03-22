@@ -34,22 +34,22 @@
             </div>
             <el-card shadow="hover">
                 <!--echart图标-->
-                <ECharts style="height: 280px"
+                <g-echarts style="height: 280px"
                          :chartData="echartData.order">
                     >
-                </ECharts>
+                </g-echarts>
             </el-card>
             <div class="graph">
                 <el-card shadow="hover">
-                    <ECharts style="height: 260px"
+                    <g-echarts style="height: 260px"
                              :chartData="echartData.user">
-                    </ECharts>
+                    </g-echarts>
                 </el-card>
                 <el-card shadow="hover">
-                    <ECharts style="height: 260px"
+                    <g-echarts style="height: 260px"
                              :chartData="echartData.video"
                              :isAxisChart="false">
-                    </ECharts>
+                    </g-echarts>
                 </el-card>
             </div>
         </el-col>
@@ -58,11 +58,9 @@
 
 <script>
     import {mapState} from 'vuex';
-    import ECharts from '@/components/echarts/ECharts';
 
     export default {
         name: "Home",
-        components: {ECharts},
         data() {
             return {
                 userImg: require('../../assets/imgs/user.png'),
