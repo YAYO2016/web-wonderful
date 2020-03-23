@@ -9,6 +9,7 @@
                 highlight
                 highlight-current-row
                 border
+                stripe
                 @row-click="rowClick"
                 @current-change="handleCurrentChange"
                 :row-class-name="tableRowClassName"
@@ -16,7 +17,12 @@
                 @select="select"
                 @filter-change="filterChange"
                 tooltip-effect="dark"
+
         >
+            <!--
+                stripe:是否是斑马纹
+
+            -->
             <slot></slot>
         </el-table>
     </div>
@@ -81,9 +87,10 @@
 
 <style lang="scss" scoped>
     .Table {
-        /deep/ .el-table th.gutter{
-            display: table-cell!important;
+        /deep/ .el-table th.gutter {
+            display: table-cell !important;
         }
+
         /deep/ .el-table__header-wrapper {
             th {
                 text-align: center;
