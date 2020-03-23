@@ -18,6 +18,9 @@ const userApi = {
     getUsers(params) {
         return get('/users/getUsers', params,{loading:true})
     },
+    getSingleUser(params) {
+        return get('/users/getSingleUser', params)
+    },
 
 };
 

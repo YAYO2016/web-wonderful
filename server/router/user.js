@@ -43,11 +43,11 @@ router.get('/getUsers', (req, res, next) => {
         let total = result.data.list.length;
         let list = result.data.list.slice((reqBody.pageNum - 1) * reqBody.pageSize, reqBody.pageNum * reqBody.pageSize);
         let username = reqBody.username;
-        if(username){
-            list = list.map(item=>{
-               if(item.name === username){
-                   return item;
-               }
+        if (username) {
+            list = list.map(item => {
+                if (item.name === username) {
+                    return item;
+                }
             });
             //loadsh的compact函数会去掉数组中的无效元素
             list = _.compact(list);
@@ -57,7 +57,7 @@ router.get('/getUsers', (req, res, next) => {
             result.pageInfo.pageIndex = reqBody.pageNum;
             result.pageInfo.pageSize = reqBody.pageSize;
             res.json(result);
-        }else{
+        } else {
             result.data.list = list;
             result.pageInfo = {};
             result.pageInfo.total = total;
@@ -65,10 +65,24 @@ router.get('/getUsers', (req, res, next) => {
             result.pageInfo.pageSize = reqBody.pageSize;
             res.json(result);
         }
-
-
     })
 });
 
+router.get('/getSingleUser', (req, res, next) => {
+    let reqBody = req.query;
+    util.FileFn.readJSONFile(userPath).then(result => {
+        let list = result.data.list;
+        let id = reqBody.id;
+        let user = null;
+        list.forEach(item=>{
+            if(item.id == id){
+                user = item;
+            }
+        })
+        //loadsh的compact函数会去掉数组中的无效元素
+        result.data = user;
+        res.json(result);
+    })
+});
 
 module.exports = router;

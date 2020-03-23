@@ -2,7 +2,9 @@
     <div class='UserManage'>
         <el-row :gutter="10">
             <el-col :span="12">
-                <el-button type="primary" icon="el-icon-plus">新增</el-button>
+                <el-button type="primary" icon="el-icon-plus"
+                           @click="formVisible = true">新增
+                </el-button>
             </el-col>
             <el-col :span="12" align="right">
                 <el-input v-model="search.input" placeholder="请输入"
@@ -23,8 +25,10 @@
                     <el-table-column property="birthday" label="生日"></el-table-column>
                     <el-table-column property="address" label="地址" show-overflow-tooltip></el-table-column>
                     <el-table-column label="操作栏">
-                        <el-button >编辑</el-button>
-                        <el-button type="danger">删除</el-button>
+                        <template slot-scope="scope">
+                            <el-button @click="handleModify(scope.row.id)">编辑</el-button>
+                            <el-button type="danger">删除</el-button>
+                        </template>
                     </el-table-column>
                 </g-table>
                 <g-pagination :currentPage="pageInfo.pageIndex"
@@ -33,6 +37,32 @@
                               @changePage="currentChange"/>
             </el-col>
         </el-row>
+
+        <div class="dialog">
+            <g-dialog :show="formVisible" :width="'500px'"  @closedDialog="Form=formDemo()">
+                <el-form ref="userForm" :model="Form" label-width="80px">
+                    <el-form-item label="用户名">
+                        <el-input v-model="Form.name" placeholder="请输入"></el-input>
+                    </el-form-item>
+                    <el-form-item label="年龄">
+                        <el-input v-model="Form.age" placeholder="请输入"></el-input>
+                    </el-form-item>
+                    <el-form-item label="性别">
+                        <el-input v-model="Form.sex" placeholder="请输入"></el-input>
+                    </el-form-item>
+                    <el-form-item label="生日">
+                        <el-input v-model="Form.birthday" placeholder="请输入"></el-input>
+                    </el-form-item>
+                    <el-form-item label="地址">
+                        <el-input v-model="Form.address" placeholder="请输入"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary">确认</el-button>
+                        <el-button @click="formVisible=false">取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </g-dialog>
+        </div>
     </div>
 </template>
 
@@ -61,6 +91,8 @@
                     pageSize: 5,
                     total: 0,
                 },
+                Form: this.formDemo(),
+                formVisible: false,
             }
         },
         methods: {
@@ -92,6 +124,25 @@
                 //只有点击查询按钮的时候，关键字才会进行接口查询，不然只是个临时的数据而已
                 vm.searchKey.input = input;
                 vm.getData();
+            },
+            //新增 编辑 用户的数据模板
+            formDemo() {
+                return {
+                    id: "",
+                    name: "",
+                    age: "",
+                    sex: "",
+                    birthday: "",
+                    address: ""
+                }
+            },
+            //表格点击修改用户
+            handleModify(id){
+                let vm = this;
+                vm.$api.getSingleUser({id}).then(res => {
+                    vm.Form = res.data;
+                    vm.formVisible = true;
+                })
             }
         }
     }
