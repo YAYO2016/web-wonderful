@@ -27,7 +27,7 @@
                     <el-table-column label="操作栏">
                         <template slot-scope="scope">
                             <el-button @click="handleModify(scope.row.id)">编辑</el-button>
-                            <el-button type="danger">删除</el-button>
+                            <el-button type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
                         </template>
                     </el-table-column>
                 </g-table>
@@ -39,7 +39,7 @@
         </el-row>
 
         <div class="dialog">
-            <g-dialog :show="formVisible" :width="'500px'"  @closedDialog="Form=formDemo()">
+            <g-dialog :show="formVisible" :width="'500px'" @closedDialog="Form=formDemo()">
                 <el-form ref="userForm" :model="Form" label-width="80px">
                     <el-form-item label="用户名">
                         <el-input v-model="Form.name" placeholder="请输入"></el-input>
@@ -48,10 +48,17 @@
                         <el-input v-model="Form.age" placeholder="请输入"></el-input>
                     </el-form-item>
                     <el-form-item label="性别">
-                        <el-input v-model="Form.sex" placeholder="请输入"></el-input>
+                        <el-radio-group v-model="Form.sex">
+                            <el-radio :label="1">男</el-radio>
+                            <el-radio :label="0">女</el-radio>
+                        </el-radio-group>
                     </el-form-item>
                     <el-form-item label="生日">
-                        <el-input v-model="Form.birthday" placeholder="请输入"></el-input>
+                        <el-date-picker
+                                v-model="Form.birthday"
+                                type="date"
+                                placeholder="选择日期">
+                        </el-date-picker>
                     </el-form-item>
                     <el-form-item label="地址">
                         <el-input v-model="Form.address" placeholder="请输入"></el-input>
@@ -137,12 +144,31 @@
                 }
             },
             //表格点击修改用户
-            handleModify(id){
+            handleModify(id) {
                 let vm = this;
                 vm.$api.getSingleUser({id}).then(res => {
                     vm.Form = res.data;
                     vm.formVisible = true;
                 })
+            },
+            //表格点击删除按钮
+            handleDelete(id) {
+                this.$confirm('此操作将永久删除该条数据, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    //执行删除逻辑
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             }
         }
     }
