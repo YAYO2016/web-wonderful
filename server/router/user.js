@@ -38,6 +38,8 @@ router.post('/login', (req, res, next) => {
 
 const userPath = "./assets/json/user.json";
 router.get('/getUsers', (req, res, next) => {
+    //等待1s，模拟从数据库查询数据的时间间隔
+    util.OtherFn.sleep(1000);
     let reqBody = req.query;
     util.FileFn.readJSONFile(userPath).then(result => {
         let total = result.data.list.length;

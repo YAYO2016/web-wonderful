@@ -1,5 +1,6 @@
 <template>
     <div class='UserManage'>
+        <!--搜索区域-->
         <el-row :gutter="10">
             <el-col :span="12">
                 <el-button type="primary" icon="el-icon-plus"
@@ -15,8 +16,10 @@
             </el-col>
         </el-row>
         <g-split></g-split>
+        <!--表格区域-->
         <el-row :gutter="10">
             <el-col :span="24">
+                <!--表格-->
                 <g-table :tableData="tableData">
                     <el-table-column type="index" width="50" label="序号"></el-table-column>
                     <el-table-column property="name" label="姓名"></el-table-column>
@@ -31,6 +34,7 @@
                         </template>
                     </el-table-column>
                 </g-table>
+                <!--分页-->
                 <g-pagination :currentPage="pageInfo.pageIndex"
                               :pageSize="pageInfo.pageSize"
                               :total="pageInfo.total"
@@ -38,6 +42,7 @@
             </el-col>
         </el-row>
 
+        <!--模态框区域-->
         <div class="dialog">
             <g-dialog :show="formVisible" :width="'500px'" @closedDialog="Form=formDemo()">
                 <el-form ref="userForm" :model="Form" label-width="80px">
