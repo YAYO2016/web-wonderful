@@ -76,8 +76,8 @@ router.get('/getSingleUser', (req, res, next) => {
         let list = result.data.list;
         let id = reqBody.id;
         let user = null;
-        list.forEach(item=>{
-            if(item.id == id){
+        list.forEach(item => {
+            if (item.id == id) {
                 user = item;
             }
         })
@@ -86,5 +86,18 @@ router.get('/getSingleUser', (req, res, next) => {
         res.json(result);
     })
 });
+
+router.post('/getUserInfo', (req, res, next) => {
+    let reqBody = req.body;
+    console.log(`token:${reqBody.token}`);
+    res.status(200).json({
+        code: 200,
+        data: {
+            username: 'yanyue',
+            roles: ["admin", "editor"]
+        }
+    })
+});
+
 
 module.exports = router;

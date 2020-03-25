@@ -21,44 +21,6 @@ const createRouter = () => new VueRouter({
 
 const router = createRouter();
 
-// 路由守卫,进行拦截，可以拦截用户设置的权限是路由requireAuth:true的（但是可能token失效了，但是本地还是保存着，所以需要axios拦截配合）
-router.beforeEach(async (to, from, next) => {
-    //判断localStorage中是否有token来判断是否登录
-    const hasToken = getToken();
-    if (to.path === "/login" || to.path === "/register") {
-        //如果是登录或者注册路由的时候，就无须判断，直接跳转
-        next();
-    } else {
-        if (hasToken) {
-            //根据store中的roles是否存在，来判断页面是否刷新了
-            const hasRoles = store.state.user.roles && store.state.user.roles.length > 0;
-            if (hasRoles) {
-                next()
-            } else {
-                try {
-                    store.dispatch("user/setUserInfo",util.StorageFn.getLocal('userInfo'));
-                    store.dispatch("common/getTabs");
-                    next({...to, replace: true})
-                } catch (e) {
-                    store.dispatch("user/clearCurrentState");
-                    store.dispatch("common/clearTabs");
-                    // 用户没有登录
-                    next(`/login?redirect=${to.path}`)
-                }
-            }
-
-        } else {
-            store.dispatch("user/clearCurrentState");
-            store.dispatch("common/clearTabs");
-            // 用户没有登录
-            next(`/login?redirect=${to.path}`)
-        }
-    }
-});
-
-router.afterEach((to, from, next) => {
-    window.scrollTo(0, 0);
-});
 
 export function resetRouter() {
     const newRouter = createRouter()

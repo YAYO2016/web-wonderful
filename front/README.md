@@ -71,3 +71,6 @@ npm i  echarts -S
 
 安装mathjs：//js的计算库，可以避免精度丢失
 npm i mathjs -S
+
+安装npm install --save nprogress
+路由跳转进度条

@@ -88,7 +88,7 @@
                     return acc
                 }, {})
             },
-            handleShowPwd(){
+            handleShowPwd() {
                 let vm = this;
                 if (vm.passwordType === 'password') {
                     vm.passwordType = ''
@@ -104,20 +104,28 @@
                 //表单验证函数
                 if (vm.validateRules(formName, vm)) {
                     vm.loading = true;
-                    vm.$api.login(vm.loginForm).then(res => {
-                        vm.setUserInfo(res.data);
-                        vm.$message({
-                            message: res.message,
-                            type: 'success'
-                        });
-                        //注册成功，跳转到首页
-                        //vm.$router.push("/");
-                        //也可以跳转到login之后的redirect页面，看需求而定
-                        vm.$router.push({path: this.redirect || '/', query: vm.otherQuery});
-                        vm.loading = false;
-                    }).catch(() => {
-                        vm.loading = false;
-                    });
+                    //vm.$api.login(vm.loginForm).then(res => {
+                    //    vm.setUserInfo(res.data);
+                    //    vm.$message({
+                    //        message: res.message,
+                    //        type: 'success'
+                    //    });
+                    //    //注册成功，跳转到首页
+                    //    //vm.$router.push("/");
+                    //    //也可以跳转到login之后的redirect页面，看需求而定
+                    //    vm.$router.push({path: this.redirect || '/', query: vm.otherQuery});
+                    //    vm.loading = false;
+                    //}).catch(() => {
+                    //    vm.loading = false;
+                    //});
+                    vm.$store.dispatch('user/login', vm.loginForm)
+                        .then(() => {
+                            vm.$router.push({path: vm.redirect || '/', query: vm.otherQuery});
+                            vm.loading = false
+                        })
+                        .catch(() => {
+                            vm.loading = false
+                        })
                 }
             }
         }

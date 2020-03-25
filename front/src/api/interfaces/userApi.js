@@ -15,6 +15,9 @@ const userApi = {
     login(params) {
         return post('/users/login', params)
     },
+    getUserInfo(params){
+        return post('/users/getUserInfo', params)
+    },
     getUsers(params) {
         return get('/users/getUsers', params,{loading:true})
     },

@@ -82,6 +82,22 @@ export const asyncRoutes = [
         ]
     },
     {
+        path: '/book',
+        component: Layout,
+        name: 'Book',
+        redirect: '/book/createbook',
+        meta: {title: '图书管理', icon: 'el-icon-notebook-2',roles:["editor","admin"]},
+        children: [
+            {
+                path: '/book/createbook',
+                component: () => import('@/views/book/CreateBook'),
+                name: 'CreateBook',
+                meta: {title: '上传图书', icon: 'el-icon-edit',roles:["editor","admin"]}
+            },
+
+        ]
+    },
+    {
         path: '/form', name: 'form',
         redirect: '/forminput',
         meta: {title: '表单类型', icon: 'fa fa-wpforms'},

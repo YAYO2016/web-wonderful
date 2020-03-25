@@ -9,6 +9,9 @@ import "@/common/style/reset.scss"
 //引入外部iconfont
 import "@/common/iconfont/iconfont.css"
 
+//导入全局的路由守卫
+import "./permission.js";
+
 //安装使用elementUI
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
