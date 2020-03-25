@@ -4,9 +4,8 @@
 /**
  * Created by yanyue on 2019-11-16 11:21
  */
-import {constantRoutes, asyncRoutes} from "../../router/routes";
-import router, {resetRouter} from '@/router'
-import {setToken, getToken, removeToken, filterAsyncRoutes} from "../../common/js/permission";
+import router, {resetRouter} from '../../router'
+import {setToken, getToken, removeToken} from "../../common/js/auth";
 import api from "@/api"
 
 const user = {
@@ -15,8 +14,7 @@ const user = {
         token: getToken(),
         userInfo: {},
         roles: [],
-        addRoutes: [],
-        routes: [],
+
     },
     mutations: {
         SET_TOKEN(state, payload) {
@@ -28,10 +26,7 @@ const user = {
         SET_ROLES(state, payload) {
             state.roles = payload;
         },
-        SET_ROUTES: (state, routes) => {
-            state.addRoutes = routes;
-            state.routes = constantRoutes.concat(routes);
-        }
+
     },
     actions: {
         login({commit}, userInfo) {
@@ -54,14 +49,13 @@ const user = {
         //    commit('SET_ROLES', userInfo.roles);
         //    //localStorage.setItem("userInfo", JSON.stringify(userInfo));
         //    //这里对路由进行权限过滤
-        //    //let accessedRoutes = filterAsyncRoutes(asyncRoutes, userInfo.roles);
         //    //commit('SET_ACCESSEDROUTES', accessedRoutes);
         //    //commit('SER_ROUTES', new Set(constantRoutes.concat(state.accessedRoutes)));
         //    //router.addRoutes(state.accessedRoutes);
         //},
         getUserInfo: ({commit, state}, userInfo) => {
             return new Promise((resolve, reject) => {
-                api.getUserInfo({token:state.token}).then(res => {
+                api.getUserInfo({token: state.token}).then(res => {
                     let userInfo = res.data;
                     if (!userInfo) {
                         reject('校验失败，请重新登录')
@@ -74,18 +68,6 @@ const user = {
                 })
             });
 
-        },
-        generateRoutes({commit}, roles) {
-            return new Promise(resolve => {
-                let accessedRoutes;
-                if (roles.includes('admin')) {
-                    accessedRoutes = asyncRoutes || []
-                } else {
-                    accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-                }
-                commit('SET_ROUTES', accessedRoutes);
-                resolve(accessedRoutes)
-            })
         },
         clearCurrentState: ({commit}) => {
             removeToken();

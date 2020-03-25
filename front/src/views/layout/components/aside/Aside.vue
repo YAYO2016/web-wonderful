@@ -51,7 +51,7 @@
             return {}
         },
         computed: {
-            ...mapState('user', ['routes']),
+            ...mapState('permission', ['routes']),
             isCollapse() {
                 return this.$store.state.common.isCollapse
             },

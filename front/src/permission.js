@@ -1,4 +1,4 @@
-import {getToken} from "./common/js/permission";
+import {getToken} from "./common/js/auth";
 import store from "./store";
 import util from "./common/js/util";
 import router from "./router";
@@ -35,12 +35,13 @@ router.beforeEach(async (to, from, next) => {
                     //如果roles不存在的时候，就去调用接口获取用户的roles
                     const {roles} = await store.dispatch("user/getUserInfo");
                     //根据用户的roles去过滤出可以访问的路由
-                    const accessRoutes = await store.dispatch('user/generateRoutes', roles);
+                    const accessRoutes = await store.dispatch('permission/generateRoutes', roles);
                     //将获取到路由参数添加到路由中
                     router.addRoutes(accessRoutes);
                     store.dispatch("common/getTabs");
                     next({...to, replace: true})
                 } catch (e) {
+                    //发生异常的话
                     store.dispatch("user/clearCurrentState");
                     store.dispatch("common/clearTabs");
                     // 用户没有登录
@@ -68,6 +69,6 @@ router.beforeEach(async (to, from, next) => {
 });
 
 router.afterEach((to, from, next) => {
-    window.scrollTo(0, 0);
+    //window.scrollTo(0, 0);
     NProgress.done()
 });

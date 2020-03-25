@@ -1,22 +1,8 @@
-/**
- * Created by yanyue on 2020/3/15 16:30
- */
+import {asyncRoutes, constantRoutes} from "../../router/routes";
 
 /**
- * token的设置和获取
+ * Created by yanyue on 2020/3/25 22:46
  */
-import Cookies from 'js-cookie'
-const TokenKey = 'token';
-
-export function getToken() {
-    return Cookies.get(TokenKey)
-}
-export function setToken(token) {
-    return Cookies.set(TokenKey, token)
-}
-export function removeToken() {
-    return Cookies.remove(TokenKey)
-}
 
 /**
  * 判断用户是否有权限访问该路由
@@ -52,3 +38,34 @@ export function filterAsyncRoutes(routes, roles) {
     });
     return res
 }
+
+const permission = {
+    namespaced: true,
+    state: {
+        addRoutes: [],
+        routes: [],
+    },
+    mutations: {
+        SET_ROUTES: (state, routes) => {
+            state.addRoutes = routes;
+            state.routes = constantRoutes.concat(routes);
+        }
+    },
+    actions: {
+        generateRoutes({commit}, roles) {
+            return new Promise(resolve => {
+                let accessedRoutes;
+                if (roles.includes('admin')) {
+                    accessedRoutes = asyncRoutes || []
+                } else {
+                    accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+                }
+                commit('SET_ROUTES', accessedRoutes);
+                resolve(accessedRoutes)
+            })
+        },
+    },
+    getters: {}
+};
+
+export default permission;
