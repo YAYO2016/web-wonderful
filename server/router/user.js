@@ -90,13 +90,24 @@ router.get('/getSingleUser', (req, res, next) => {
 router.post('/getUserInfo', (req, res, next) => {
     let reqBody = req.body;
     console.log(`token:${reqBody.token}`);
-    res.status(200).json({
-        code: 200,
-        data: {
-            username: 'yanyue',
-            roles: ["admin", "editor"]
-        }
-    })
+    if(reqBody.token == "admin"){
+        res.status(200).json({
+            code: 200,
+            data: {
+                username: 'admin',
+                roles: ["admin"]
+            }
+        })
+    }else{
+        res.status(200).json({
+            code: 200,
+            data: {
+                username: 'yanyue',
+                roles: ["editor"]
+            }
+        })
+    }
+
 });
 
 

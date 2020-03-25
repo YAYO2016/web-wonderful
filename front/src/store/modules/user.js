@@ -12,7 +12,7 @@ import api from "@/api"
 const user = {
     namespaced: true,
     state: {
-        token: '',
+        token: getToken(),
         userInfo: {},
         roles: [],
         addRoutes: [],
@@ -61,7 +61,7 @@ const user = {
         //},
         getUserInfo: ({commit, state}, userInfo) => {
             return new Promise((resolve, reject) => {
-                api.getUserInfo(state.token).then(res => {
+                api.getUserInfo({token:state.token}).then(res => {
                     let userInfo = res.data;
                     if (!userInfo) {
                         reject('校验失败，请重新登录')
