@@ -89,7 +89,7 @@
                 vm.$store.dispatch('user/clearCurrentState');
                 vm.$store.dispatch('common/clearTabs');
                 vm.$router.push(`/login?redirect=${this.$route.fullPath}`)
-                //location.reload()
+                location.reload()
             }
         }
     }

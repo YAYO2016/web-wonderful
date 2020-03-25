@@ -36,7 +36,6 @@ const user = {
     },
     actions: {
         setUserInfo: ({commit, state}, userInfo) => {
-
             setToken(userInfo.token);
             commit('SET_TOKEN', userInfo.token);
             commit('SET_USERINFO', userInfo);

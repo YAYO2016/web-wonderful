@@ -6,13 +6,18 @@
                 <el-form :model="loginForm" ref="loginForm" :rules="loginRules" label-width="80px"
                          class="loginForm">
                     <el-form-item label="用户名" prop="username">
-                        <el-input v-model="loginForm.username" placeholder="请输入用户名"></el-input>
+                        <el-input ref="username" v-model="loginForm.username" placeholder="请输入用户名"></el-input>
                     </el-form-item>
                     <el-form-item label="密码" prop="password">
                         <!--键盘enter输入，需要焦点在当前输入框上才有用-->
-                        <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"
+                        <el-input :type="passwordType" v-model="loginForm.password" placeholder="请输入密码"
+                                  ref="password"
                                   @keydown.enter.native="submitForm('loginForm')"
-                        ></el-input>
+                        >
+                            <i :class="`iconfont ${passwordType==='password'?'icon-eye-close':'icon-eye-open'}`"
+                               slot="suffix"
+                               @click="handleShowPwd"></i>
+                        </el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')"
@@ -35,7 +40,8 @@
     /**
      * Created by yanyue on 2020/3/14 17:03
      */
-    import {mapState,mapActions} from 'vuex'
+    import {mapState, mapActions} from 'vuex'
+
     export default {
         name: "login",
         data() {
@@ -43,6 +49,7 @@
                 redirect: undefined,
                 otherQuery: {},
                 loading: false,
+                passwordType: 'password',
                 backgroundImg: require('@/assets/imgs/bg.jpg'),
                 loginForm: {
                     username: '',
@@ -61,7 +68,7 @@
         },
         watch: {
             $route: {
-                handler: function(route) {
+                handler: function (route) {
                     const query = route.query
                     if (query) {
                         this.redirect = query.redirect
@@ -81,6 +88,17 @@
                     return acc
                 }, {})
             },
+            handleShowPwd(){
+                let vm = this;
+                if (vm.passwordType === 'password') {
+                    vm.passwordType = ''
+                } else {
+                    vm.passwordType = 'password'
+                }
+                vm.$nextTick(() => {
+                    vm.$refs.password.focus()
+                })
+            },
             submitForm(formName) {
                 let vm = this;
                 //表单验证函数
@@ -95,7 +113,7 @@
                         //注册成功，跳转到首页
                         //vm.$router.push("/");
                         //也可以跳转到login之后的redirect页面，看需求而定
-                        vm.$router.push({ path: this.redirect || '/', query: vm.otherQuery });
+                        vm.$router.push({path: this.redirect || '/', query: vm.otherQuery});
                         vm.loading = false;
                     }).catch(() => {
                         vm.loading = false;

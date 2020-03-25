@@ -6,6 +6,8 @@ import store from './store'
 //导入normalize.css：Normalize的作用就是统一浏览器的初始样式
 //import 'normalize.css'
 import "@/common/style/reset.scss"
+//引入外部iconfont
+import "@/common/iconfont/iconfont.css"
 
 //安装使用elementUI
 import ElementUI from 'element-ui';

@@ -1,0 +1,23 @@
+{
+  "id": "1714441",
+  "name": "千年眼",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "367149",
+      "name": "eye",
+      "font_class": "eye-open",
+      "unicode": "e857",
+      "unicode_decimal": 59479
+    },
+    {
+      "icon_id": "5109010",
+      "name": "eye",
+      "font_class": "eye-close",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    }
+  ]
+}
