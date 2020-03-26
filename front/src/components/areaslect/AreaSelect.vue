@@ -5,6 +5,7 @@
             :options="areaOptions"
             v-model="areaItem"
             @change="handleChange"
+            :style="{width:width }"
     >
     </el-cascader>
 </template>
@@ -22,11 +23,15 @@
             area: { //地址码
                 type: String,
                 default: ''
+            },
+            width:{
+                type:String,
+                default:"200px"
             }
         },
         data() {
             return {
-                areaItem : this.area,
+                areaItem: this.area,
                 areaOptions: [],  //地址选择数据
             }
         },
@@ -40,7 +45,7 @@
             handleChange(value) {
                 let vm = this;
                 vm.areaItem = vm.selectArea(value);
-                vm.$emit("change",vm.areaItem);
+                vm.$emit("change", vm.areaItem);
             },
             //获取所有省市数据
             getAreaList() {

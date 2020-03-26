@@ -132,7 +132,7 @@
             <el-form-item label="地区选择" class="fl area-select">
                 <!--<v-distpicker :province="form.province" :city="form.city" :area="form.area" size="mini"></v-distpicker>-->
                 <!--g-areaSelect 自定义地区组件的使用-->
-                <g-areaSelect :area="form.area" @change="(val)=>{form.area=val}"></g-areaSelect>
+                <g-areaSelect :area="form.area" @change="(val)=>{form.area=val}" :width="'220px'"></g-areaSelect>
             </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
