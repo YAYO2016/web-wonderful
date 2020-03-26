@@ -131,7 +131,8 @@
             <el-divider></el-divider>
             <el-form-item label="地区选择" class="fl area-select">
                 <!--<v-distpicker :province="form.province" :city="form.city" :area="form.area" size="mini"></v-distpicker>-->
-                <g-areaSelect></g-areaSelect>
+                <!--g-areaSelect 自定义地区组件的使用-->
+                <g-areaSelect :area="form.area" @change="(val)=>{form.area=val}"></g-areaSelect>
             </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
@@ -171,9 +172,7 @@
                         //    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                         //}
                     ],
-                    province: '',
-                    city: '',
-                    area: ''
+                    area: '150524'  //地区码
                 },
                 videoUploadPercent: 0,
                 videoFlag: false,

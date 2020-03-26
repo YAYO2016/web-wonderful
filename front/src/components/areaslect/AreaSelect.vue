@@ -1,9 +1,9 @@
 <template>
     <el-cascader
+            clearable
             class="AreaSelect"
             :options="areaOptions"
-            change-on-select
-            v-model="computedArea"
+            v-model="areaItem"
             @change="handleChange"
     >
     </el-cascader>
@@ -18,26 +18,29 @@
 
     export default {
         name: "AreaSelect",
+        props: {
+            area: { //地址码
+                type: String,
+                default: ''
+            }
+        },
         data() {
             return {
-                area: '',
-                areaOptions: [],
+                areaItem : this.area,
+                areaOptions: [],  //地址选择数据
             }
         },
         mounted() {
             let vm = this;
+            //获取所有的可选区域
             vm.areaOptions = vm.getAreaList();
         },
-        computed: {
-            computedArea() {
-                let vm = this;
-                return vm.getArea(vm.area);
-            }
-        },
+        computed: {},
         methods: {
             handleChange(value) {
                 let vm = this;
-                vm.area = vm.selectArea(value);
+                vm.areaItem = vm.selectArea(value);
+                vm.$emit("change",vm.areaItem);
             },
             //获取所有省市数据
             getAreaList() {
