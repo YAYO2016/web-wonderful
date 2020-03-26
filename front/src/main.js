@@ -22,6 +22,11 @@ Vue.prototype.$ELEMENT = {size: 'mini'};
 //导入babel-polyfill，解决ie9和一些低版本的高级浏览器对es6新语法并不支持
 import "babel-polyfill";
 
+//地区组件（省市区）
+import VDistpicker from 'v-distpicker'
+Vue.component('v-distpicker', VDistpicker)
+
+
 //导入api接口
 import api from './api/index';
 Vue.prototype.$api = api;

@@ -2,8 +2,8 @@
  * Created by yanyue on 2020/3/15 16:41
  */
 const Layout = () => import('@/views/layout/Layout');
-const NoFound = () => import('@/views/error-pages/404NoFound1');
-//const NoFound = () => import('@/views/error-pages/404NoFound2');
+//const NoFound = () => import('@/views/error-pages/404NoFound1');
+const NoFound = () => import('@/views/error-pages/404NoFound2');
 /**
  * hidden: true                   如果hidden为true则在左侧菜单栏不展示
  * name:'router-name'             路由名称，必须填写

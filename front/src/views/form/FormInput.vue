@@ -129,6 +129,12 @@
             </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
+            <el-form-item label="地区选择" class="fl area-select">
+                <!--<v-distpicker :province="form.province" :city="form.city" :area="form.area" size="mini"></v-distpicker>-->
+                <g-areaSelect></g-areaSelect>
+            </el-form-item>
+            <div class="clearfix"></div>
+            <el-divider></el-divider>
         </el-form>
     </div>
 </template>
@@ -164,7 +170,10 @@
                         //    name: 'food2.jpeg',
                         //    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                         //}
-                    ]
+                    ],
+                    province: '',
+                    city: '',
+                    area: ''
                 },
                 videoUploadPercent: 0,
                 videoFlag: false,
@@ -308,6 +317,42 @@
     .FormInput {
         @include content-box;
 
+        .area-select {
+            .divwrap {
+                height: 400px;
+                overflow-y: auto;
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+            }
+
+            .divwrap > > > .distpicker-address-wrapper {
+                color: #999;
+            }
+
+            .divwrap > > > .address-header {
+                position: fixed;
+                bottom: 400px;
+                width: 100%;
+                background: #000;
+                color: #fff;
+            }
+
+            .divwrap > > > .address-header ul li {
+                flex-grow: 1;
+                text-align: center;
+            }
+
+            .divwrap > > > .address-header .active {
+                color: #fff;
+                border-bottom: #666 solid 8px
+            }
+
+            .divwrap > > > .address-container .active {
+                color: #000;
+            }
+        }
 
     }
 </style>

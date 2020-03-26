@@ -8,7 +8,7 @@ import GSplit from './split/Split';
 import GUploadFiile from './uploadfile/UploadFile'
 import GTable from './table/Table'
 import GPagination from './pagination/Pagination'
-
+import GAreaSelect from './areaslect/AreaSelect'
 export default {
     install(Vue, options) {
         Vue.component('g-dialog', GDialog);
@@ -17,5 +17,6 @@ export default {
         Vue.component('g-echarts',GECharts);
         Vue.component('g-table',GTable);
         Vue.component('g-pagination',GPagination);
+        Vue.component('g-areaSelect',GAreaSelect);
     }
 };

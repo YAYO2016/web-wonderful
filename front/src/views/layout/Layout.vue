@@ -1,6 +1,6 @@
 <template>
     <el-container class="Layout">
-        <el-aside width="auto">
+        <el-aside width="auto" class="aside-container">
             <Aside/>
         </el-aside>
         <el-container>
@@ -26,11 +26,11 @@
 
     export default {
         name: "Layout",
-        components: {Header, Aside,Tags},
+        components: {Header, Aside, Tags},
         data() {
             return {}
         },
-        computed:{
+        computed: {
             variables() {
                 return variables;
             }
@@ -42,13 +42,15 @@
 <style lang='scss' scoped>
     .Layout {
         height: 100%;
+
         .el-header {
             position: relative;
             background-color: $white;
-            box-shadow: 0 1px 4px rgba(0,21,41,0.08);
+            box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
         }
-        .el-main{
+
+        .el-main {
             padding: 32px;
             background-color: #f0f2f5;
             position: relative;

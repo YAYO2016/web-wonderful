@@ -1,0 +1,198 @@
+<template>
+    <el-cascader
+            class="AreaSelect"
+            :options="areaOptions"
+            change-on-select
+            v-model="computedArea"
+            @change="handleChange"
+    >
+    </el-cascader>
+</template>
+
+<script>
+    /**
+     * Created by yanyue on 2020/3/26 13:47
+     * 地区选择 级联选择器
+     */
+    import areaJson from './area-json';
+
+    export default {
+        name: "AreaSelect",
+        data() {
+            return {
+                area: '',
+                areaOptions: [],
+            }
+        },
+        mounted() {
+            let vm = this;
+            vm.areaOptions = vm.getAreaList();
+        },
+        computed: {
+            computedArea() {
+                let vm = this;
+                return vm.getArea(vm.area);
+            }
+        },
+        methods: {
+            handleChange(value) {
+                let vm = this;
+                vm.area = vm.selectArea(value);
+            },
+            //获取所有省市数据
+            getAreaList() {
+                let options = [];
+                Object.keys(areaJson).forEach((item, index) => {
+                    let obj = {};
+                    obj["value"] = areaJson[item].code;
+                    obj["label"] = areaJson[item].name;
+                    if (areaJson[item].children) {
+                        let cityList = [];
+                        obj["children"] = [];
+                        Object.keys(areaJson[item].children).forEach((item2, index2) => {
+                            let cityObj = {};
+                            cityObj["value"] = areaJson[item].children[item2].code;
+                            cityObj["label"] = areaJson[item].children[item2].name;
+                            if (areaJson[item].children[item2].children) {
+                                let areaList = [];
+                                cityObj["children"] = [];
+                                Object.keys(areaJson[item].children[item2].children).forEach((item3, index3) => {
+                                    let areaObj = {};
+                                    areaObj["value"] = areaJson[item].children[item2].children[item3].code;
+                                    areaObj["label"] = areaJson[item].children[item2].children[item3].name;
+                                    areaObj["parentCode"] = areaJson[item].children[item2].code;
+                                    areaObj["parentLabel"] = areaJson[item].children[item2].name;
+                                    areaList.push(areaObj);
+                                });
+                                cityObj["children"] = areaList;
+                            }
+                            cityObj["parentCode"] = areaJson[item].code;
+                            cityObj["parentLabel"] = areaJson[item].name;
+                            cityList.push(cityObj);
+                        });
+                        obj["children"] = cityList;
+                    }
+                    options.push(obj);
+                });
+                return options;
+            },
+            //返回选择的地区码
+            selectArea(value) {
+                return value[value.length - 1];
+            },
+            //根据地址码获取具体的地址信息
+            getArea(addressCode) {
+                let code = addressCode;
+                // let code = '130103';
+                let list = this.getAreaList();
+                let parentList = [];
+                let temporary = [], area = [];
+
+                //生成父列表数据
+                function buildParentList(arr) {
+                    arr.forEach(g => {
+                        if (g.value != undefined) {
+                            let pid = g['parentCode'];
+                            let oid = g['value'];
+                            parentList[oid] = pid;
+                        }
+                        if (g.children != undefined) {
+                            buildParentList(g['children']);
+                        }
+                    })
+                }
+
+                //参数是code，按照code查询地址
+                function findParent(idx) {
+                    if (parentList[idx] != undefined) {
+                        let pid = parentList[idx];
+                        temporary.push(pid);
+                        findParent(pid);
+                    }
+                }
+
+                buildParentList(list);
+
+                findParent(code);
+
+                if (temporary.length === 0) {
+                    //没有查询父级别地址,判断是否是第一级，不是就是脏数据
+                    Object.keys(areaJson).indexOf(code) != -1 ? area.push(code) : area = [];
+                } else {
+                    //有父级别地址
+                    for (let i = temporary.length - 1; i >= 0; i--) {
+                        area.push(temporary[i]);
+                    }
+                    area.push(code);
+                }
+                if (area.length > 0) {
+                    return area;
+                }
+            },
+            setArea(code) {//获取地区名 
+                if (!code) {
+                    return;
+                }
+                let list = this.getAreaList();
+                let parentList = [];
+                let temporary = [], area = [];
+
+                function buildParentList(arr) {
+                    arr.forEach(g => {
+                        if (g.value != undefined) {
+                            let pid = g['parentCode'];
+                            let oid = g['value'];
+                            parentList[oid] = pid;
+                        }
+                        if (g.children != undefined) {
+                            buildParentList(g['children']);
+                        }
+                    })
+                }
+
+                function findParent(idx) {
+                    if (parentList[idx] != undefined) {
+                        let pid = parentList[idx];
+                        temporary.push(pid);
+                        findParent(pid);
+                    }
+                }
+
+                buildParentList(list);
+                findParent(code); // 0 1 2 
+                for (let i = temporary.length - 1; i >= 0; i--) {
+                    area.push(temporary[i]);
+                }
+                area.push(code);
+                let aName = "";
+                for (let i = 0; i < list.length; i++) {
+                    if (list[i].value == area[0]) {
+                        aName += list[i].label;       // debugger 
+                        if (area.length > 1) {
+                            for (let j = 0; j < list[i].children.length; j++) {
+                                if (list[i].children[j].value == area[1]) {
+                                    aName += list[i].children[j].label;
+                                    if (area.length > 2) {
+                                        for (let k = 0; k < list[i].children[j].children.length; k++) {
+                                            if (list[i].children[j].children[k].value == area[2]) {
+                                                aName += list[i].children[j].children[k].label;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return aName;
+            }
+
+        }
+    }
+</script>
+
+<style lang='scss' scoped>
+    .AreaSelect {
+
+    }
+</style>

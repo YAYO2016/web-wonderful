@@ -1,10 +1,8 @@
 /**
  * Created by yanyue on 2020/3/15 16:30
- */
-
-/**
  * token的设置和获取
  */
+
 import Cookies from 'js-cookie'
 const TokenKey = 'token';
 

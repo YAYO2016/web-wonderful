@@ -74,3 +74,6 @@ npm i mathjs -S
 
 安装npm install --save nprogress
 路由跳转进度条
+
+安装地区选择器（省市区）
+npm install v-distpicker --save
