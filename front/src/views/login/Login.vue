@@ -48,6 +48,7 @@
             return {
                 redirect: undefined,
                 otherQuery: {},
+                //按钮loading
                 loading: false,
                 passwordType: 'password',
                 backgroundImg: require('@/assets/imgs/bg.jpg'),
@@ -69,17 +70,18 @@
         watch: {
             $route: {
                 handler: function (route) {
-                    const query = route.query
+                    const query = route.query;  //获取路由参数 ?后面的
                     if (query) {
-                        this.redirect = query.redirect
+                        //提取出路由参数中的redirect 和剩余的其他参数otherQuery
+                        this.redirect = query.redirect;
                         this.otherQuery = this.getOtherQuery(query)
                     }
                 },
-                immediate: true
+                immediate: true  //会在create的时候就进行调用
             }
         },
         methods: {
-            ...mapActions('user', ['setUserInfo']),
+            //...mapActions('user', ['setUserInfo']),
             getOtherQuery(query) {
                 return Object.keys(query).reduce((acc, cur) => {
                     if (cur !== 'redirect') {
@@ -120,6 +122,7 @@
                     //});
                     vm.$store.dispatch('user/login', vm.loginForm)
                         .then(() => {
+                            //登录成功，跳转到路由query中redirect参数的路由地址，并且带上剩余的其他路由参数otherQuery
                             vm.$router.push({path: vm.redirect || '/', query: vm.otherQuery});
                             vm.loading = false
                         })

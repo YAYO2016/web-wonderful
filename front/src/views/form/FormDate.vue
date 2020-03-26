@@ -16,7 +16,7 @@
                                          //如果没有后面的-8.64e7就是不可以选择今天的
                                     }
                                 }"
-                />
+                ></el-date-picker>
             </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
@@ -55,7 +55,7 @@
             <el-form-item label="时间期限" class="fl">
                 <el-input v-model="form.selectCount"
                           oninput="value=value.replace(/\D|^0/g,'')"
-                          placeholder="输入期限"/>
+                          placeholder="输入期限"></el-input>
             </el-form-item>
             <el-form-item label="截止日期" class="fl">
                 <el-input v-model="expireDate" readonly placeholder="截止日期"></el-input>

@@ -15,14 +15,14 @@ const NoFound = () => import('@/views/error-pages/404NoFound2');
  **/
 
 export const constantRoutes = [
-    //重定向路由放在第一位
+    //重定向路由必须放在第一位
     {
         path: '/redirect',
         component: Layout,
         hidden: true,
         children: [
             {
-                path: '/redirect/:path(.*)',
+                path: '/redirect/:path(.*)',  //*代表匹配0个或者多个路由
                 component: () => import('@/views/redirect/Redirect')
             }
         ]
@@ -114,7 +114,7 @@ export const asyncRoutes = [
             {
                 path: '/form/formdate',
                 name: 'formdate',
-                meta: {title: '日期格式輸入', icon: 'fa fa-calendar'},
+                meta: {title: '日期格式输入', icon: 'fa fa-calendar'},
                 component: () => import('@/views/form/FormDate'),
             },
             {

@@ -83,6 +83,13 @@
 
                 </el-input>
             </el-form-item>
+            <el-form-item label="计数器：" class="fl">
+                <el-input-number
+                          type="number"
+                          v-model="form.number"
+                          placeholder="请输入">
+                </el-input-number>
+            </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
             <el-form-item label="数字1：" class="fl">
@@ -129,7 +136,7 @@
             </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
-            <el-form-item label="地区选择" class="fl area-select">
+            <el-form-item label="地区选择：" class="fl area-select">
                 <!--<v-distpicker :province="form.province" :city="form.city" :area="form.area" size="mini"></v-distpicker>-->
                 <!--g-areaSelect 自定义地区组件的使用-->
                 <g-areaSelect :area="form.area" @change="(val)=>{form.area=val}" :width="'220px'"></g-areaSelect>
