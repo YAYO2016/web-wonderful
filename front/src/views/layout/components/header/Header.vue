@@ -2,9 +2,9 @@
     <div class='Header'>
         <div class="left-content">
             <el-button type="primary" icon="el-icon-menu"
-            @click="$store.dispatch('common/collapseMenu')"
+                       @click="$store.dispatch('common/collapseMenu')"
             ></el-button>
-            <!--面包屑-->
+            <!--面包屑导航-->
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item v-for="bread in breadCrumbItems" :key="bread.path"
                                     :to="{path:bread.path}">
@@ -16,7 +16,7 @@
             <div class="content-item">
                 <ScreenFull></ScreenFull>
             </div>
-            <div  class="content-item">
+            <div class="content-item">
                 <!--用户相关-->
                 <el-dropdown trigger="click">
                     <span class="el-dropdown-link"><img :src="userImg" class="user"/></span>
@@ -27,7 +27,7 @@
                 </el-dropdown>
             </div>
             <!--<div class="content-item">-->
-                <!--<i class="el-icon-question"></i>-->
+            <!--<i class="el-icon-question"></i>-->
             <!--</div>-->
         </div>
     </div>
@@ -42,10 +42,11 @@
 
     export default {
         name: "Header",
-        components:{ScreenFull},
+        components: {ScreenFull},
         data() {
             return {
                 userImg: require('@/assets/imgs/visitor.jpg'),
+                //面包屑导航数组
                 breadCrumbItems: [],
             }
         },
@@ -56,6 +57,7 @@
         },
         watch: {
             $route: {
+                // 路由改变一次就重新设置一下面包屑导航数据
                 handler: function (to, from) {
                     let vm = this;
                     vm.initBreadCrumbItems(to);
@@ -69,7 +71,7 @@
                 //根路由title
                 let breadCrumbItems = [{path: '/', title: '后台管理系统'}];
                 //let breadCrumbItems = [{path: '/', title: '首页'}];
-                //遍历父级到当前子路由的页面的title和path存储到当前数组中
+                //router目标路由参数--也就是当前路由，遍历父级到当前子路由的页面的title和path存储到当前数组中
                 for (let index in router.matched) {
                     if (router.matched[index].meta && router.matched[index].meta.title) {
                         breadCrumbItems.push({
@@ -84,6 +86,7 @@
                 let vm = this;
                 vm.$store.dispatch('common/collapseMenu')
             },
+            //登出
             logOut() {
                 let vm = this;
                 vm.$store.dispatch('user/clearCurrentState');
@@ -111,16 +114,18 @@
         }
 
         .right-content {
-            .content-item{
+            .content-item {
                 display: inline-block;
                 height: 100%;
                 line-height: 100%;
                 vertical-align: middle;
                 padding: 0 10px;
-                i{
+
+                i {
                     font-size: 20px;
                 }
             }
+
             .user {
                 width: 40px;
                 height: 40px;
@@ -130,11 +135,11 @@
 
     }
 
-    .el-dropdown{
+    .el-dropdown {
 
     }
 
-    .el-icon-question{
+    .el-icon-question {
         color: $yellow;
     }
 

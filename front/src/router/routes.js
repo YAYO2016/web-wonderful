@@ -100,7 +100,7 @@ export const asyncRoutes = [
     },
     {
         path: '/form', name: 'form',
-        redirect: '/forminput',
+        redirect: '/form/forminput',
         meta: {title: '表单类型', icon: 'fa fa-wpforms'},
         show: true,
         component: Layout,
