@@ -6,18 +6,22 @@
                 <el-form :model="loginForm" ref="loginForm" :rules="loginRules" label-width="80px"
                          class="loginForm">
                     <el-form-item label="用户名" prop="username">
-                        <el-input ref="username" v-model="loginForm.username" placeholder="请输入用户名"></el-input>
+                        <el-input ref="username" v-model.trim="loginForm.username" placeholder="请输入用户名"></el-input>
                     </el-form-item>
-                    <el-form-item label="密码" prop="password">
+                    <el-form-item label="密码" prop="password" style=" position: relative;margin-bottom: 28px;">
                         <!--键盘enter输入，需要焦点在当前输入框上才有用-->
-                        <el-input :type="passwordType" v-model="loginForm.password" placeholder="请输入密码"
+                        <el-input :type="passwordType" v-model.trim="loginForm.password" placeholder="请输入密码"
                                   ref="password"
                                   @keydown.enter.native="submitForm('loginForm')"
+                                  @keyup.native="loginKeyDown"
                         >
                             <i :class="`iconfont ${passwordType==='password'?'icon-eye-close':'icon-eye-open'}`"
                                slot="suffix"
                                @click="handleShowPwd"></i>
                         </el-input>
+                        <div style="height:15px;position: absolute;right: 0;">
+                            <el-tag v-show="bigChar">大写锁定已打开</el-tag>
+                        </div>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')"
@@ -64,7 +68,9 @@
                         {required: true, message: '密码不能为空', trigger: 'blur'},
                         {min: 2, max: 30, message: '长度在2-30个字符之间', trigger: 'blur'}
                     ],
-                }
+                },
+                firstTochar: false,
+                bigChar: false,
             }
         },
         watch: {
@@ -130,7 +136,39 @@
                             vm.loading = false
                         })
                 }
-            }
+            },
+            loginKeyDown(event) {
+                let vm = this;
+                //是否输入过字母键，且判断是否按键为caps lock
+                if (vm.firstTochar) {
+                    if (event.keyCode === 20) {
+                        vm.bigChar = !vm.bigChar;
+                        return;
+                    }
+                }
+                //未输入过字母键，或按键不是caps lock，判断每次最后输入的字符的大小写
+                let e = event || window.event;
+                let keyvalue = e.keyCode ? e.keyCode : e.which;
+                let shifKey = e.shiftKey ? e.shiftKey : ((keyvalue == 16) ? true : false);
+                if (typeof (vm.loginForm.password) === 'undefined') {
+                    return;
+                }
+                let strlen = vm.loginForm.password.length;
+                let password = vm.loginForm.password;
+
+                if (strlen) {
+                    let uniCode = password.charCodeAt(strlen - 1);
+                    if (keyvalue >= 65 && keyvalue <= 90) {
+                        //如果是字母键
+                        vm.firstTochar = true;
+                        if (((uniCode >= 65 && uniCode <= 90) && !shifKey) || ((uniCode >= 97 && uniCode <= 122) && shifKey)) {
+                            vm.bigChar = true;
+                        } else {
+                            vm.bigChar = false;
+                        }
+                    }
+                }
+            },
         }
     }
 </script>
