@@ -29,6 +29,7 @@ const user = {
 
     },
     actions: {
+        //用户登录
         login({commit}, userInfo) {
             const {username, password} = userInfo
             return new Promise((resolve, reject) => {
@@ -42,17 +43,7 @@ const user = {
                 })
             })
         },
-        //setUserInfo: ({commit, state}, userInfo) => {
-        //    setToken(userInfo.token);
-        //    commit('SET_TOKEN', userInfo.token);
-        //    commit('SET_USERINFO', userInfo);
-        //    commit('SET_ROLES', userInfo.roles);
-        //    //localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        //    //这里对路由进行权限过滤
-        //    //commit('SET_ACCESSEDROUTES', accessedRoutes);
-        //    //commit('SER_ROUTES', new Set(constantRoutes.concat(state.accessedRoutes)));
-        //    //router.addRoutes(state.accessedRoutes);
-        //},
+        //获取当前登录用户的信息--通过token
         getUserInfo: ({commit, state}, userInfo) => {
             return new Promise((resolve, reject) => {
                 api.getUserInfo({token: state.token}).then(res => {
@@ -67,8 +58,8 @@ const user = {
                     reject(error)
                 })
             });
-
         },
+        //清除用户信息以及其他缓存数据
         clearCurrentState: ({commit}) => {
             removeToken();
             commit('SET_TOKEN', "");

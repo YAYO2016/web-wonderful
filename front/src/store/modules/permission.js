@@ -39,6 +39,7 @@ export function filterAsyncRoutes(routes, roles) {
     return res
 }
 
+//权限相关 -- 主要是路由访问权限
 const permission = {
     namespaced: true,
     state: {
@@ -52,6 +53,7 @@ const permission = {
         }
     },
     actions: {
+        //根据用户权限生成动态路由
         generateRoutes({commit}, roles) {
             return new Promise(resolve => {
                 let accessedRoutes;
