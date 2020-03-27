@@ -3,7 +3,8 @@
  */
 const getters = {
     roles: state => state.user.userInfo.roles,
-    routes:state => state.user.routes,
+    routes:state => state.permission.routes,
+    token:state => state.user.token,
 };
 export default getters
 

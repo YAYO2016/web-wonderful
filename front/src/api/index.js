@@ -2,8 +2,8 @@
  * Created by yanyue on 2019-09-18 14:51
  */
 
-import homeApi from './interfaces/homeApi';
-import userApi from './interfaces/userApi';
+//import homeApi from './interfaces/homeApi';
+//import userApi from './interfaces/userApi';
 
 //批量引入interfaces下的接口文件导入模块（读取文件的路径，是否遍历文件的子目录，匹配文件的正则）
 let requireAll = require.context('./interfaces', false, /\.js$/);

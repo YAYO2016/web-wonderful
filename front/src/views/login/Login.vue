@@ -12,7 +12,7 @@
                         <!--键盘enter输入，需要焦点在当前输入框上才有用-->
                         <el-input :type="passwordType" v-model.trim="loginForm.password" placeholder="请输入密码"
                                   ref="password"
-                                  @keydown.enter.native="submitForm('loginForm')"
+                                  @keydown.enter.native="handleLogin('loginForm')"
                                   @keyup.native="loginKeyDown"
                         >
                             <i :class="`iconfont ${passwordType==='password'?'icon-eye-close':'icon-eye-open'}`"
@@ -24,7 +24,7 @@
                         </div>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')"
+                        <el-button type="primary" class="submit_btn" @click="handleLogin('loginForm')"
                                    :loading="loading"
                         >登录
                         </el-button>
@@ -107,25 +107,11 @@
                     vm.$refs.password.focus()
                 })
             },
-            submitForm(formName) {
+            handleLogin(formName) {
                 let vm = this;
                 //表单验证函数
                 if (vm.validateRules(formName, vm)) {
                     vm.loading = true;
-                    //vm.$api.login(vm.loginForm).then(res => {
-                    //    vm.setUserInfo(res.data);
-                    //    vm.$message({
-                    //        message: res.message,
-                    //        type: 'success'
-                    //    });
-                    //    //注册成功，跳转到首页
-                    //    //vm.$router.push("/");
-                    //    //也可以跳转到login之后的redirect页面，看需求而定
-                    //    vm.$router.push({path: this.redirect || '/', query: vm.otherQuery});
-                    //    vm.loading = false;
-                    //}).catch(() => {
-                    //    vm.loading = false;
-                    //});
                     vm.$store.dispatch('user/login', vm.loginForm)
                         .then(() => {
                             //登录成功，跳转到路由query中redirect参数的路由地址，并且带上剩余的其他路由参数otherQuery

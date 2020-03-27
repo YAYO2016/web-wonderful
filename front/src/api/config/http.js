@@ -3,6 +3,7 @@ import axios from 'axios';
 import router from '@/router';
 import store from "@/store"
 import {Message, Loading} from "element-ui"
+import {getToken, removeToken} from "../../common/js/auth.js"
 
 let loadingInstance;
 let loadingCount = 0;
@@ -67,6 +68,11 @@ http.interceptors.request.use(config => {
         startLoading();
     }
 
+    //请求拦截器中给所有的请求header中添加token
+    if (store.getters.token) {
+        config.headers['token'] = getToken();
+    }
+
     if (config.method === 'post') {
         config.data = {
             ...config.data,
@@ -114,7 +120,9 @@ http.interceptors.response.use(
             switch (error.response.status) {
                 case 401:
                     console.log(401);
-                    localStorage.removeItem('token');
+                    //localStorage.removeItem('token');
+                    //removeToken();
+                    store.dispatch("user/clearCurrentState");
                     router.push({path: '/login'});
                     errorMessage = "token值无效，请重新登录";
                     break;
@@ -142,7 +150,7 @@ function get(url, params = {}, options = {}) {
         url,
         method: 'GET',
         headers: {
-            'Authorization': localStorage.getItem('token')
+            //'Authorization': localStorage.getItem('token')
         },
         params,
         options
@@ -150,13 +158,14 @@ function get(url, params = {}, options = {}) {
 }
 
 //封装post请求
-function post(url, data = {}, options = {},callback=()=>{}) {
+function post(url, data = {}, options = {}, callback = () => {
+}) {
     return http({
         url,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=UTF-8',
-            'Authorization': localStorage.getItem('token')
+            //'Authorization': localStorage.getItem('token')
         },
         data,
         options,
