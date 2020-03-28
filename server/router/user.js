@@ -9,22 +9,37 @@ const _ = require("loadsh");
 const Result = require("../models/Result.js");
 const {PWD_SALT} = require("../utils/constant");
 const {login} = require("../services/userService");
+const boom = require("boom");
+const {body, validationResult} = require('express-validator');
 
 
-router.post('/login', (req, res, next) => {
-    const {username, password} = req.body;
-    //调用userService中的login登录服务(密码进行md5加盐加密)
-    login(username, util.EnCryPtoFn.md5(`${password}${PWD_SALT}`)).then(user => {
-        if (!user || user.length === 0) {
-            new Result('登录失败').fail(res);
+router.post('/login'
+    , [
+        //这边使用express-validator进行校验，正常的话是给前端进行校验的
+        body("username").isString().withMessage("用户名必须为字符").isLength({min:5}).withMessage("用户名不能少于5个字符"),
+        body("password").isLength({min:5}).withMessage("密码不能少于5个字符")
+    ]
+    , (req, res, next) => {
+        //express-validator对请求进行校验
+        const err = validationResult(req);
+        if (!err.isEmpty()) {
+            const [{msg}] = err.errors;
+            next(boom.badRequest(msg));
         } else {
-            new Result(
-                user[0],
-                '登录成功',
-            ).success(res);
+            let {username, password} = req.body;
+            //调用userService中的login登录服务(密码进行md5加盐加密)
+            login(username, util.EnCryPtoFn.md5(`${password}${PWD_SALT}`)).then(user => {
+                if (!user || user.length === 0) {
+                    new Result('登录失败').fail(res);
+                } else {
+                    new Result(
+                        user[0],
+                        '登录成功',
+                    ).success(res);
+                }
+            });
         }
     });
-});
 
 const userPath = "./assets/json/user.json";
 router.get('/getUsers', (req, res, next) => {

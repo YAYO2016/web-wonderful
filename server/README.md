@@ -34,3 +34,7 @@ app.use(cors())
 
 #npm i -S crypto
 安装crypto，进行md5密码的加密处理
+
+#npm i express-validator -S
+可以快速实现表单的验证
+
