@@ -8,13 +8,13 @@ const util = require("../utils/util");
 const _ = require("loadsh");
 const Result = require("../models/Result.js");
 const {PWD_SALT, PRIVATE_KEY, JWT_EXPIRED} = require("../utils/constant");
-const {login} = require("../services/userService");
+const {login, findUser} = require("../services/userService");
 const boom = require("boom");
 const {body, validationResult} = require('express-validator');
 //使用jwt生成token
 const jwt = require("jsonwebtoken");
 
-
+//user/login 登录接口
 router.post('/login'
     , [
         //这边使用express-validator进行校验，正常的话是给前端进行校验的
@@ -34,7 +34,6 @@ router.post('/login'
                 if (!user || user.length === 0) {
                     new Result('登录失败').fail(res);
                 } else {
-
                     let [_user] = user;
                     //生成token
                     let token = jwt.sign(
@@ -45,15 +44,28 @@ router.post('/login'
                     );
                     //登录成功就传给前端一个token，
                     // 然后前端凭借这个token再去调用接口获取用户的具体数据
-                    new Result(
-                        {token},
-                        '登录成功',
-                    ).success(res);
+                    new Result({token}, '登录成功').success(res);
                 }
             });
         }
     });
 
+//user/getUserInfo   获取用户信息接口
+router.post('/getUserInfo', (req, res, next) => {
+    // 解析请求中token获取token加密的数据 username
+    let decode = util.EnCryPtoFn.decode(req);
+    if (decode && decode.username) {
+        findUser(decode.username).then(user => {
+            if (user) {
+                new Result(user, '用户查询成功').success(res);
+            } else {
+                new Result('用户查询失败').fail(res);
+            }
+        })
+    } else {
+        new Result('用户信息查询失败').fail(res);
+    }
+});
 
 const userPath = "./assets/json/user.json";
 router.get('/getUsers', (req, res, next) => {
@@ -106,28 +118,28 @@ router.get('/getSingleUser', (req, res, next) => {
     })
 });
 
-router.post('/getUserInfo', (req, res, next) => {
-    let reqBody = req.body;
-    console.log(`token:${reqBody.token}`);
-    if (reqBody.token == "admin") {
-        res.status(200).json({
-            code: 200,
-            data: {
-                username: 'admin',
-                roles: ["admin"]
-            }
-        })
-    } else {
-        res.status(200).json({
-            code: 200,
-            data: {
-                username: 'yanyue',
-                roles: ["editor"]
-            }
-        })
-    }
-
-});
+//router.post('/getUserInfo', (req, res, next) => {
+//    let reqBody = req.body;
+//    console.log(`token:${reqBody.token}`);
+//    if (reqBody.token == "admin") {
+//        res.status(200).json({
+//            code: 200,
+//            data: {
+//                username: 'admin',
+//                roles: ["admin"]
+//            }
+//        })
+//    } else {
+//        res.status(200).json({
+//            code: 200,
+//            data: {
+//                username: 'yanyue',
+//                roles: ["editor"]
+//            }
+//        })
+//    }
+//
+//});
 
 
 module.exports = router;

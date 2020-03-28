@@ -70,7 +70,9 @@ http.interceptors.request.use(config => {
 
     //请求拦截器中给所有的请求header中添加token
     if (store.getters.token) {
-        config.headers['token'] = getToken();
+        //config.headers['token'] = getToken();
+        //因为后台是express-jwt验证，所以必须写这样的格式
+        config.headers['Authorization'] = `Bearer ${getToken()}`;
     }
 
     if (config.method === 'post') {
@@ -105,7 +107,7 @@ http.interceptors.response.use(
                 return Promise.reject(response)
             }
         } else {
-            Message.error(response.data.message);
+            Message.error(response.data.message || "请求失败");
             return Promise.reject(response)
         }
     },

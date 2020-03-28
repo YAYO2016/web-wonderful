@@ -40,3 +40,6 @@ app.use(cors())
 
 #npm i jsonwebtoken -S
 生成 JWT Token
+
+#npm i -S express-jwt
+安装express-jwt，实现jwt的认证

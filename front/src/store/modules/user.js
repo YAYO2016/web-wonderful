@@ -29,9 +29,9 @@ const user = {
 
     },
     actions: {
-        //用户登录
-        login({commit}, userInfo) {
-            const {username, password} = userInfo
+        //用户登录，只获取返回的 token
+        login({commit}, loginForm) {
+            const {username, password} = loginForm;
             return new Promise((resolve, reject) => {
                 api.login({username: username.trim(), password: password}).then(response => {
                     const {data} = response;
@@ -43,7 +43,8 @@ const user = {
                 })
             })
         },
-        //获取当前登录用户的信息--通过token
+
+        //获取当前登录用户的信息--通过token获取用户的相关信息
         getUserInfo: ({commit, state}, userInfo) => {
             return new Promise((resolve, reject) => {
                 api.getUserInfo({token: state.token}).then(res => {
@@ -52,22 +53,20 @@ const user = {
                         reject('校验失败，请重新登录')
                     }
                     commit('SET_USERINFO', userInfo);
-                    commit('SET_ROLES', userInfo.roles);
+                    commit('SET_ROLES', userInfo.roles.split(","));
                     resolve(userInfo)
                 }).catch(error => {
                     reject(error)
                 })
             });
         },
+
         //清除用户信息以及其他缓存数据
         clearCurrentState: ({commit}) => {
-            removeToken();
             commit('SET_TOKEN', "");
             commit('SET_USERINFO', {});
             commit('SET_ROLES', []);
-            //localStorage.removeItem("userInfo");
-            //commit('SET_ACCESSEDROUTES', []);
-            //commit('SER_ROUTES', []);
+            removeToken();
             resetRouter();
         },
     },

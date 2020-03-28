@@ -19,7 +19,7 @@ function connect() {
     })
 }
 
-//执行mysql的查询
+//执行mysql的查询 -- 返回的是一个数组对象
 function querySql(sql) {
     const conn = connect();
     //debug为true的时候就去打印sql语句
@@ -43,4 +43,23 @@ function querySql(sql) {
     })
 }
 
-module.exports = {querySql};
+
+//执行mysql的查询--查询单个数据信息
+function queryOne(sql) {
+    return new Promise((resolve, reject) => {
+        querySql(sql).then(results => {
+            if (results && results.length > 0) {
+                resolve(results[0])
+            } else {
+                reject();
+            }
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+module.exports = {
+    querySql,
+    queryOne
+};
