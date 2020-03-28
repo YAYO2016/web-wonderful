@@ -28,3 +28,9 @@ const cors = require('cors')
 // ...
 app.use(cors())
 再次请求即可成功，这里我们在 Network 中会发现发起了两次 https 请求，这是因为由于触发跨域，所以会首先进行 OPTIONS 请求，判断服务端是否允许跨域请求，如果允许才能实际进行请求
+
+#npm i -S mysql
+安装 mysql 库：连接mysql数据库和进行mysql的操作
+
+#npm i -S crypto
+安装crypto，进行md5密码的加密处理

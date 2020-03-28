@@ -1,4 +1,6 @@
-var fs = require("fs");
+const fs = require("fs");
+const crypto = require("crypto");
+
 const util = {
         TypeFn: {
             isString(o) { //是否字符串
@@ -1437,6 +1439,14 @@ const util = {
                 if (!userInfo || !userInfo.privileges) return null;
                 return util.ArrayFn.intersect(userInfo.privileges, needPrivileges).length > 0
             }
+        },
+        EnCryPtoFn: {
+            //加密解密相关的函数
+            md5(str) {
+                //参数需要为String类型
+                return crypto.createHash("md5").update(String(str)).digest("hex");
+            },
+
         },
         OtherFn: {
             //等待sleep

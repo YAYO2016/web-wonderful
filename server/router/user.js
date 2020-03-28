@@ -7,37 +7,23 @@ const router = express.Router();
 const util = require("../utils/util");
 const _ = require("loadsh");
 const Result = require("../models/Result.js");
+const {PWD_SALT} = require("../utils/constant");
+const {login} = require("../services/userService");
+
 
 router.post('/login', (req, res, next) => {
-    let username = req.body.username;
-    let password = req.body.password;
-    if (username == 'admin' && password == '123456') {
-        new Result(
-            {
-                name: "admin",
-                roles: ["admin"],
-                token: "admin"
-            },
-            '登录成功',
-        ).success(res);
-    } else {
-        new Result(
-            '登录失败'
-        ).fail(res);
-    }
-
-    if (username == 'yanyue' && password == '123456') {
-        res.status(200).json({
-            code: '200',
-            message: '登录成功',
-            //使用passpor-jwt的时候就一定要使用Bearer 放到token之前返回给页面
-            data: {
-                name: "yanyue",
-                roles: ["editor"],
-                token: "yanyue"
-            }
-        })
-    }
+    const {username, password} = req.body;
+    //调用userService中的login登录服务(密码进行md5加盐加密)
+    login(username, util.EnCryPtoFn.md5(`${password}${PWD_SALT}`)).then(user => {
+        if (!user || user.length === 0) {
+            new Result('登录失败').fail(res);
+        } else {
+            new Result(
+                user[0],
+                '登录成功',
+            ).success(res);
+        }
+    });
 });
 
 const userPath = "./assets/json/user.json";
