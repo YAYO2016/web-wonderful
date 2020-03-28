@@ -15,6 +15,7 @@
                                   @keydown.enter.native="handleLogin('loginForm')"
                                   @keyup.native="loginKeyDown"
                         >
+                            <!--是否显式显示密码-->
                             <i :class="`iconfont ${passwordType==='password'?'icon-eye-close':'icon-eye-open'}`"
                                slot="suffix"
                                @click="handleShowPwd"></i>
@@ -73,6 +74,17 @@
                 bigChar: false,
             }
         },
+        mounted() {
+            // 如果啥都没写的话，会默认聚焦
+            let vm = this;
+            if (vm.loginForm.username === '') {
+                vm.$refs.username.focus();
+            } else if (vm.loginForm.password === '') {
+                vm.$refs.password.focus();
+            }
+
+
+        },
         watch: {
             $route: {
                 handler: function (route) {
@@ -113,9 +125,10 @@
                 if (vm.validateRules(formName, vm)) {
                     vm.loading = true;
                     vm.$store.dispatch('user/login', vm.loginForm)
-                        .then(() => {
+                        .then((res) => {
                             //登录成功，跳转到路由query中redirect参数的路由地址，并且带上剩余的其他路由参数otherQuery
                             vm.$router.push({path: vm.redirect || '/', query: vm.otherQuery});
+                            vm.$message.success(res.message);
                             vm.loading = false
                         })
                         .catch(() => {

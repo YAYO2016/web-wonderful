@@ -67,6 +67,12 @@ mathjs.config({
   //BigNumbers的最大有效位数
 });
 
+//引入全局过滤器
+import * as filters from './common/js/filter.js'
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+});
+
 //全局使用自定义的UI的组件
 import GUI from './components/plugins';
 Vue.use(GUI);

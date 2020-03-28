@@ -1,13 +1,6 @@
 import moment from 'moment';
 
 const install = function (Vue, options) {
-    Vue.prototype.rolesFilter = (roles) => {
-        if (roles.indexOf("admin") !== -1) {
-            return "超级管理员";
-        } else {
-            return "游客"
-        }
-    };
 
     Vue.prototype.sexFormat = (sex) => {
         if (sex === 'MALE') {

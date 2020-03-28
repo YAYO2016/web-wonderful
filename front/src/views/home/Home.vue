@@ -6,7 +6,8 @@
                     <img :src="userImg"/>
                     <div class="user-info">
                         <p class="name">{{userInfo.name}}</p>
-                        <p class="access">{{rolesFilter(userInfo.roles)}}</p>
+                        <!--rolesFilter 使用过滤器-->
+                        <p class="access">{{userInfo.roles|rolesFilter}}</p>
                     </div>
                 </div>
                 <div class="login-info">
@@ -35,20 +36,20 @@
             <el-card shadow="hover">
                 <!--echart图标-->
                 <g-echarts style="height: 280px"
-                         :chartData="echartData.order">
+                           :chartData="echartData.order">
                     >
                 </g-echarts>
             </el-card>
             <div class="graph">
                 <el-card shadow="hover">
                     <g-echarts style="height: 260px"
-                             :chartData="echartData.user">
+                               :chartData="echartData.user">
                     </g-echarts>
                 </el-card>
                 <el-card shadow="hover">
                     <g-echarts style="height: 260px"
-                             :chartData="echartData.video"
-                             :isAxisChart="false">
+                               :chartData="echartData.video"
+                               :isAxisChart="false">
                     </g-echarts>
                 </el-card>
             </div>
