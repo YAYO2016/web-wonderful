@@ -38,3 +38,5 @@ app.use(cors())
 #npm i express-validator -S
 可以快速实现表单的验证
 
+#npm i jsonwebtoken -S
+生成 JWT Token

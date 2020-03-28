@@ -7,17 +7,19 @@ const router = express.Router();
 const util = require("../utils/util");
 const _ = require("loadsh");
 const Result = require("../models/Result.js");
-const {PWD_SALT} = require("../utils/constant");
+const {PWD_SALT, PRIVATE_KEY, JWT_EXPIRED} = require("../utils/constant");
 const {login} = require("../services/userService");
 const boom = require("boom");
 const {body, validationResult} = require('express-validator');
+//使用jwt生成token
+const jwt = require("jsonwebtoken");
 
 
 router.post('/login'
     , [
         //这边使用express-validator进行校验，正常的话是给前端进行校验的
-        body("username").isString().withMessage("用户名必须为字符").isLength({min:5}).withMessage("用户名不能少于5个字符"),
-        body("password").isLength({min:5}).withMessage("密码不能少于5个字符")
+        body("username").isString().withMessage("用户名必须为字符").isLength({min: 5}).withMessage("用户名不能少于5个字符"),
+        body("password").isLength({min: 5}).withMessage("密码不能少于5个字符")
     ]
     , (req, res, next) => {
         //express-validator对请求进行校验
@@ -32,14 +34,26 @@ router.post('/login'
                 if (!user || user.length === 0) {
                     new Result('登录失败').fail(res);
                 } else {
+
+                    let [_user] = user;
+                    //生成token
+                    let token = jwt.sign(
+                        {username: _user.username},
+                        PRIVATE_KEY,
+                        //expiresIn过期时间
+                        {expiresIn: JWT_EXPIRED}
+                    );
+                    //登录成功就传给前端一个token，
+                    // 然后前端凭借这个token再去调用接口获取用户的具体数据
                     new Result(
-                        user[0],
+                        {token},
                         '登录成功',
                     ).success(res);
                 }
             });
         }
     });
+
 
 const userPath = "./assets/json/user.json";
 router.get('/getUsers', (req, res, next) => {
