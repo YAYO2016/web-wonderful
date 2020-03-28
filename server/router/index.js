@@ -16,7 +16,7 @@ const {CODE_ERROR} = require("../utils/constant");
 const router = express.Router();
 
 router.get('/',(req,res)=>{
-    res.send('express后台管理读书')
+    res.send('express后台管理系统')
 });
 
 //导入user路由模块

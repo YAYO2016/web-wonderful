@@ -3,5 +3,8 @@
  * 常用全局常量
  */
 module.exports = {
-    CODE_ERROR: -1
+    CODE_ERROR: -1,
+    CODE_SUCCESS:200
 };
+
+

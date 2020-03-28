@@ -6,22 +6,27 @@ const express = require("express");
 const router = express.Router();
 const util = require("../utils/util");
 const _ = require("loadsh");
+const Result = require("../models/Result.js");
 
 router.post('/login', (req, res, next) => {
-    let body = req.body;
-    if (body.username == 'admin' && body.password == '123456') {
-        res.status(200).json({
-            code: '200',
-            message: '登录成功',
-            //使用passpor-jwt的时候就一定要使用Bearer 放到token之前返回给页面
-            data: {
+    let username = req.body.username;
+    let password = req.body.password;
+    if (username == 'admin' && password == '123456') {
+        new Result(
+            {
                 name: "admin",
                 roles: ["admin"],
                 token: "admin"
-            }
-        })
+            },
+            '登录成功',
+        ).success(res);
+    } else {
+        new Result(
+            '登录失败'
+        ).fail(res);
     }
-    if (body.username == 'yanyue' && body.password == '123456') {
+
+    if (username == 'yanyue' && password == '123456') {
         res.status(200).json({
             code: '200',
             message: '登录成功',
@@ -33,7 +38,6 @@ router.post('/login', (req, res, next) => {
             }
         })
     }
-
 });
 
 const userPath = "./assets/json/user.json";
@@ -90,7 +94,7 @@ router.get('/getSingleUser', (req, res, next) => {
 router.post('/getUserInfo', (req, res, next) => {
     let reqBody = req.body;
     console.log(`token:${reqBody.token}`);
-    if(reqBody.token == "admin"){
+    if (reqBody.token == "admin") {
         res.status(200).json({
             code: 200,
             data: {
@@ -98,7 +102,7 @@ router.post('/getUserInfo', (req, res, next) => {
                 roles: ["admin"]
             }
         })
-    }else{
+    } else {
         res.status(200).json({
             code: 200,
             data: {
