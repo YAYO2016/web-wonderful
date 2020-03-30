@@ -43,7 +43,7 @@
                         <span v-if="item.meta&&item.meta.title" slot="title">{{item.meta.title}}</span>
                     </template>
                     <!--子菜单名称-->
-                    <el-menu-item v-for="child in item.children" :index='child.path' :key="child.path"
+                    <el-menu-item v-for="child in item.children" v-if="!child.hidden" :index='child.path' :key="child.path"
                                   @click="clickMenu(child)">
                         <i v-if="child.meta.icon" :class="`${child.meta.icon}`"></i>
                         <span v-if="child.meta&&child.meta.title" slot="title">{{child.meta.title}}</span>

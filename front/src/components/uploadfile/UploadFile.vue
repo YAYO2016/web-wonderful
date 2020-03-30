@@ -4,11 +4,14 @@
             <el-upload
                     class="upload-demo"
                     action=""
+                    :multiple="multiple"
+                    :limit="limit"
                     :auto-upload="true"
                     :accept="acceptType"
                     :before-upload="(file)=>beforeUpload(file,fileList)"
                     :http-request="httpRequest"
                     :show-file-list="false"
+                    :disabled="disabled"
                     :data="{fileList}">
                 <el-button size="small" type="primary">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">{{fileUploadText}}}，且不超过{{fileMaxSize}}M</div>
@@ -41,10 +44,13 @@
                         class="uploaded-demo"
                         action=""
                         :auto-upload="true"
+                        :multiple="multiple"
+                        :limit="limit"
                         :accept="acceptType"
                         :before-upload="(file)=>beforeUpload(file,fileList)"
                         :http-request="httpRequest"
                         :show-file-list="false"
+                        :disabled="disabled"
                         :data="{fileList}">
                     <el-button size="small" type="primary">继续添加</el-button>
                     <div slot="tip" class="el-upload__tip">{{fileUploadText}}}，且不超过{{fileMaxSize}}M</div>
@@ -80,6 +86,20 @@
             fileUploadText: {
                 type: String,
                 default: "支持PDF\\HRML\\WORD\\EXCEL等格式"
+            },
+            //是否允许上传多个文件
+            multiple:{
+                type:Boolean,
+                default:false
+            },
+            //上传文件数量限制
+            limit:{
+                type:Number,
+                default:1
+            },
+            disabled:{
+                type:Boolean,
+                default:false
             }
         },
         methods: {
@@ -106,13 +126,18 @@
                 let formData = new FormData();
                 formData.append("file",file);
                 let index = e.data.fileList.length -1;
-                vm.$api.uploadFileApi(formData,progress=>{
+                vm.$api.fileUpload(formData,progress=>{
                     vm.showProgress(file,progress,e.data.fileList);
                 }).then(res=>{
                     e.data.fileList[index] = {...res.data.data,progress:100};
                     vm.$forceUpdate();
                 })
-            }
+            },
+            //设置当前文件上传过程中的百分比，用来显示进度条
+            showProgress(file, progress, fileList) {
+                let vm = this;
+                vm.$set(fileList.filter(_file => _file.uid === file.uid)[0], "progress", progress);
+            },
         }
 
     }
