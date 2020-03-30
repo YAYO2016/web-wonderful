@@ -85,9 +85,9 @@
             </el-form-item>
             <el-form-item label="计数器：" class="fl">
                 <el-input-number
-                          type="number"
-                          v-model="form.number"
-                          placeholder="请输入">
+                        type="number"
+                        v-model="form.number"
+                        placeholder="请输入">
                 </el-input-number>
             </el-form-item>
             <div class="clearfix"></div>
@@ -143,6 +143,10 @@
             </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
+            <el-form-item label="线条评分：" class="fl">
+                <div>-·-·-·-·-·-·-·-·-</div>
+            </el-form-item>
+            <div class="clearfix"></div>
         </el-form>
     </div>
 </template>

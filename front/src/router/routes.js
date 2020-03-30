@@ -66,19 +66,19 @@ export const asyncRoutes = [
         component: Layout,
         name: 'Video',
         redirect: '/video/videoManage',
-        meta: {title: '视频', icon: 'fa fa-video-camera',roles:["editor","admin"]},
+        meta: {title: '视频', icon: 'fa fa-video-camera', roles: ["editor", "admin"]},
         children: [
             {
                 path: '/video/videoManage',
                 component: () => import('@/views/videoManage/VideoManage'),
                 name: 'VideoManage',
-                meta: {title: '视频管理', icon: 'fa fa-video-camera',roles:["editor","admin"]}
+                meta: {title: '视频管理', icon: 'fa fa-video-camera', roles: ["editor", "admin"]}
             },
             {
                 path: '/video/videoPlay',
                 component: () => import('@/views/videoManage/VideoPlay'),
                 name: 'VideoPlay',
-                meta: {title: '视频播放', icon: 'fa fa-video-camera',roles:["editor","admin"]}
+                meta: {title: '视频播放', icon: 'fa fa-video-camera', roles: ["editor", "admin"]}
             }
         ]
     },
@@ -87,13 +87,13 @@ export const asyncRoutes = [
         component: Layout,
         name: 'Book',
         redirect: '/book/createbook',
-        meta: {title: '图书管理', icon: 'el-icon-notebook-2',roles:["editor","admin"]},
+        meta: {title: '图书管理', icon: 'el-icon-notebook-2', roles: ["editor", "admin"]},
         children: [
             {
                 path: '/book/createbook',
                 component: () => import('@/views/book/CreateBook'),
                 name: 'CreateBook',
-                meta: {title: '上传图书', icon: 'el-icon-edit',roles:["editor","admin"]}
+                meta: {title: '上传图书', icon: 'el-icon-edit', roles: ["editor", "admin"]}
             },
 
         ]
@@ -133,6 +133,27 @@ export const asyncRoutes = [
         ]
     },
     {
+        path: '/echarts', name: 'echarts',
+        redirect: '/echarts/line',
+        meta: {title: 'echarts图', icon: 'el-icon-s-marketing'},
+        show: true,
+        component: Layout,
+        children: [
+            {
+                path: '/echarts/line',
+                name: 'LineEcharts',
+                meta: {title: '折线图', icon: 'el-icon-picture-outline'},
+                component: () => import('@/views/echarts/LineEcharts'),
+            },
+            {
+                path: '/echarts/radar',
+                name: 'RadarEcharts',
+                meta: {title: '雷达图', icon: 'el-icon-picture-outline'},
+                component: () => import('@/views/echarts/RadarEcharts'),
+            },
+        ]
+    },
+    {
         path: '/user',
         component: Layout,
         name: 'User',
@@ -142,13 +163,13 @@ export const asyncRoutes = [
                 path: '/user/userManage',
                 component: () => import('@/views/userManage/UserManage'),
                 name: 'UserManage',
-                meta: {title: '用户管理', icon: 'el-icon-s-custom',roles:["admin"]}
+                meta: {title: '用户管理', icon: 'el-icon-s-custom', roles: ["admin"]}
             }
         ]
     },
 
     // 404一定要放到最后面，不然会被之前的拦截掉
-    { path: '*', redirect: '/404', hidden: true }
+    {path: '*', redirect: '/404', hidden: true}
 
 
 ];

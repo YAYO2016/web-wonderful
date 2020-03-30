@@ -35,22 +35,22 @@
             </div>
             <el-card shadow="hover">
                 <!--echart图标-->
-                <g-echarts style="height: 280px"
-                           :chartData="echartData.order">
-                    >
-                </g-echarts>
+                <!--<g-echarts style="height: 280px"-->
+                           <!--:chartData="echartData.order">-->
+                    <!--&gt;-->
+                <!--</g-echarts>-->
             </el-card>
             <div class="graph">
                 <el-card shadow="hover">
-                    <g-echarts style="height: 260px"
-                               :chartData="echartData.user">
-                    </g-echarts>
+                    <!--<g-echarts style="height: 260px"-->
+                               <!--:chartData="echartData.user">-->
+                    <!--</g-echarts>-->
                 </el-card>
                 <el-card shadow="hover">
-                    <g-echarts style="height: 260px"
-                               :chartData="echartData.video"
-                               :isAxisChart="false">
-                    </g-echarts>
+                    <!--<g-echarts style="height: 260px"-->
+                               <!--:chartData="echartData.video"-->
+                               <!--:isAxisChart="false">-->
+                    <!--</g-echarts>-->
                 </el-card>
             </div>
         </el-col>
