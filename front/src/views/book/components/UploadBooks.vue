@@ -4,20 +4,19 @@
                 class="image-upload"
                 :action="action"
                 :headers="headers"
-                :on-preview="handlePreview(file)"
-                :on-remove="onRemove(file, fileList)"
-                :before-remove="beforeRemove(files, fileList)"
+                :multiple="false"
                 :limit="1"
                 :before-upload="beforeUpload"
-                :on-error="onError"
                 :on-success="onSuccess"
-                :on-exceed="onExceed(files, fileList)"
+                :on-error="onError"
+                :on-remove="onRemove"
                 :file-list="fileList"
+                :on-exceed="onExceed"
                 :disabled="disabled"
                 drag
                 show-file-list
                 accept="application/epub+zip"
-                :multiple="false">
+        >
             <!--drag 支持拖拽-->
             <!--<el-button size="small" type="primary">点击上传</el-button>-->
             <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
@@ -55,8 +54,7 @@
         },
         data() {
             return {
-                action: `${process.env.VUE_APP_API_URL}/book/upload`,
-                fileList: []
+                action: `${process.env.VUE_APP_API_URL}/file/uploadbook`,
             }
         },
         computed: {
@@ -74,7 +72,9 @@
 
             },
             onRemove() {
-
+                let vm = this;
+                vm.$message.success("电子书删除成功");
+                vm.$emit("onRemove");
             },
             onExceed() {
                 this.$message({
@@ -82,8 +82,8 @@
                     type: "warning"
                 })
             },
-            beforeUpload() {
-                this.$emit("beforeUpload");
+            beforeUpload(file) {
+                this.$emit("beforeUpload", file);
             },
             onError(err) {
                 let errMsg = err.message && JSON.parse(err.message);
@@ -100,11 +100,20 @@
                     //a||b 的使用
                     //a存在的话就是true，后面的不用管了肯定也是返回true了，那么就返回a
                     //a不存在的话就是false，那就要看b了，反正返回的是b的值
-                })
+                });
                 this.$emit("onError", err);
             },
-            onSuccess() {
-
+            onSuccess(response, file) {
+                let vm = this;
+                console.log(response, file);
+                let {code, message} = response;
+                if (code === 200) {
+                    vm.$message.success(message);
+                    vm.$emit("onSuccess", file);
+                } else {
+                    vm.$message.error(message && `上传失败，失败原因：${message}` || "上传失败");
+                    vm.$emit("onError", file);
+                }
             },
         }
     }
@@ -112,6 +121,13 @@
 
 <style lang='scss' scoped>
     .UploadBooks {
+        width: 100%;
 
+        /deep/ .el-upload {
+            width: 100%;
+            .el-upload-dragger{
+                width: 100%;
+            }
+        }
     }
 </style>

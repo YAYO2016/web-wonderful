@@ -8,7 +8,7 @@ const boom = require("boom");
 
 const userRouter = require("./user");
 const home = require("./home");
-
+const fileRouter = require("./fileRouter");
 
 const {CODE_ERROR} = require("../utils/constant");
 
@@ -21,6 +21,7 @@ router.get('/',(req,res)=>{
 
 //导入user路由模块
 router.use('/users',userRouter);
+router.use('/file',fileRouter);
 router.use('/home',home);
 /**
  * 集中处理404请求的中间件

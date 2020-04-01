@@ -43,3 +43,8 @@ app.use(cors())
 
 #npm i -S express-jwt
 安装express-jwt，实现jwt的认证
+
+#npm i multer  -S
+安装multer，multer文件上传工具
+
+
