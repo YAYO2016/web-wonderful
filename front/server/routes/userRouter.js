@@ -8,7 +8,7 @@ const util = require("../utils/util");
 const _ = require("loadsh");
 const Result = require("../models/Result.js");
 const {PWD_SALT, PRIVATE_KEY, JWT_EXPIRED} = require("../utils/constant");
-const {login, findUser} = require("../services/userService");
+const {login, findUser, addUser} = require("../services/userService");
 const boom = require("boom");
 const {body, validationResult} = require('express-validator');
 //使用jwt生成token
@@ -45,6 +45,35 @@ router.post('/login'
                     //登录成功就传给前端一个token，
                     // 然后前端凭借这个token再去调用接口获取用户的具体数据
                     new Result({token}, '登录成功').success(res);
+                }
+            });
+        }
+    });
+
+
+//注册用户
+router.post('/register'
+    , [
+        //这边使用express-validator进行校验，正常的话是给前端进行校验的
+        body("username").isString().withMessage("用户名必须为字符").isLength({min: 5}).withMessage("用户名不能少于5个字符"),
+        body("password").isLength({min: 5}).withMessage("密码不能少于5个字符"),
+        body("roles").isLength({min: 1}).withMessage("角色不能为空"),
+        body("email").isEmail().withMessage("email非空"),
+    ]
+    , (req, res, next) => {
+        //express-validator对请求进行校验
+        const err = validationResult(req);
+        if (!err.isEmpty()) {
+            const [{msg}] = err.errors;
+            next(boom.badRequest(msg));
+        } else {
+            let {username, password, roles, email} = req.body;
+            //调用userService中的login登录服务(密码进行md5加盐加密)
+            addUser(username, util.EnCryPtoFn.md5(`${password}${PWD_SALT}`), roles, email).then(user => {
+                if (!user || user.length === 0) {
+                    new Result('注册失败').fail(res);
+                } else {
+                    new Result('注册成功').success(res);
                 }
             });
         }

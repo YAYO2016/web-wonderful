@@ -6,8 +6,8 @@
                 <span class="title">严跃后台管理系统</span>
                 <el-form :model="registerForm" ref="registerForm" :rules="registerRules" label-width="80px"
                          class="registerForm">
-                    <el-form-item label="用户名" prop="name">
-                        <el-input v-model="registerForm.name" placeholder="请输入用户名"></el-input>
+                    <el-form-item label="用户名" prop="username">
+                        <el-input v-model="registerForm.username" placeholder="请输入用户名"></el-input>
                     </el-form-item>
                     <el-form-item label="邮箱" prop="email">
                         <el-input v-model="registerForm.email" placeholder="请输入邮箱"></el-input>
@@ -18,10 +18,10 @@
                     <el-form-item label="确认密码" prop="password2">
                         <el-input type="password" v-model="registerForm.password2" placeholder="请输入用户名"></el-input>
                     </el-form-item>
-                    <el-form-item label="选择身份" prop="identity">
-                        <el-select v-model="registerForm.identity" placeholder="请选择身份">
-                            <el-option label="管理员" value="manager"></el-option>
-                            <el-option label="员工" value="employee"></el-option>
+                    <el-form-item label="选择身份" prop="roles">
+                        <el-select v-model="registerForm.roles" placeholder="请选择身份">
+                            <el-option label="管理员" value="admin"></el-option>
+                            <el-option label="员工" value="visitor"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item>
@@ -52,11 +52,11 @@
 
             return {
                 registerForm: {
-                    name: "",
+                    username: "",
                     email: "",
                     password: "",
                     password2: "",
-                    identity: ""
+                    roles: ""
 
                 },
                 registerRules: {
