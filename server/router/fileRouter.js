@@ -18,7 +18,7 @@ router.post("/upload", multer({dest: UPLOAD_PATH}).single("file"), function (req
     }
 );
 
-//single上传单个文件
+//dest文件上传的目标位置 single上传单个文件
 router.post("/uploadbook", multer({dest: `${UPLOAD_PATH}/book`}).single("file"), function (req, res, next) {
         if (!req.file || req.file.length === 0) {
             new Result("上传电子书失败").fail(res);
