@@ -59,12 +59,12 @@
                     <el-row>
                         <el-col :span="12">
                             <el-form-item label="封面路径：" :label-width="labelWidth">
-                                <el-input v-model="postForm.filePath" placeholder="封面路径" disabled></el-input>
+                                <el-input v-model="postForm.cover" placeholder="封面路径" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item label="文件名称：" :label-width="labelWidth">
-                                <el-input v-model="postForm.unzipPath" placeholder="文件名称" disabled></el-input>
+                                <el-input v-model="postForm.originalname" placeholder="文件名称" disabled></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -120,13 +120,62 @@
                 }
             }
         },
-        methods: {}
+        methods: {
+            onUploadSuccess(data) {
+                let vm = this;
+                vm.setData(data);
+            },
+            setData(data) {
+                let vm = this;
+                const {
+                    title,
+                    author,
+                    publisher,
+                    url,
+                    contents,
+                    filename,
+                    filePath,
+                    unzipPath,
+                    cover,
+                    coverPath,
+                    language,
+                    unzipUrl,
+                    originalname,
+                    rootFile,
+                } = data;
+                vm.postForm = {
+                    ...vm.postForm,
+                    title,
+                    author,
+                    publisher,
+                    url,
+                    contents,
+                    filename,
+                    filePath,
+                    unzipPath,
+                    cover,
+                    coverPath,
+                    language,
+                    unzipUrl,
+                    originalname,
+                    rootFile,
+                }
+            },
+            onUploadError() {
+
+            }
+        }
     }
 </script>
 
 <style lang='scss' scoped>
     .CreateBook {
         @include content-box;
+
+        .preview-img {
+            width: 200px;
+            height: 270px;
+        }
 
         .tips {
             background: #ebeff5;

@@ -6,7 +6,7 @@ const {env} = require("./env");
 //文件上传的目录地址，后台使用
 const UPLOAD_PATH = env === 'dev' ? 'D:\\local-server\\upload' : '/root/upload';
 //文件上传的url，前台使用
-const UPLOAD_URL = env === 'dev' ? 'http://localhost:8089/book' : 'http://yanyue.guyubao.com/book';
+const UPLOAD_URL = env === 'dev' ? 'http://localhost:8089/' : 'http://yanyue.guyubao.com/';
 
 module.exports = {
     CODE_ERROR: -1,

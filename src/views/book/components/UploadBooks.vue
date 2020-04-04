@@ -105,11 +105,10 @@
             },
             onSuccess(response, file) {
                 let vm = this;
-                console.log(response, file);
-                let {code, message} = response;
+                let {code, message,data} = response;
                 if (code === 200) {
                     vm.$message.success(message);
-                    vm.$emit("onSuccess", file);
+                    vm.$emit("onSuccess", data);
                 } else {
                     vm.$message.error(message && `上传失败，失败原因：${message}` || "上传失败");
                     vm.$emit("onError", file);
