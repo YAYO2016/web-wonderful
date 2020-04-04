@@ -5,7 +5,7 @@ import store from './store'
 
 //导入normalize.css：Normalize的作用就是统一浏览器的初始样式
 //import 'normalize.css'
-import "@/common/style/reset.scss"
+import "@/common/style/reset.css"
 //引入外部iconfont
 import "@/common/iconfont/iconfont.css"
 

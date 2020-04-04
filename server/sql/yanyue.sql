@@ -27,3 +27,5 @@ values(1,'yanyue','123456','admin','1874524491@qq.com',26,'320882199505270238','
 
 -- 删除表
 DROP TABLE IF EXISTS user;
+
+

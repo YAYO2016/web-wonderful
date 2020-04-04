@@ -6,9 +6,6 @@ const express = require("express");
 
 const boom = require("boom");
 
-const userRouter = require("./userRouter");
-const home = require("./home");
-const fileRouter = require("./fileRouter");
 
 const {CODE_ERROR} = require("../utils/constant");
 
@@ -19,10 +16,25 @@ router.get('/',(req,res)=>{
     res.send('express后台管理系统')
 });
 
-//导入user路由模块
+
+/**
+ * 导入各个路由模块
+ */
+const userRouter = require("./userRouter");
 router.use('/users',userRouter);
+
+const fileRouter = require("./fileRouter");
 router.use('/file',fileRouter);
+
+const home = require("./home");
 router.use('/home',home);
+
+const bookRouter = require("./bookRouter");
+router.use('/book',bookRouter);
+
+
+
+
 /**
  * 集中处理404请求的中间件
  * 注意：该中间件必须放在正常的处理流程的后面

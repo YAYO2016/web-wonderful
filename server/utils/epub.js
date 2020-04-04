@@ -29,7 +29,6 @@ try {
     };
 }
 
-//TODO: Cache parsed data
 
 /**
  *  new EPub(fname[, imageroot][, linkroot])

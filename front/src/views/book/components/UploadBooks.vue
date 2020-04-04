@@ -54,7 +54,7 @@
         },
         data() {
             return {
-                action: `${process.env.VUE_APP_API_URL}/file/uploadbook`,
+                action: `${process.env.VUE_APP_API_URL}/book/upload`,
             }
         },
         computed: {

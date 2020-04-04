@@ -22,7 +22,7 @@ class Book {
     }
 
     createBookFromFile(file) {
-        console.log("createBookFromFile", file);
+        //console.log("createBookFromFile", file);
         //request请求过来的file对象的属性
         /**
          {
@@ -85,6 +85,27 @@ class Book {
     }
 
     createBookFormData(data) {
+        this.fileName = data.fileName;
+        this.bookId = data.fileName;
+        this.rootFile = data.rootFile;
+        this.path = data.path || data.filePath;
+        this.unzipPath = data.unzipPath;
+        this.url = data.url;
+        this.title = data.title;
+        this.author = data.author;
+        this.publisher = data.publisher;
+        this.contents = data.contents;
+        this.cover = data.cover;
+        this.coverPath = data.coverPath;
+        this.category = data.category || 99;
+        this.categoryText = data.categoryText || "自定义";
+        this.language = data.language;
+        this.originalname = data.originalname;
+
+        this.createUser = data.username;
+        this.createDt = new Date().getTime();
+        this.updateDt = new Date().getTime();
+        this.updateType = data.undateType === 0 ? date.updateType : 1;
 
     }
 
@@ -121,7 +142,7 @@ class Book {
                         this.rootFile = epub.rootFile;
                         const handleGetImage = (err, file, mimeType) => {
                             if (err) {
-                                console.log("err111",err);
+                                //console.log("err111", err);
                                 reject(err)
                             } else {
                                 const suffix = mimeType.split('/')[1];
@@ -206,7 +227,7 @@ class Book {
                         reject(err)
                     } else {
                         const navMap = json.ncx.navMap;
-                        console.log('xml', navMap);
+                        //console.log('xml', navMap);
                         if (navMap.navPoint && navMap.navPoint.length > 0) {
                             navMap.navPoint = findParent(navMap.navPoint);
                             const newNavMap = flatten(navMap.navPoint);
