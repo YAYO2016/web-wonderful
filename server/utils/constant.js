@@ -2,6 +2,12 @@
  * Created by yanyue on 2020/3/13 22:38
  * 常用全局常量
  */
+const {env} = require("./env");
+//文件上传的目录地址，后台使用
+const UPLOAD_PATH = env === 'dev' ? 'D:\\local-server\\upload' : '/root/upload';
+//文件上传的url，前台使用
+const UPLOAD_URL = env === 'dev' ? 'http://localhost:8089/book' : 'http://yanyue.guyubao.com/book';
+
 module.exports = {
     CODE_ERROR: -1,
     CODE_SUCCESS: 200,
@@ -12,8 +18,11 @@ module.exports = {
     PRIVATE_KEY: 'qian_nian_yan_server_token',
     //token的失效时间（1小时）
     JWT_EXPIRED: 60 * 60, //单位s token失效时间
-    //upload文件上传目录
-    UPLOAD_PATH: "D:/local-server/upload"
+    UPLOAD_PATH,
+    UPLOAD_URL,
+    MIME_TYPE_EPUB: "application/epub",  //默认的文件上传类型
+
+
 };
 
 

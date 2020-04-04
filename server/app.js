@@ -1,9 +1,14 @@
-/**
- * Created by yanyue on 2020/3/13 21:54
- */
-const express = require('express');
-//创建express应用
-const app = express();
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+
+
+var app = express();
+
+/************************************开发开始************************************/
+
 //cors 解决跨域访问
 const cors = require('cors');
 //引入body-parser，用来传递post请求的数据
@@ -20,12 +25,37 @@ app.use(bodyParser.json());
 app.use(jwtAuth);
 
 
-//导入路由
-const router = require("./router/index");
-app.use("/", router);
+/***********************************开发结束*************************************/
 
-//启动项目服务
-const server = app.listen(7005,'localhost', function () {
-    const {address, port} = server.address();
-    console.log(`Http server is running on http://${address}:${port}"`);
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+//导入路由
+const indexRouter = require("./routes/index");
+app.use('/', indexRouter);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
 });
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;
