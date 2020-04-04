@@ -22,55 +22,55 @@
                     </el-form-item>
                     <el-row>
                         <el-col :span="12">
-                            <el-form-item label="作者：" :label-width="labelWidth">
+                            <el-form-item label="作者：">
                                 <el-input v-model="postForm.author" placeholder="作者"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item label="出版社：" :label-width="labelWidth">
+                            <el-form-item label="出版社：">
                                 <el-input v-model="postForm.publisher" placeholder="出版社"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="12">
-                            <el-form-item label="语言：" :label-width="labelWidth">
+                            <el-form-item label="语言：">
                                 <el-input v-model="postForm.language" placeholder="语言"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item label="根文件：" :label-width="labelWidth">
+                            <el-form-item label="根文件：">
                                 <el-input v-model="postForm.rootFile" placeholder="根文件" disabled></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="12">
-                            <el-form-item label="文件路径：" :label-width="labelWidth">
+                            <el-form-item label="文件路径：">
                                 <el-input v-model="postForm.filePath" placeholder="文件路径" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item label="解压路径：" :label-width="labelWidth">
+                            <el-form-item label="解压路径：">
                                 <el-input v-model="postForm.unzipPath" placeholder="解压路径" disabled></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="12">
-                            <el-form-item label="封面路径：" :label-width="labelWidth">
+                            <el-form-item label="封面路径：">
                                 <el-input v-model="postForm.cover" placeholder="封面路径" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item label="文件名称：" :label-width="labelWidth">
+                            <el-form-item label="文件名称：">
                                 <el-input v-model="postForm.originalname" placeholder="文件名称" disabled></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="24">
-                            <el-form-item label="封面：" :label-width="labelWidth">
+                            <el-form-item label="封面：">
                                 <a v-if="postForm.cover" :href="postForm.cover" target="_blank">
                                     <img :src="postForm.cover" class="preview-img">
                                 </a>
@@ -80,9 +80,12 @@
                     </el-row>
                     <el-row>
                         <el-col :span="24">
-                            <el-form-item label="目录：" :label-width="labelWidth">
+                            <el-form-item label="目录：">
                                 <div v-if="postForm.contents && postForm.contents.length > 0" class="contents-wrapper">
-                                    <el-tree/>
+                                    <el-tree :data="postForm.contents" :props="{
+                                        children: 'children',
+                                        label: 'title'
+                                    }" @node-click="handleNodeClick"></el-tree>
                                 </div>
                                 <span v-else>无</span>
                             </el-form-item>
@@ -159,6 +162,11 @@
                     unzipUrl,
                     originalname,
                     rootFile,
+                }
+            },
+            handleNodeClick(data) {
+                if (data.text) {
+                    window.open(data.text);
                 }
             },
             onUploadError() {
