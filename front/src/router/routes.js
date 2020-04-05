@@ -113,6 +113,21 @@ export const asyncRoutes = [
         ]
     },
     {
+        path: '/bank',
+        component: Layout,
+        name: 'Bank',
+        redirect: '/bank/banklist',
+        meta: {title: '银行', icon: 'fa fa-video-camera', roles: ["editor", "admin"]},
+        children: [
+            {
+                path: '/bank/banklist',
+                component: () => import('@/views/bank/BankList'),
+                name: 'BankList',
+                meta: {title: '银行列表', icon: 'fa fa-video-camera', roles: ["editor", "admin"]}
+            },
+        ]
+    },
+    {
         path: '/form', name: 'form',
         redirect: '/form/forminput',
         meta: {title: '表单类型', icon: 'fa fa-wpforms'},

@@ -4,7 +4,7 @@
                 background
                 layout="prev,pager,next,total"
                 :total="Number(total)"
-                @current-change="currentChange"
+                @current-change="changePage"
                 :current-page="Number(currentPage)"
                 :page-size="Number(pageSize)">
         </el-pagination>
@@ -29,13 +29,17 @@
             pageSize: {
                 type: [Number,String],
                 default: 10
+            },
+            changePage:{
+                type:Function,
+                default:()=>{}
             }
         },
         methods: {
-            currentChange(page) {
-                let vm = this;
-                vm.$emit('changePage', page);
-            }
+            //currentChange(page) {
+            //    let vm = this;
+            //    vm.$emit('changePage', page);
+            //}
         }
     }
 </script>

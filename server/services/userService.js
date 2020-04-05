@@ -22,9 +22,9 @@ function addUser(username, password, roles, email) {
 //获取所有用户
 function getAllUsers(username, pageNum, pageSize) {
     if (username) {
-        return querySql(`select * from user where username='${username}' limit ${pageNum - 1},${pageSize}`)
+        return querySql(`select * from user where username='${username}' limit ${(pageNum - 1) * pageSize} , ${pageSize}`)
     } else {
-        return querySql(`select * from user limit ${pageNum - 1},${pageSize}`)
+        return querySql(`select * from user limit ${(pageNum - 1) * pageSize} ,${pageSize}`)
     }
 
 }
