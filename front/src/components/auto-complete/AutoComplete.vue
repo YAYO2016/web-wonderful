@@ -1,5 +1,6 @@
 <template>
     <el-autocomplete class="inline-input AutoComplete"
+                     prefix-icon="el-icon-search"
                      v-model="data[valueKey.split(',')[searchValueIndex]]"
                      :fetch-suggestions="querySearch"
                      :placeholder="placeholder"
@@ -33,8 +34,8 @@
 
         <i slot="prefix" class="icon icon-search-btn-grey"></i>
         <template slot-scope="{item}">
-            <div class="name" disabled :style="item.name==='查无数据'?'text-align:center':''">
-                {{item.name && item.name === '查无数据'?'查无数据':messageItems(item,valueKey)}}
+            <div class="name" disabled :style="item.name===nothingWords?'text-align:center':''">
+                {{item.name && item.name === nothingWords?nothingWords:messageItems(item,valueKey)}}
                 <!--messageItems 下拉框展示数据的方式-->
             </div>
         </template>
@@ -92,7 +93,8 @@
         data() {
             return {
                 //flag: false
-                results: []
+                results: [],
+                nothingWords:"查无数据"
             }
         },
         computed: {
@@ -118,8 +120,9 @@
         methods: {
             handleSelectItemFunction(item, valueKey, data) {
                 //console.log(item);
+                let vm = this;
                 //没查到数据就把所有的查询项的值全部变为""
-                if(item.name && item.name === "查无数据"){
+                if(item.name && item.name === vm.nothingWords){
                     valueKey.split(",").forEach(value => {
                         data[value.replace("(No)", "")] = "";
                     });
@@ -137,7 +140,7 @@
                 if (vm.results.length > 0) {
                     cb(vm.results);
                 } else {
-                    cb([{name: "查无数据"}]);
+                    cb([{name: vm.nothingWords}]);
                 }
             },
             messageItems(item, valueKey) {
@@ -160,13 +163,6 @@
 
 <style lang='scss' scoped>
     .AutoComplete {
-        .icon {
-            font-size: 16px;
-            line-height: 32px;
-        }
 
-        .select-autocomplete-option-big {
-            width: 700px;
-        }
     }
 </style>

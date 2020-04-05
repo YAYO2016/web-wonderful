@@ -117,13 +117,13 @@ export const asyncRoutes = [
         component: Layout,
         name: 'Bank',
         redirect: '/bank/banklist',
-        meta: {title: '银行', icon: 'fa fa-video-camera', roles: ["editor", "admin"]},
+        meta: {title: '银行', icon: 'fa fa-university', roles: ["editor", "admin"]},
         children: [
             {
                 path: '/bank/banklist',
                 component: () => import('@/views/bank/BankList'),
                 name: 'BankList',
-                meta: {title: '银行列表', icon: 'fa fa-video-camera', roles: ["editor", "admin"]}
+                meta: {title: '银行列表', icon: 'fa fa-university', roles: ["editor", "admin"]}
             },
         ]
     },
