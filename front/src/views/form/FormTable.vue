@@ -45,7 +45,7 @@
                 </el-table>
             </div>
         </el-card>
-        <g-split></g-split>
+        <g-split-l></g-split-l>
         <el-card class="box-card">
             <div slot="header" class="clearfix">
                 <span>滚动条的表格</span>
@@ -102,7 +102,7 @@
                 </el-table>
             </div>
         </el-card>
-        <g-split></g-split>
+        <g-split-l></g-split-l>
         <el-card class="box-card">
             <div slot="header" class="clearfix">
                 <span>默认展开的表格</span>

@@ -29,3 +29,13 @@ values(1,'yanyue','123456','admin','1874524491@qq.com',26,'320882199505270238','
 DROP TABLE IF EXISTS user;
 
 
+create TABLE IF NOT EXISTS `s_bank`(
+    `bank_id` INT UNSIGNED KEY COMMENT '银行id',
+    `correspondent_no` VARCHAR(20) NOT NULL COMMENT '通讯编号',
+    `bank_name` VARCHAR(60) NOT NULL COMMENT '银行名称',
+    `bank_no` VARCHAR(20) NOT NULL COMMENT '银行编号（总行）',
+    `branch_no` VARCHAR(20)  COMMENT '分行编号',
+    `owner_county` VARCHAR(120)  COMMENT '所属地'
+) ENGINE=INNODB CHARSET=UTF8;
+
+

@@ -1,5 +1,5 @@
 <template>
-    <div class="m-pagination">
+    <div class="g-pagination">
         <el-pagination
                 background
                 layout="prev,pager,next,total"
@@ -40,8 +40,8 @@
     }
 </script>
 
-<style lang="scss" scoped>
-    .m-pagination {
+<style scoped>
+    .g-pagination {
         text-align: center;
         margin-top: 20px;
     }

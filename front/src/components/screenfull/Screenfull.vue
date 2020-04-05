@@ -52,12 +52,10 @@
     }
 </script>
 
-<style lang='scss' scoped>
-    .Screenfull {
-        i {
-            cursor: pointer;
-            fill: #5a5e66;
-        }
+<style scoped>
+    .Screenfull i {
+        cursor: pointer;
+        fill: #5a5e66;
     }
 
 </style>

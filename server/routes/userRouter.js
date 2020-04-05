@@ -8,7 +8,7 @@ const util = require("../utils/util");
 const _ = require("loadsh");
 const Result = require("../models/Result.js");
 const {PWD_SALT, PRIVATE_KEY, JWT_EXPIRED} = require("../utils/constant");
-const {login, findUser, addUser} = require("../services/userService");
+const {login, findUser, addUser, getAllUsers} = require("../services/userService");
 const boom = require("boom");
 const {body, validationResult} = require('express-validator');
 //使用jwt生成token
@@ -96,56 +96,78 @@ router.post('/getUserInfo', (req, res, next) => {
     }
 });
 
-const userPath = "./assets/json/user.json";
-router.get('/getUsers', (req, res, next) => {
-    //等待1s，模拟从数据库查询数据的时间间隔
-    util.OtherFn.sleep(1000);
-    let reqBody = req.query;
-    util.FileFn.readJSONFile(userPath).then(result => {
-        let total = result.data.list.length;
-        let list = result.data.list.slice((reqBody.pageNum - 1) * reqBody.pageSize, reqBody.pageNum * reqBody.pageSize);
-        let username = reqBody.username;
-        if (username) {
-            list = list.map(item => {
-                if (item.name === username) {
-                    return item;
+router.post('/getUsers', (req, res, next) => {
+    let body = req.body;
+    let {username, pageNum, pageSize} = body;
+    getAllUsers(username, pageNum, pageSize).then(users => {
+        if (users) {
+            let result = {
+                list: users,
+                pageInfo: {
+                    pageNum: pageNum,
+                    pageSize: pageSize,
+                    total: users.length
                 }
-            });
-            //loadsh的compact函数会去掉数组中的无效元素
-            list = _.compact(list);
-            result.data.list = list;
-            result.pageInfo = {};
-            result.pageInfo.total = list.length;
-            result.pageInfo.pageIndex = reqBody.pageNum;
-            result.pageInfo.pageSize = reqBody.pageSize;
-            res.json(result);
+            };
+            new Result(result, '用户查询成功').success(res);
         } else {
-            result.data.list = list;
-            result.pageInfo = {};
-            result.pageInfo.total = total;
-            result.pageInfo.pageIndex = reqBody.pageNum;
-            result.pageInfo.pageSize = reqBody.pageSize;
-            res.json(result);
+            new Result('用户查询失败').fail(res);
         }
     })
 });
 
-router.get('/getSingleUser', (req, res, next) => {
-    let reqBody = req.query;
-    util.FileFn.readJSONFile(userPath).then(result => {
-        let list = result.data.list;
-        let id = reqBody.id;
-        let user = null;
-        list.forEach(item => {
-            if (item.id == id) {
-                user = item;
-            }
-        })
-        //loadsh的compact函数会去掉数组中的无效元素
-        result.data = user;
-        res.json(result);
-    })
-});
+
+//读取本地json文件，然后生成数据并且返回的
+//const userPath = "./assets/json/user.json";
+//router.get('/getUsers', (req, res, next) => {
+//    //等待1s，模拟从数据库查询数据的时间间隔
+//    util.OtherFn.sleep(1000);
+//    let reqBody = req.query;
+//    util.FileFn.readJSONFile(userPath).then(result => {
+//        let total = result.data.list.length;
+//        let list = result.data.list.slice((reqBody.pageNum - 1) * reqBody.pageSize, reqBody.pageNum * reqBody.pageSize);
+//        let username = reqBody.username;
+//        if (username) {
+//            list = list.map(item => {
+//                if (item.name === username) {
+//                    return item;
+//                }
+//            });
+//            //loadsh的compact函数会去掉数组中的无效元素
+//            list = _.compact(list);
+//            result.data.list = list;
+//            result.pageInfo = {};
+//            result.pageInfo.total = list.length;
+//            result.pageInfo.pageIndex = reqBody.pageNum;
+//            result.pageInfo.pageSize = reqBody.pageSize;
+//            res.json(result);
+//        } else {
+//            result.data.list = list;
+//            result.pageInfo = {};
+//            result.pageInfo.total = total;
+//            result.pageInfo.pageIndex = reqBody.pageNum;
+//            result.pageInfo.pageSize = reqBody.pageSize;
+//            res.json(result);
+//        }
+//    })
+//});
+
+//router.get('/getSingleUser', (req, res, next) => {
+//    let reqBody = req.query;
+//    util.FileFn.readJSONFile(userPath).then(result => {
+//        let list = result.data.list;
+//        let id = reqBody.id;
+//        let user = null;
+//        list.forEach(item => {
+//            if (item.id == id) {
+//                user = item;
+//            }
+//        })
+//        //loadsh的compact函数会去掉数组中的无效元素
+//        result.data = user;
+//        res.json(result);
+//    })
+//});
 
 //router.post('/getUserInfo', (req, res, next) => {
 //    let reqBody = req.body;

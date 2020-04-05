@@ -19,10 +19,7 @@
                 tooltip-effect="dark"
 
         >
-            <!--
-                stripe:是否是斑马纹
-
-            -->
+            <!-- stripe:是否是斑马纹-->
             <slot></slot>
         </el-table>
     </div>
@@ -86,6 +83,7 @@
 </script>
 
 <style lang="scss" scoped>
+    /*因为elementUI的table样式是后生成的,无法直接写css去改变,除非写全局的css,所以这里使用scss或者less去修改样式*/
     .Table {
         /deep/ .el-table th.gutter {
             display: table-cell !important;

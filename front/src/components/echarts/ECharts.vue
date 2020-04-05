@@ -78,7 +78,7 @@
     }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
     .ECharts {
         height: 100%;
         width: 100%;

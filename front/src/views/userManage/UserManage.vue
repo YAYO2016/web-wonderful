@@ -9,22 +9,24 @@
             </el-col>
             <el-col :span="12" align="right">
                 <el-input v-model="search.input" placeholder="请输入"
-                          style="width: 180px;margin-right: 20px"
+                          style="width: 180px"
                           clearable
                 ></el-input>
+                <g-split-v></g-split-v>
                 <el-button type="primary" @click="handleSearch(search.input)">搜索</el-button>
             </el-col>
         </el-row>
-        <g-split></g-split>
+        <g-split-l></g-split-l>
         <!--表格区域-->
         <el-row :gutter="10">
             <el-col :span="24">
                 <!--表格-->
                 <g-table :tableData="tableData">
                     <el-table-column type="index" width="50" label="序号"></el-table-column>
-                    <el-table-column property="name" label="姓名"></el-table-column>
+                    <el-table-column property="username" label="姓名"></el-table-column>
                     <el-table-column property="age" label="年龄"></el-table-column>
-                    <el-table-column property="sex" label="性别" :formatter="rowSexFormat"></el-table-column>
+                    <el-table-column property="sex" label="性别"></el-table-column>
+                    <!--<el-table-column property="sex" label="性别" :formatter="rowSexFormat"></el-table-column>-->
                     <el-table-column property="birthday" label="生日"></el-table-column>
                     <el-table-column property="address" label="地址" show-overflow-tooltip></el-table-column>
                     <el-table-column label="操作栏">
@@ -35,7 +37,7 @@
                     </el-table-column>
                 </g-table>
                 <!--分页-->
-                <g-pagination :currentPage="pageInfo.pageIndex"
+                <g-pagination :currentPage="pageInfo.pageNum"
                               :pageSize="pageInfo.pageSize"
                               :total="pageInfo.total"
                               @changePage="currentChange"/>
@@ -99,7 +101,7 @@
                 },
                 tableData: [],
                 pageInfo: {
-                    pageIndex: 1,
+                    pageNum: 1,
                     pageSize: 5,
                     total: 0,
                 },
@@ -114,15 +116,15 @@
                 vm.pageInfo.pageIndex = currentPage;
                 vm.$api.getUsers({
                     username: vm.searchKey.input,
-                    pageNum: vm.pageInfo.pageIndex,
+                    pageNum: vm.pageInfo.pageNum,
                     pageSize: vm.pageInfo.pageSize,
                 }).then(res => {
                     //如果输入的页面不是第一页，并且没有数据的话，那就查询第一页的数据返回
-                    if (vm.pageInfo.pageIndex !== 1 && res.data === null && res.data === []) {
-                        vm.getData('1');
+                    if (vm.pageInfo.pageNum !== 1 && res.data === null && res.data === []) {
+                        vm.getData(1);
                     }
                     vm.tableData = res.data.list;
-                    vm.pageInfo = res.pageInfo;
+                    vm.pageInfo = res.data.pageInfo;
                 })
             },
             //翻页
