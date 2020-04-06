@@ -15,6 +15,8 @@ import "./permission.js";
 //安装使用elementUI
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+//修改elementUI的默认样式
+ import './element-var.scss';
 Vue.use(ElementUI);
 //设置elementUI的全局size
 Vue.prototype.$ELEMENT = {size: 'mini'};

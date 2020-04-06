@@ -5,11 +5,11 @@
                 :default-active="$route.path"
                 :background-color="variables.menuBg"
                 :text-color="variables.menuText"
-                :active-text-color="variables.menuActiveText"
                 :collapse="isCollapse"
                 mode="vertical"
                 router
         >
+            <!--:active-text-color="variables.menuActiveText"-->
             <!--
                 el-menu 设置了router属性后，el-menu-item中index值就是点击时候的路由跳转值
                 default-active 激活的路由地址
