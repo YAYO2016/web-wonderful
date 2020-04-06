@@ -61,6 +61,32 @@ html, body {
     font-family: 'PingFangSC-Light', 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', 'Arial', 'sans-serif';
 }
 
+/*el-switch如果文字要显示在颜色条中的话 加上demo*/
+.switchStyle .el-switch__label {
+    position: absolute;
+    display: none;
+    color: #fff!important;
+}
+/*打开时文字位置设置*/
+.switchStyle .el-switch__label--right {
+    z-index: 1;
+    right: -3px;
+}
+/*关闭时文字位置设置*/
+.switchStyle .el-switch__label--left {
+    z-index: 1;
+    left: 19px;
+}
+/*显示文字*/
+.switchStyle .el-switch__label.is-active {
+    display: block;
+}
+.switchStyle.el-switch .el-switch__core,
+.switchStyle.el-switch .el-switch__label {
+    width: 50px !important;
+}
+
+
 .popper-class-short {
     width: 300px !important;
 }
@@ -72,7 +98,6 @@ html, body {
 .popper-class-long {
     width: 700px !important;
 }
-
 
 .m10 {
     margin: 10px;

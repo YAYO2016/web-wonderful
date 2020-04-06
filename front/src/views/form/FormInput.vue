@@ -154,6 +154,39 @@
                 ></el-rate>
             </el-form-item>
             <div class="clearfix"></div>
+            <el-form-item label="switch开关：" class="fl">
+                <el-switch
+                        class="switchStyle"
+                        v-model="form.switch"
+                        active-color="#13ce66"
+                        active-text="是"
+                        inactive-color="#ff4949"
+                        inactive-text="否"
+                        :active-value="1"
+                        :inactive-value="0"
+                        active-icon-class="el-icon-check"
+                >
+                    <!--
+                        active-icon-class switch 打开时所显示图标的类名，设置此项会忽略 active-text
+                    -->
+                </el-switch>
+                <br>
+                <el-switch
+                        v-model="form.switch"
+                        active-color="#13ce66"
+                        active-text="是"
+                        inactive-color="#ff4949"
+                        inactive-text="否"
+                        :active-value="1"
+                        :inactive-value="0"
+                        active-icon-class="el-icon-check"
+                >
+                    <!--
+                        active-icon-class switch 打开时所显示图标的类名，设置此项会忽略 active-text
+                    -->
+                </el-switch>
+            </el-form-item>
+            <div class="clearfix"></div>
         </el-form>
     </div>
 </template>
@@ -191,7 +224,8 @@
                         //}
                     ],
                     area: '150524',  //地区码
-                    rate: 3
+                    rate: 3,
+                    switch: 0
                 },
                 videoUploadPercent: 0,
                 videoFlag: false,
