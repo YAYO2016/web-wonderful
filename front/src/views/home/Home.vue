@@ -134,10 +134,6 @@
         mounted() {
             let vm = this;
             vm.getTableData();
-            this.$message.success({
-                message:"成功",
-                duration:0
-            })
         },
         methods: {
             getTableData() {

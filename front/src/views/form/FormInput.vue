@@ -49,6 +49,25 @@
                 </el-autocomplete>
             </el-form-item>
             <div class="clearfix"></div>
+            <el-form-item label="多选">
+                <el-select v-model="form.multiSelectData" placeholder="请选择"
+                           multiple
+                           clearable
+                           collapse-tags
+                >
+                    <!--
+                        collapse-tags	多选时是否将选中值按文字的形式展示
+                    -->
+                    <g-all-checkbox :selectData.sync="form.multiSelectData" :options="optionsList"></g-all-checkbox>
+                    <!--<el-checkbox v-model="form.checked" @change='selectAll(form.multiSelectData,optionsList)'>全选</el-checkbox>-->
+                    <el-option
+                            v-for="item in optionsList"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
             <el-divider></el-divider>
             <!--obj.value = obj.value.replace(/[^\d.]/g,""); //清除"数字"和"."以外的字符-->
             <!--obj.value = obj.value.replace(/^\./g,""); //验证第一个字符是数字-->
@@ -206,6 +225,7 @@
             return {
                 form: {
                     name: '',
+                    multiSelectData:[],
                     code: '',
                     number: '',
                     numberMore: '',
@@ -225,11 +245,29 @@
                     ],
                     area: '150524',  //地区码
                     rate: 3,
-                    switch: 0
+                    switch: 0,
+                    checked:false,
                 },
                 videoUploadPercent: 0,
                 videoFlag: false,
                 restaurants: [],
+
+                optionsList: [{
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }],
             }
         },
         methods: {
@@ -360,7 +398,7 @@
                 } else {
                     return "";
                 }
-            }
+            },
         }
     }
 </script>

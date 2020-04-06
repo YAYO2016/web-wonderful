@@ -44,9 +44,6 @@
                 visible: this.show
             }
         },
-        mounted() {
-
-        },
         watch: {
             show() {
                 this.visible = this.show;

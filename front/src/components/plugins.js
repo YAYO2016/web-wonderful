@@ -11,6 +11,7 @@ import GTable from './table/Table'
 import GPagination from './pagination/Pagination'
 import GAutoComplete from './auto-complete/AutoComplete'
 import GAreaSelect from './areaslect/AreaSelect'
+import GAllCheckbox from './selectAll-checkbox/AllCheckbox'
 export default {
     install(Vue, options) {
         Vue.component('g-dialog', GDialog);
@@ -22,5 +23,6 @@ export default {
         Vue.component('g-pagination',GPagination);
         Vue.component('g-areaSelect',GAreaSelect);
         Vue.component('g-auto-complete',GAutoComplete);
+        Vue.component('g-all-checkbox',GAllCheckbox);
     }
 };
