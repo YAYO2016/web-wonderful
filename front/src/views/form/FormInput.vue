@@ -143,8 +143,15 @@
             </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
-            <el-form-item label="线条评分：" class="fl">
-                <div>-·-·-·-·-·-·-·-·-</div>
+            <el-form-item label="评分：" class="fl">
+                <!--
+                    max最大分值
+                    low-threshold 低分和中等分数的界限值，值本身被划分在低分中
+                    high-threshold 高分和中等分数的界限值，值本身被划分在高分中
+                    -->
+                <el-rate class="mt5" v-model="form.rate" :max="9" :low-threshold="3" :high-threshold="6"
+                         :colors="['#f56c6c', '#e6a23c', '#5cbb7a']"
+                ></el-rate>
             </el-form-item>
             <div class="clearfix"></div>
         </el-form>
@@ -183,7 +190,8 @@
                         //    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                         //}
                     ],
-                    area: '150524'  //地区码
+                    area: '150524',  //地区码
+                    rate: 3
                 },
                 videoUploadPercent: 0,
                 videoFlag: false,

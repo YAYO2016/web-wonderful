@@ -60,17 +60,19 @@ html, body {
     background-color: #f5f5f5;
     font-family: 'PingFangSC-Light', 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', 'Arial', 'sans-serif';
 }
-.popper-class-short{
-    width: 300px!important;
+
+.popper-class-short {
+    width: 300px !important;
 }
 
-.popper-class-medium{
-    width: 500px!important;
+.popper-class-medium {
+    width: 500px !important;
 }
 
-.popper-class-long{
-    width: 700px!important;
+.popper-class-long {
+    width: 700px !important;
 }
+
 
 .m10 {
     margin: 10px;
@@ -80,6 +82,9 @@ html, body {
     padding: 10px;
 }
 
+.mt5 {
+    margin-top: 5px;
+}
 .mt10 {
     margin-top: 10px;
 }

@@ -46,7 +46,7 @@
 
         <!--模态框区域-->
         <div class="dialog">
-            <g-dialog :show="formVisible" :width="'500px'" @closedDialog="Form=formDemo()">
+            <g-dialog :show.sync="formVisible" :width="'500px'" @closedDialog="Form=formDemo()">
                 <el-form ref="userForm" :model="Form" label-width="80px">
                     <el-form-item label="用户名">
                         <el-input v-model="Form.name" placeholder="请输入"></el-input>
