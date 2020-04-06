@@ -53,9 +53,13 @@ import 'font-awesome/css/font-awesome.min.css'
 import moment from 'moment'
 //使用中文moment
 import 'moment/locale/zh-cn'
-Object.defineProperty(Vue.prototype, '$moment', { value: moment })
+Object.defineProperty(Vue.prototype, '$moment', { value: moment });
 //使用this.$moment().format('HH:mm')
 
+//注意，这里没有意义，因为mixins是在组件创建之前就需要的，这里作为全局变量传入，一开始是获取不到的
+//import mixins from './common/js/mixins';
+//Vue.mixin(Mixin);
+//Vue.prototype.$mixins = mixins;
 
 //js的计算库，可以避免精度丢失
 import { create, all } from 'mathjs';

@@ -31,12 +31,13 @@
     /**
      * Created by yanyue on 2020/4/5 19:14
      */
-
+    import mixins from "@/common/js/mixins"
     export default {
         name: "BankList",
+        mixins:[mixins.commonMixin],
         data() {
             return {
-                tableData: [],
+                //tableData: [],
                 searchForm: {
                     bankName: '',
                     bankId: '',
@@ -45,11 +46,11 @@
                     bankName: '',
                     bankId: '',
                 },
-                pageInfo: {
-                    pageNum: 1,
-                    pageSize: 10,
-                    total: 0
-                }
+                //pageInfo: {
+                //    pageNum: 1,
+                //    pageSize: 10,
+                //    total: 0
+                //}
             }
         },
         mounted() {
