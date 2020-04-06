@@ -65,28 +65,33 @@ html, body {
 .switchStyle .el-switch__label {
     position: absolute;
     display: none;
-    color: #fff!important;
+    color: #fff !important;
 }
+
 /*打开时文字位置设置*/
 .switchStyle .el-switch__label--right {
     z-index: 1;
     right: -3px;
 }
+
 /*关闭时文字位置设置*/
 .switchStyle .el-switch__label--left {
     z-index: 1;
     left: 19px;
 }
+
 /*显示文字*/
 .switchStyle .el-switch__label.is-active {
     display: block;
 }
+
 .switchStyle.el-switch .el-switch__core,
 .switchStyle.el-switch .el-switch__label {
     width: 50px !important;
 }
 
 
+/*el-autocomplete下拉显示框的宽度设置popper*/
 .popper-class-short {
     width: 300px !important;
 }
@@ -99,6 +104,52 @@ html, body {
     width: 700px !important;
 }
 
+/*el-message组件的样式修改*/
+.el-message {
+    border-radius: 0;
+    border: none!important;
+    padding: 0!important;
+    box-shadow: 0 2px 10px 0 rgba(206, 206, 206, 0.5);
+}
+.el-message .el-message__icon {
+    font-size: 16px;
+    margin-right: 4px;
+    padding: 10px;
+}
+.el-message .el-icon-info,
+.el-message .el-icon-warning,
+.el-message .el-icon-success,
+.el-message .el-icon-error {
+    color: #fff !important;
+    margin-right: 28px;
+}
+/*icon区域的背景颜色*/
+.el-icon-info {
+    background-color: #66a2ff;
+}
+.el-icon-warning {
+    background-color: #FF9801;
+}
+.el-icon-success {
+    background-color: #52aa3A;
+}
+.el-icon-error {
+    background-color: #FF5066;
+}
+/*文字区域的背景色  白色*/
+.el-message--info, .el-message--warning, .el-message--success, .el-message--error {
+    background-color: #fff !important;
+}
+/*内容区域的设置*/
+.el-message__content {
+    font-family: "Microsoft YaHei";
+    font-size: 12px;
+    color: #48465b !important;
+    letter-spacing: 0;
+    line-height: 20px;
+}
+
+
 .m10 {
     margin: 10px;
 }
@@ -110,6 +161,7 @@ html, body {
 .mt5 {
     margin-top: 5px;
 }
+
 .mt10 {
     margin-top: 10px;
 }
