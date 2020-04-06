@@ -101,7 +101,7 @@
             .el-dialog__body {
                 text-align: left;
                 /*padding: 5px 17px 5px 5px;*/
-                padding:20px;
+                padding: 20px;
                 max-height: 900px;
                 overflow-y: auto;
 

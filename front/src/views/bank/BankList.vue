@@ -17,13 +17,50 @@
             <el-table-column prop="bank_no" label="总银行编号"></el-table-column>
             <el-table-column prop="branch_no" label="分行编号"></el-table-column>
             <el-table-column prop="owner_county" label="所属地"></el-table-column>
-            <el-table-column label="操作"></el-table-column>
+            <el-table-column label="操作">
+                <template slot-scope="scope">
+                    <el-button type="primary" @click="handleEditBank(scope.row)">编辑</el-button>
+                </template>
+            </el-table-column>
         </g-table>
         <g-pagination :currentPage="pageInfo.pageNum"
                       :pageSize="pageInfo.pageSize"
                       :total="pageInfo.total"
                       :changePage="getData">
         </g-pagination>
+
+
+        <!--
+        sync是vue的语法糖，
+        <comp :foo.sync="bar"></comp>
+        相当于
+        <comp :foo="bar" @update:foo="val => bar = val"></comp>
+        用子组件传来的参数更新父组件的变量 foo
+        -->
+        <g-dialog :title="'银行信息'" :show.sync="bankFormDialogVisible" @closedDialog="bankForm=bankFormInit()">
+            <el-form ref="form" :model="bankForm" label-width="120px">
+                <el-form-item label="银行id">
+                    <el-input v-model="bankForm.bank_id" placeholder="placeholder"></el-input>
+                </el-form-item>
+                <el-form-item label="银行名称">
+                    <el-input v-model="bankForm.bank_name" placeholder="placeholder"></el-input>
+                </el-form-item>
+                <el-form-item label="总银行编号">
+                    <el-input v-model="bankForm.bank_no" placeholder="placeholder"></el-input>
+                </el-form-item>
+                <el-form-item label="分行编号">
+                    <el-input v-model="bankForm.branch_no" placeholder="placeholder"></el-input>
+                </el-form-item>
+                <el-form-item label="所属地">
+                    <el-input v-model="bankForm.owner_county" placeholder="placeholder"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary">确认</el-button>
+                    <el-button @click="bankFormDialogVisible=false">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </g-dialog>
+
     </div>
 </template>
 
@@ -32,9 +69,10 @@
      * Created by yanyue on 2020/4/5 19:14
      */
     import mixins from "@/common/js/mixins"
+
     export default {
         name: "BankList",
-        mixins:[mixins.commonMixin],
+        mixins: [mixins.commonMixin],
         data() {
             return {
                 //tableData: [],
@@ -51,6 +89,8 @@
                 //    pageSize: 10,
                 //    total: 0
                 //}
+                bankForm: this.bankFormInit(),
+                bankFormDialogVisible: false,
             }
         },
         mounted() {
@@ -83,6 +123,20 @@
                 let vm = this;
                 vm.searchKeyForm = {...vm.searchForm};
                 vm.getData(1);
+            },
+            bankFormInit() {
+                return {
+                    bankId: "",
+                    bank_name: "",
+                    bank_no: "",
+                    branch_no: "",
+                    owner_county: ""
+                }
+            },
+            handleEditBank(row) {
+                let vm = this;
+                vm.bankForm = row;
+                vm.bankFormDialogVisible = true;
             }
 
         }
