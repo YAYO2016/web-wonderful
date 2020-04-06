@@ -134,6 +134,10 @@
         mounted() {
             let vm = this;
             vm.getTableData();
+            //this.$message.info({
+            //    message:"yanyue",
+            //    duration:0
+            //})
         },
         methods: {
             getTableData() {

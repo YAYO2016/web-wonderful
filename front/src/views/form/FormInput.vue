@@ -49,7 +49,7 @@
                 </el-autocomplete>
             </el-form-item>
             <div class="clearfix"></div>
-            <el-form-item label="多选">
+            <el-form-item label="多选（全选）：" label-width="150px">
                 <el-select v-model="form.multiSelectData" placeholder="请选择"
                            multiple
                            clearable
@@ -189,7 +189,7 @@
                         active-icon-class switch 打开时所显示图标的类名，设置此项会忽略 active-text
                     -->
                 </el-switch>
-                <br>
+                <g-split-v :width="'60px'"></g-split-v>
                 <el-switch
                         v-model="form.switch"
                         active-color="#13ce66"

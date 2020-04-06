@@ -124,24 +124,24 @@ html, body {
     margin-right: 28px;
 }
 /*icon区域的背景颜色*/
-.el-icon-info {
+.el-message .el-icon-info {
     background-color: #66a2ff;
 }
-.el-icon-warning {
+.el-message .el-icon-warning {
     background-color: #FF9801;
 }
-.el-icon-success {
+.el-message .el-icon-success {
     background-color: #52aa3A;
 }
-.el-icon-error {
+.el-message .el-icon-error {
     background-color: #FF5066;
 }
 /*文字区域的背景色  白色*/
-.el-message--info, .el-message--warning, .el-message--success, .el-message--error {
-    background-color: #fff !important;
+.el-message.el-message--info, .el-message.el-message--warning, .el-message.el-message--success, .el-message.el-message--error {
+    background-color: #fff;
 }
 /*内容区域的设置*/
-.el-message__content {
+.el-message .el-message__content {
     font-family: "Microsoft YaHei";
     font-size: 12px;
     color: #48465b !important;
