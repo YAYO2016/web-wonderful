@@ -77,3 +77,11 @@ npm i mathjs -S
 
 安装地区选择器（省市区）
 npm install v-distpicker --save
+
+安装高级日历组件
+npm i vue-full-calendar -S
+还需要安装jquery才可以使用
+npm i jquery -S
+需要安装moment组件
+npm i moment -S
+
