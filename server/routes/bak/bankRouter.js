@@ -4,9 +4,9 @@
  */
 const express = require("express");
 const router = express.Router();
-const Result = require("../models/Result");
+const Result = require("../../models/Result");
 const boom = require('boom');
-const {getAllBanks, getBankCount, getBankInfo} = require("../services/bankService");
+const {getAllBanks, getBankCount, getBankInfo} = require("../../services/bak/bankService");
 
 router.post("/getBanks", async function (req, res, next) {
     let body = req.body;

@@ -7,7 +7,7 @@ const express = require("express");
 const boom = require("boom");
 
 
-const {CODE_ERROR} = require("../utils/constant");
+const {CODE_ERROR} = require("../../utils/constant");
 
 //注册路由
 const router = express.Router();
@@ -21,19 +21,19 @@ router.get('/',(req,res)=>{
  * 导入各个路由模块
  */
 const userRouter = require("./userRouter");
-router.use('/user',userRouter);
+router.use('/users',userRouter);
 
-//const fileRouter = require("./fileRouter");
-//router.use('/file',fileRouter);
+const fileRouter = require("./fileRouter");
+router.use('/file',fileRouter);
 
-//const home = require("./home");
-//router.use('/home',home);
+const home = require("./home");
+router.use('/home',home);
 
-//const bookRouter = require("./bookRouter");
-//router.use('/book',bookRouter);
+const bookRouter = require("./bookRouter");
+router.use('/book',bookRouter);
 
-//const bankRouter = require("./bankRouter");
-//router.use('/bank',bankRouter);
+const bankRouter = require("./bankRouter");
+router.use('/bank',bankRouter);
 
 
 /**

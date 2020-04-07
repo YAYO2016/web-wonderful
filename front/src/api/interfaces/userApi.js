@@ -10,19 +10,19 @@ const get = Http.get;
 const userApi = {
     //注册接口
     register(params) {
-        return post('/users/register', params)
+        return post('/user/register', params)
     },
     login(params) {
-        return post('/users/login', params)
+        return post('/user/login', params)
     },
     getUserInfo(params){
-        return post('/users/getUserInfo', params)
+        return post('/user/getUserInfo', params)
     },
     getUsers(params) {
-        return post('/users/getUsers', params,{loading:true})
+        return post('/user/getUsers', params,{loading:true})
     },
     getSingleUser(params) {
-        return get('/users/getSingleUser', params)
+        return get('/user/getSingleUser', params)
     },
 
 };

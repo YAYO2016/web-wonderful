@@ -4,7 +4,7 @@
 const mysql = require("mysql");
 const config = require("./config.js");
 //是否debug提示
-const {debug} = require("../utils/constant.js");
+const {debug} = require("../../utils/constant.js");
 
 //创建mysql的连接
 function connect() {

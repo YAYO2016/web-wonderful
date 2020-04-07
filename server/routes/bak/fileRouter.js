@@ -4,8 +4,8 @@
  */
 const express = require("express");
 const router = express.Router();
-const {UPLOAD_PATH} = require("../utils/constant");
-const Result = require("../models/Result");
+const {UPLOAD_PATH} = require("../../utils/constant");
+const Result = require("../../models/Result");
 const boom = require('boom');
 
 //multer文件上传工具

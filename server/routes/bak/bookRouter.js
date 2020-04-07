@@ -4,12 +4,12 @@
  */
 const express = require("express");
 const router = express.Router();
-const {UPLOAD_PATH} = require("../utils/constant");
-const Result = require("../models/Result");
-const Book = require("../models/Book");
+const {UPLOAD_PATH} = require("../../utils/constant");
+const Result = require("../../models/Result");
+const Book = require("../../models/bak/Book");
 const boom = require('boom');
-const util = require("../utils/util");
-const bookService = require("../services/bookService");
+const util = require("../../utils/util");
+const bookService = require("../../services/bak/bookService");
 
 //multer文件上传工具
 const multer = require("multer");

@@ -1,10 +1,8 @@
 /**
- * Created by yanyue on 2020/3/28 14:06
- * mysql的配置
+ * Created by yanyue on 2020/4/7 9:39
+ * 数据库配置文件
  */
+
 module.exports = {
-    host: 'localhost',
-    user: 'root',
-    password: 'yanyue2020',
-    database: 'yanyue'
+    mongoURI: 'mongodb://localhost:27017/web-api'
 };

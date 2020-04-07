@@ -1,7 +1,7 @@
 /**
  * Created by yanyue on 2020/4/5 19:02
  */
-const {querySql, queryOne} = require("../db");
+const {querySql, queryOne} = require("../../db/bak");
 
 //获取所有的银行信息带模糊查询的
 function getAllBanks(bankName, pageNum, pageSize) {

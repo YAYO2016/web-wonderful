@@ -2,9 +2,9 @@
  * Created by yanyue on 2020/4/3 22:20
  * 电子书实体类
  */
-const {MIME_TYPE_EPUB, UPLOAD_URL, UPLOAD_PATH} = require("../utils/constant");
+const {MIME_TYPE_EPUB, UPLOAD_URL, UPLOAD_PATH} = require("../../utils/constant");
 const fs = require("fs");
-const Epub = require("../utils/epub");
+const Epub = require("../../utils/epub");
 const xml2js = require('xml2js').parseString
 
 

@@ -2,7 +2,7 @@
  * Created by yanyue on 2020/3/28 14:32
  * user用户相关的服务
  */
-const {querySql, queryOne} = require("../db");
+const {querySql, queryOne} = require("../../db/bak");
 
 //登录用户
 function login(username, password) {

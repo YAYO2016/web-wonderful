@@ -2,7 +2,7 @@
  * Created by yanyue on 2020/3/28 14:32
  * user用户相关的服务
  */
-const Book = require("../models/Book");
+const Book = require("../../models/bak/Book");
 
 //插入新的书
 function insertBook(book) {

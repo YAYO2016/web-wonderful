@@ -69,13 +69,30 @@ router.post('/register'
         } else {
             let {username, password, roles, email} = req.body;
             //调用userService中的login登录服务(密码进行md5加盐加密)
-            addUser(username, util.EnCryPtoFn.md5(`${password}${PWD_SALT}`), roles, email).then(user => {
-                if (!user || user.length === 0) {
-                    new Result('注册失败').fail(res);
-                } else {
-                    new Result('注册成功').success(res);
-                }
+            const newUser = new User({
+                username,
+                password: util.EnCryPtoFn.md5(`${password}${PWD_SALT}`),
+                email,
+                roles,
             });
+
+            newUser
+                .save()
+                .then(user => {
+                    new Result('注册成功').success(res);
+                })
+                .catch(err => {
+                    new Result('注册失败').fail(res);
+                    console.log(err)
+                });
+
+            //User.findOne(username, util.EnCryPtoFn.md5(`${password}${PWD_SALT}`), roles, email).then(user => {
+            //    if (!user || user.length === 0) {
+            //        new Result('注册失败').fail(res);
+            //    } else {
+            //        new Result('注册成功').success(res);
+            //    }
+            //});
         }
     });
 
@@ -84,7 +101,7 @@ router.post('/getUserInfo', (req, res, next) => {
     // 解析请求中token获取token加密的数据 username
     let decode = util.EnCryPtoFn.decode(req);
     if (decode && decode.username) {
-        findUser(decode.username).then(user => {
+        User.findOne({username: decode.username}).then(user => {
             if (user) {
                 new Result(user, '用户查询成功').success(res);
             } else {

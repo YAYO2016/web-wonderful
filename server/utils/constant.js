@@ -21,6 +21,7 @@ module.exports = {
     UPLOAD_PATH,
     UPLOAD_URL,
     MIME_TYPE_EPUB: "application/epub",  //默认的文件上传类型
+    mongoURI:"mongodb://localhost:27017/web-mongodb",
 
 
 };
