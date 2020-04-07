@@ -19,7 +19,7 @@ const install = function (Vue, options) {
         } else if (sex === 0) {
             return "女";
         } else {
-            return "";
+            return "未知";
         }
     };
 
@@ -33,7 +33,7 @@ const install = function (Vue, options) {
         if ((!date && typeof (date) != "undefined" && date != 0) || date == '') {
             return '';
         } else {
-            return moment(parseInt(date)).format("YYYY-MM-DD HH:mm:ss");
+            return moment(date).format("YYYY-MM-DD HH:mm:ss");
         }
     };
 
@@ -41,7 +41,7 @@ const install = function (Vue, options) {
         if ((!date && typeof (date) != "undefined" && date != 0) || date == '') {
             return '';
         } else {
-            return moment(parseInt(date)).format("YYYY-MM-DD");
+            return moment(date).format("YYYY-MM-DD");
         }
     };
 
@@ -49,7 +49,7 @@ const install = function (Vue, options) {
         if ((!date && typeof (date) != "undefined" && date != 0) || date == '') {
             return '';
         } else {
-            return moment(parseInt(date)).format("HH:mm:ss");
+            return moment(date).format("HH:mm:ss");
         }
     };
 
@@ -58,7 +58,7 @@ const install = function (Vue, options) {
         if (!date && typeof (date) != "undefined" && date != 0) {
             return "";
         } else {
-            return moment(parseInt(date)).format("YYYY-MM-DD");
+            return moment(date).format("YYYY-MM-DD");
         }
     };
 

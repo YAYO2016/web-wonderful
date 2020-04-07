@@ -25,9 +25,8 @@
                     <el-table-column type="index" width="50" label="序号"></el-table-column>
                     <el-table-column property="username" label="姓名"></el-table-column>
                     <el-table-column property="age" label="年龄"></el-table-column>
-                    <el-table-column property="sex" label="性别"></el-table-column>
-                    <!--<el-table-column property="sex" label="性别" :formatter="rowSexFormat"></el-table-column>-->
-                    <el-table-column property="birthday" label="生日"></el-table-column>
+                    <el-table-column property="sex" label="性别" :formatter="rowSexFormat"></el-table-column>
+                    <el-table-column property="birthday" label="生日" :formatter="rowDateFormat"></el-table-column>
                     <el-table-column property="address" label="地址" show-overflow-tooltip></el-table-column>
                     <el-table-column label="操作栏">
                         <template slot-scope="scope">

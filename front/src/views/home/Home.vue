@@ -3,7 +3,7 @@
         <el-col :span="8">
             <el-card shadow="hover">
                 <div class="user">
-                    <img :src="userImg"/>
+                    <img :src="userInfo.avatar"/>
                     <div class="user-info">
                         <p class="name">{{userInfo.name}}</p>
                         <!--rolesFilter 使用过滤器-->
@@ -64,7 +64,6 @@
         name: "Home",
         data() {
             return {
-                userImg: require('../../assets/imgs/user.png'),
                 countData: [
                     {
                         name: '今日支付订单',
@@ -110,22 +109,6 @@
                     monthBuy: '本月购买',
                     totalBuy: '总购买'
                 },
-                echartData: {
-                    //订单
-                    order: {
-                        xData: [],
-                        series: []
-                    },
-                    //用户
-                    user: {
-                        xData: [],
-                        series: []
-                    },
-                    //视频
-                    video: {
-                        series: []
-                    }
-                }
             }
         },
         computed: {
@@ -133,52 +116,9 @@
         },
         mounted() {
             let vm = this;
-            vm.getTableData();
-            //this.$message.info({
-            //    message:"yanyue",
-            //    duration:0
-            //})
         },
         methods: {
-            getTableData() {
-                let vm = this;
-                vm.$api.getTableData().then(res => {
-                    //表格数据
-                    vm.tableData = res.data.tableData;
-                    //订单折线图
-                    const order = res.data.orderData;
-                    vm.echartData.order.xData = order.date;
-                    // 第一步取出series中的name部分——键名
-                    let keyArray = Object.keys(order.data[0]);
-                    // 第二步，循环添加数据
-                    keyArray.forEach(key => {
-                        this.echartData.order.series.push({
-                            name: key === 'wechat' ? '小程序' : key,
-                            data: order.data.map(item => item[key]),
-                            type: 'line'
-                        })
-                    });
-                    // 用户柱状图
-                    vm.echartData.user.xData = res.data.userData.map(item => item.date)
-                    vm.echartData.user.series.push({
-                        name: '新增用户',
-                        data: res.data.userData.map(item => item.new),
-                        type: 'bar'
-                    })
-                    vm.echartData.user.series.push({
-                        name: '活跃用户',
-                        data: res.data.userData.map(item => item.active),
-                        type: 'bar',
-                        //barGap 柱状图之间的间隔
-                        barGap: 0
-                    })
-                    // 视频饼图
-                    vm.echartData.video.series.push({
-                        data: res.data.videoData,
-                        type: 'pie'
-                    })
-                })
-            }
+
 
         }
     }

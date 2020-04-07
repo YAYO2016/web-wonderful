@@ -12,11 +12,11 @@
             <el-button type="primary" @click="handleSearch">搜索</el-button>
         </el-form>
         <g-table :table-data="tableData">
-            <el-table-column prop="bank_id" label="银行id" width="80px"></el-table-column>
-            <el-table-column prop="bank_name" label="银行名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="bank_no" label="总银行编号"></el-table-column>
-            <el-table-column prop="branch_no" label="分行编号"></el-table-column>
-            <el-table-column prop="owner_county" label="所属地"></el-table-column>
+            <el-table-column prop="bankId" label="银行id" width="80px"></el-table-column>
+            <el-table-column prop="bankName" label="银行名称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="bankNo" label="总银行编号"></el-table-column>
+            <el-table-column prop="branchNo" label="分行编号"></el-table-column>
+            <el-table-column prop="ownerCounty" label="所属地"></el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
                     <el-button type="primary" @click="handleEditBank(scope.row)">编辑</el-button>
@@ -40,19 +40,19 @@
         <g-dialog :title="'银行信息'" :show.sync="bankFormDialogVisible" @closedDialog="bankForm=bankFormInit()">
             <el-form ref="form" :model="bankForm" label-width="120px">
                 <el-form-item label="银行id">
-                    <el-input v-model="bankForm.bank_id" placeholder="placeholder"></el-input>
+                    <el-input v-model="bankForm.bankId" placeholder="placeholder"></el-input>
                 </el-form-item>
                 <el-form-item label="银行名称">
-                    <el-input v-model="bankForm.bank_name" placeholder="placeholder"></el-input>
+                    <el-input v-model="bankForm.bankName" placeholder="placeholder"></el-input>
                 </el-form-item>
                 <el-form-item label="总银行编号">
-                    <el-input v-model="bankForm.bank_no" placeholder="placeholder"></el-input>
+                    <el-input v-model="bankForm.bankNo" placeholder="placeholder"></el-input>
                 </el-form-item>
                 <el-form-item label="分行编号">
-                    <el-input v-model="bankForm.branch_no" placeholder="placeholder"></el-input>
+                    <el-input v-model="bankForm.branchNo" placeholder="placeholder"></el-input>
                 </el-form-item>
                 <el-form-item label="所属地">
-                    <el-input v-model="bankForm.owner_county" placeholder="placeholder"></el-input>
+                    <el-input v-model="bankForm.ownerCounty" placeholder="placeholder"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary">确认</el-button>
@@ -115,7 +115,12 @@
             },
             querySearchFunction(queryString) {
                 let vm = this;
-                return vm.$api.getBankInfo({bankName: queryString}).then(res => {
+                return vm.$api.getBankInfo({
+                    bankName: queryString,
+                    pageNum: 1,
+                    pageSize: 999
+                    // 我觉得一个下拉框显示999个数据已经很多了
+                }).then(res => {
                     return res.data;
                 })
             },

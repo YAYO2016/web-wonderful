@@ -32,8 +32,8 @@ router.use('/user',userRouter);
 //const bookRouter = require("./bookRouter");
 //router.use('/book',bookRouter);
 
-//const bankRouter = require("./bankRouter");
-//router.use('/bank',bankRouter);
+const bankRouter = require("./BankRouter");
+router.use('/bank',bankRouter);
 
 
 /**

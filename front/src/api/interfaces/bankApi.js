@@ -15,7 +15,7 @@ const bankApi = {
 
     //获取用户信息
     getBankInfo(params) {
-        return get('/bank/getBankInfo', params)
+        return post('/bank/getBankInfo', params)
     },
 
 };
