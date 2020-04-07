@@ -49,6 +49,9 @@ const UserSchema = new Schema({
         type: Number,
         default:2
     },
+    birthday:{
+        type: Date
+    },
     //创建日期
     date: {
         type: Date,

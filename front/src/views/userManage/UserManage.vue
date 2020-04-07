@@ -40,7 +40,8 @@
                 <g-pagination :currentPage="pageInfo.pageNum"
                               :pageSize="pageInfo.pageSize"
                               :total="pageInfo.total"
-                              @changePage="currentChange"/>
+                              :changePage="getData">
+                </g-pagination>
             </el-col>
         </el-row>
 
@@ -113,7 +114,7 @@
             //查询表格数据
             getData(currentPage = 1) {
                 let vm = this;
-                vm.pageInfo.pageIndex = currentPage;
+                vm.pageInfo.pageNum = currentPage;
                 vm.$api.getUsers({
                     username: vm.searchKey.input,
                     pageNum: vm.pageInfo.pageNum,
@@ -126,11 +127,6 @@
                     vm.tableData = res.data.list;
                     vm.pageInfo = res.data.pageInfo;
                 })
-            },
-            //翻页
-            currentChange(currentPage) {
-                let vm = this;
-                vm.getData(currentPage)
             },
             //点击查询
             handleSearch(input) {

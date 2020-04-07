@@ -113,17 +113,18 @@ router.post('/getUserInfo', (req, res, next) => {
     }
 });
 
-router.post('/getUsers', (req, res, next) => {
+router.post('/getUsers', async (req, res, next) => {
     let body = req.body;
     let {username, pageNum, pageSize} = body;
-    getAllUsers(username, pageNum, pageSize).then(users => {
+    let allUser = await User.find();
+    User.find(username ? {username} : {}).limit(pageSize).skip((pageNum - 1) * pageSize).then(users => {
         if (users) {
             let result = {
                 list: users,
                 pageInfo: {
                     pageNum: pageNum,
                     pageSize: pageSize,
-                    total: users.length
+                    total: allUser.length
                 }
             };
             new Result(result, '用户查询成功').success(res);
