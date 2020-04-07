@@ -4,11 +4,11 @@
  */
 const express = require("express");
 const router = express.Router();
-const util = require("../utils/util");
+const util = require("../../utils/util");
 const _ = require("loadsh");
-const Result = require("../models/Result.js");
-const {PWD_SALT, PRIVATE_KEY, JWT_EXPIRED} = require("../utils/constant");
-const {login, findUser, addUser, getAllUsers} = require("../services/userService");
+const Result = require("../../models/Result.js");
+const {PWD_SALT, PRIVATE_KEY, JWT_EXPIRED} = require("../../utils/constant");
+const {login, findUser, addUser, getAllUsers} = require("../../services/bak/userService");
 const boom = require("boom");
 const {body, validationResult} = require('express-validator');
 //使用jwt生成token
