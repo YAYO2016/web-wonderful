@@ -35,6 +35,8 @@ router.use('/user',userRouter);
 const bankRouter = require("./BankRouter");
 router.use('/bank',bankRouter);
 
+const MeetingRouter = require("./MeetingRouter");
+router.use('/meeting',MeetingRouter);
 
 /**
  * 集中处理404请求的中间件

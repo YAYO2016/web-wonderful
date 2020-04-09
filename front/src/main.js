@@ -25,8 +25,8 @@ Vue.prototype.$ELEMENT = {size: 'mini'};
 import "babel-polyfill";
 
 //地区组件（省市区）
-import VDistpicker from 'v-distpicker'
-Vue.component('v-distpicker', VDistpicker)
+//import VDistpicker from 'v-distpicker'
+//Vue.component('v-distpicker', VDistpicker)
 
 
 //导入api接口

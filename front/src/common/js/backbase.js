@@ -2,7 +2,7 @@ import moment from 'moment';
 
 const install = function (Vue, options) {
 
-    Vue.prototype.sexFormat = (sex) => {
+    Vue.prototype.gSexFormat = (sex) => {
         if (sex === 'MALE') {
             return "男";
         } else if (sex === 'FEMALE') {
@@ -12,7 +12,7 @@ const install = function (Vue, options) {
         }
     };
 
-    Vue.prototype.rowSexFormat = (row, column) => {
+    Vue.prototype.gRowSexFormat = (row, column) => {
         let sex = row[column.property];
         if (sex === 1) {
             return "男";
@@ -24,12 +24,13 @@ const install = function (Vue, options) {
     };
 
     //备注格式处理
-    Vue.prototype.remarkFormat = (row, column) => {
+    Vue.prototype.gRemarkFormat = (row, column) => {
         let content = row[column.property];
         return content.replace(/\n/g, '<br/>');
     };
 
-    Vue.prototype.timeFormat = (date) => {
+    //大坑  之前命名过timeFormat，和elementUI中的方法重名，导致datetime的时间组价你无法使用
+    Vue.prototype.gTimeFormat = (date) => {
         if ((!date && typeof (date) != "undefined" && date != 0) || date == '') {
             return '';
         } else {
@@ -37,7 +38,7 @@ const install = function (Vue, options) {
         }
     };
 
-    Vue.prototype.dateFormat = (date) => {
+    Vue.prototype.gDateFormat = (date) => {
         if ((!date && typeof (date) != "undefined" && date != 0) || date == '') {
             return '';
         } else {
@@ -45,7 +46,7 @@ const install = function (Vue, options) {
         }
     };
 
-    Vue.prototype.hourFormat = (date) => {
+    Vue.prototype.gHourFormat = (date) => {
         if ((!date && typeof (date) != "undefined" && date != 0) || date == '') {
             return '';
         } else {
@@ -53,7 +54,7 @@ const install = function (Vue, options) {
         }
     };
 
-    Vue.prototype.rowDateFormat = (row, column) => {
+    Vue.prototype.gRowDateFormat = (row, column) => {
         let date = row[column.property];
         if (!date && typeof (date) != "undefined" && date != 0) {
             return "";
@@ -62,7 +63,7 @@ const install = function (Vue, options) {
         }
     };
 
-    Vue.prototype.roleFormat = (roleArr) => {
+    Vue.prototype.gRoleFormat = (roleArr) => {
         if (roleArr) {
             return roleArr.map(role => {
                 return role.roleName
@@ -72,12 +73,12 @@ const install = function (Vue, options) {
         }
     };
 
-    Vue.prototype.rowItemRate = (row, column) => {
+    Vue.prototype.gRowItemRate = (row, column) => {
         let itemRate = row[column.property];
         return itemRate + "%";
     };
 
-    Vue.prototype.rowItemNoPoint = (row, column) => {
+    Vue.prototype.gRowItemNoPoint = (row, column) => {
         let itemNum = row[column.property];
         return itemNum.substring(0, itemNum.indexOf('.'));
     };

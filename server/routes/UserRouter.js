@@ -83,7 +83,6 @@ router.post('/register'
                 })
                 .catch(err => {
                     new Result('注册失败').fail(res);
-                    console.log(err)
                 });
 
             //User.findOne(username, util.EnCryPtoFn.md5(`${password}${PWD_SALT}`), roles, email).then(user => {

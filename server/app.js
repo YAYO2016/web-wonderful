@@ -20,8 +20,8 @@ const db = require('./utils/constant').mongoURI;
 //mongodb数据库连接
 mongoose
     .connect(db, {useNewUrlParser: true,useUnifiedTopology: true})
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.log(err));
+    .then(() => console.log('MongoDB Connected Success'))
+    .catch(err => console.log("MongoDB Connect Fail",err));
 
 //使用cors中间件，跨域
 app.use(cors());

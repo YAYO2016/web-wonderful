@@ -62,6 +62,14 @@
             </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
+            <el-form-item label="日期时间">
+                <el-date-picker
+                        v-model="form.datetime"
+                        type="datetime"
+                        format="yyyy-MM-dd HH:mm:ss"
+                        placeholder="选择日期时间">
+                </el-date-picker>
+            </el-form-item>
         </el-form>
     </div>
 </template>
@@ -81,6 +89,7 @@
                     format: "YYYY-MM-DD HH:mm:ss",
                     selectDateType: '日',
                     selectCount: 0,
+                    datetime:""
                 }
             }
         },
