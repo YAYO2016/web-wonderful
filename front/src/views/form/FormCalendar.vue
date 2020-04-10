@@ -1,7 +1,7 @@
 <template>
     <div class='FormCalendar'>
         <el-row :gutter="10">
-            <el-col :span="18">
+            <el-col :span="16">
                 <el-form ref="searchForm" :model="searchForm" label-width="80px" inline>
                     <el-form-item label="选择日期">
                         <el-date-picker
@@ -21,14 +21,13 @@
                             <el-button type="primary" @click="$refs.calendar.fireMethod('today')">
                                 本{{computedViewWords}}
                             </el-button>
-                            <el-button type="primary">下一{{computedViewWords}}<i
-                                    class="el-icon-arrow-right el-icon--right"
-                                    @click="$refs.calendar.fireMethod('next')"></i></el-button>
+                            <el-button type="primary" @click="$refs.calendar.fireMethod('next')">下一{{computedViewWords}}
+                                <i class="el-icon-arrow-right el-icon--right"></i></el-button>
                         </el-button-group>
                     </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="meetingDialogVisible=true">新增会议</el-button>
-                    </el-form-item>
+                    <!--<el-form-item>-->
+                    <!--<el-button type="primary" @click="meetingDialogVisible=true">新增会议</el-button>-->
+                    <!--</el-form-item>-->
                     <el-form-item class="fr">
                         <el-select v-model="searchForm.view"
                                    style="width: 100px"
@@ -49,9 +48,81 @@
                 >
                 </full-calendar>
             </el-col>
+
+            <el-col :span="8">
+                <el-card class="box-card">
+                    <el-collapse accordion v-model="searchForm.activeNames" @change="meetingForm=initMeetingForm()">
+                        <el-collapse-item name="addMeeting">
+                            <template slot="title">
+                                新增会议
+                            </template>
+                            <el-form ref="addMeetingForm" :model="addMeetingForm" label-width="110px">
+                                <el-form-item label="会议标题" prop="title"
+                                              :rules="$rules.NotEmpty">
+                                    <el-input v-model="addMeetingForm.title" placeholder="请输入会议标题"
+                                              style="width: 200px"
+                                    ></el-input>
+                                </el-form-item>
+                                <el-form-item label="会议开始时间" prop="start" :rules="$rules.NotEmpty">
+                                    <el-date-picker
+                                            v-model="addMeetingForm.start"
+                                            value-format="yyyy-MM-dd HH:mm:ss"
+                                            type="datetime"
+                                            placeholder="选择日期时间">
+                                    </el-date-picker>
+                                </el-form-item>
+                                <el-form-item label="会议结束时间" prop="end" :rules="$rules.NotEmpty">
+                                    <el-date-picker
+                                            v-model="addMeetingForm.end"
+                                            value-format="yyyy-MM-dd HH:mm:ss"
+                                            type="datetime"
+                                            placeholder="选择日期时间">
+                                    </el-date-picker>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary" @click="handleAddMeeting('addMeetingForm')">新增</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </el-collapse-item>
+                        <el-collapse-item title="会议编辑" name="editMeeting">
+                            <el-form ref="editMeetingForm" :model="editMeetingForm" label-width="110px">
+                                <el-form-item label="会议标题" prop="title"
+                                              :rules="$rules.NotEmpty">
+                                    <el-input v-model="editMeetingForm.title" placeholder="请输入会议标题"
+                                              style="width: 200px"
+                                    ></el-input>
+                                </el-form-item>
+                                <el-form-item label="会议开始时间" prop="start" :rules="$rules.NotEmpty">
+                                    <el-date-picker
+                                            v-model="editMeetingForm.start"
+                                            value-format="yyyy-MM-dd HH:mm:ss"
+                                            type="datetime"
+                                            placeholder="选择日期时间">
+                                    </el-date-picker>
+                                </el-form-item>
+                                <el-form-item label="会议结束时间" prop="end" :rules="$rules.NotEmpty">
+                                    <el-date-picker
+                                            v-model="editMeetingForm.end"
+                                            value-format="yyyy-MM-dd HH:mm:ss"
+                                            type="datetime"
+                                            placeholder="选择日期时间">
+                                    </el-date-picker>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary" @click="handleAddMeeting('editMeetingForm')">提交编辑
+                                    </el-button>
+                                </el-form-item>
+                            </el-form>
+                        </el-collapse-item>
+                    </el-collapse>
+                </el-card>
+
+            </el-col>
         </el-row>
 
         <div class="dialog">
+            <!--将新增会议功能放置到折叠面板中去-->
+            <!--
             <g-dialog :show.sync="meetingDialogVisible" @closedDialog="meetingForm=initMeetingForm()">
                 <el-form ref="meetingForm" :model="meetingForm" label-width="100px">
                     <el-form-item label="会议标题">
@@ -81,6 +152,7 @@
                     </el-form-item>
                 </el-form>
             </g-dialog>
+            -->
         </div>
     </div>
 </template>
@@ -102,7 +174,8 @@
             return {
                 searchForm: {
                     date: "",
-                    view: "agendaWeek"  //默认显示周视图
+                    view: "agendaWeek",  //默认显示周视图
+                    activeNames: "addMeeting",//当前激活的折叠面板
                 },
                 //事件返回的值  title时间内容   start事件开始时间  end事件结束时间
                 events: [],
@@ -138,8 +211,9 @@
                     eventClick: this.eventClick, //点击事件
                     dayClick: this.dayClick, //点击日程表上面某一天
                 },
-                meetingDialogVisible: false,
-                meetingForm: this.initMeetingForm(),
+                //meetingDialogVisible: false,
+                addMeetingForm: this.initMeetingForm(),
+                editMeetingForm: this.initMeetingForm()
             }
         },
         computed: {
@@ -169,11 +243,13 @@
             },
             // 点击事件
             eventClick(event, jsEvent, pos) {
-                console.log('eventClick', event, jsEvent, pos);
-                console.log(event._id);
-                console.log(event.title);
-                console.log(event.start);
-                console.log(event.end);
+                //console.log('eventClick', event, jsEvent, pos);
+                //console.log(event._id);
+                let vm = this;
+                vm.searchForm.activeNames = "editMeeting";
+                vm.editMeetingForm.title = event.title;
+                vm.editMeetingForm.start = vm.gTimeFormat(event.start);
+                vm.editMeetingForm.end = vm.gTimeFormat(event.end);
             },
             // 点击当天
             dayClick(day, jsEvent) {
@@ -190,15 +266,31 @@
                     end: ""
                 }
             },
-            handleAddMeeting() {
+            handleAddMeeting(formName) {
                 let vm = this;
-                vm.$api.addMeeting(vm.meetingForm).then(res => {
-                    vm.$message("新增成功");
-                    vm.meetingDialogVisible = false;
-                    //获取最新的数据并且更新日历
-                    vm.getData();
-                    vm.$refs.calendar.fireMethod('rerenderEvents');
-                })
+                if (vm.validateRules(formName, vm)) {
+                    this.$confirm('是否确认新增该会议?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        vm.$api.addMeeting(vm.addMeetingForm).then(res => {
+                            vm.$message("新增成功");
+                            vm.meetingDialogVisible = false;
+                            //获取最新的数据并且更新日历，并且清空表单数据
+                            vm.getData();
+                            vm.addMeetingForm = vm.initMeetingForm();
+                            vm.$refs.calendar.fireMethod('rerenderEvents');
+                        })
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消'
+                        });
+                    });
+                }
+
+
             }
         }
     }

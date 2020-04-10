@@ -85,3 +85,6 @@ npm i jquery -S
 需要安装moment组件
 npm i moment -S
 
+安装concurrently，可以同时执行多个脚本
+npm i concurrently -S
+
