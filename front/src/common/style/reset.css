@@ -157,6 +157,9 @@ html, body {
 }
 
 .icon-changfangxing-fill,.icon-changfangxing-empty{
+    /*将icon图标设置为block的时候，就可以调节宽高*/
+    display: inline-block;
+    width: 10px;
     color: #ff9700;
 }
 
