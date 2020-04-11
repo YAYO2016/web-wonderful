@@ -13,6 +13,9 @@ const meetingApi = {
     getMeetings(params) {
         return get('/meeting/getMeetings', params)
     },
+    editMeeting(params) {
+        return post('/meeting/editMeeting', params, {loading: true})
+    },
 
 
 };

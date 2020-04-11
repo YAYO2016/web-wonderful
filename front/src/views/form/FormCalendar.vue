@@ -109,7 +109,7 @@
                                     </el-date-picker>
                                 </el-form-item>
                                 <el-form-item>
-                                    <el-button type="primary" @click="handleAddMeeting('editMeetingForm')">提交编辑
+                                    <el-button type="primary" @click="handleEditMeeting('editMeetingForm')">提交编辑
                                     </el-button>
                                 </el-form-item>
                             </el-form>
@@ -247,6 +247,7 @@
                 //console.log(event._id);
                 let vm = this;
                 vm.searchForm.activeNames = "editMeeting";
+                vm.editMeetingForm.id = event._id;
                 vm.editMeetingForm.title = event.title;
                 vm.editMeetingForm.start = vm.gTimeFormat(event.start);
                 vm.editMeetingForm.end = vm.gTimeFormat(event.end);
@@ -261,6 +262,7 @@
             },
             initMeetingForm() {
                 return {
+                    id:"",
                     title: "",
                     start: "",
                     end: ""
@@ -276,7 +278,7 @@
                     }).then(() => {
                         vm.$api.addMeeting(vm.addMeetingForm).then(res => {
                             vm.$message("新增成功");
-                            vm.meetingDialogVisible = false;
+                            //vm.meetingDialogVisible = false;
                             //获取最新的数据并且更新日历，并且清空表单数据
                             vm.getData();
                             vm.addMeetingForm = vm.initMeetingForm();
@@ -289,8 +291,29 @@
                         });
                     });
                 }
-
-
+            },
+            handleEditMeeting(formName){
+                let vm = this;
+                if (vm.validateRules(formName, vm)) {
+                    this.$confirm('是否确认编辑该会议?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        vm.$api.editMeeting(vm.editMeetingForm).then(res => {
+                            vm.$message("编辑成功");
+                            //获取最新的数据并且更新日历，并且清空表单数据
+                            vm.getData();
+                            vm.editMeetingForm = vm.initMeetingForm();
+                            vm.$refs.calendar.fireMethod('rerenderEvents');
+                        })
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消'
+                        });
+                    });
+                }
             }
         }
     }
