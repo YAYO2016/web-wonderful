@@ -206,6 +206,15 @@
                 </el-switch>
             </el-form-item>
             <div class="clearfix"></div>
+            <el-form-item label="进度条:">
+                <div>
+                    <i v-for="i in 5"
+                       :class="`iconfont ${i<=form.processRate?'icon-changfangxing-fill':'icon-changfangxing-empty'}`">
+                    </i>
+                    <!--<i class="iconfont icon-changfangxing-empty"></i>-->
+                </div>
+
+            </el-form-item>
         </el-form>
     </div>
 </template>
@@ -225,7 +234,7 @@
             return {
                 form: {
                     name: '',
-                    multiSelectData:[],
+                    multiSelectData: [],
                     code: '',
                     number: '',
                     numberMore: '',
@@ -246,7 +255,8 @@
                     area: '150524',  //地区码
                     rate: 3,
                     switch: 0,
-                    checked:false,
+                    checked: false,
+                    processRate: 4,
                 },
                 videoUploadPercent: 0,
                 videoFlag: false,

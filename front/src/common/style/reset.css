@@ -156,6 +156,10 @@ html, body {
     padding-right: 10px;
 }
 
+.icon-changfangxing-fill,.icon-changfangxing-empty{
+    color: #ff9700;
+}
+
 .m10 {
     margin: 10px;
 }
