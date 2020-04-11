@@ -15,7 +15,7 @@
      * Created by yanyue on 2020/3/26 13:47
      * 地区选择 级联选择器
      */
-    import areaJson from './area-json';
+    import areaJson from './areas';
 
     export default {
         name: "AreaSelect",

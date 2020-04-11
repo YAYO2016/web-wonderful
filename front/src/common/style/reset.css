@@ -104,18 +104,20 @@ html, body {
     width: 700px !important;
 }
 
-/*e--------------------------------------l-message组件的样式修改-------------------------------------------*/
+/*--------------------------------------l-message组件的样式修改-------------------------------------------*/
 .el-message {
     border-radius: 0;
-    border: none!important;
-    padding: 0!important;
+    border: none !important;
+    padding: 0 !important;
     box-shadow: 0 2px 10px 0 rgba(206, 206, 206, 0.5);
 }
+
 .el-message .el-message__icon {
     font-size: 16px;
     margin-right: 4px;
     padding: 10px;
 }
+
 .el-message .el-icon-info,
 .el-message .el-icon-warning,
 .el-message .el-icon-success,
@@ -123,23 +125,29 @@ html, body {
     color: #fff !important;
     margin-right: 28px;
 }
+
 /*icon区域的背景颜色*/
 .el-message .el-icon-info {
     background-color: #66a2ff;
 }
+
 .el-message .el-icon-warning {
     background-color: #FF9801;
 }
+
 .el-message .el-icon-success {
     background-color: #52aa3A;
 }
+
 .el-message .el-icon-error {
     background-color: #FF5066;
 }
+
 /*文字区域的背景色  白色*/
 .el-message.el-message--info, .el-message.el-message--warning, .el-message.el-message--success, .el-message.el-message--error {
     background-color: #fff;
 }
+
 /*内容区域的设置*/
 .el-message .el-message__content {
     font-family: "Microsoft YaHei";
@@ -149,19 +157,50 @@ html, body {
     line-height: 20px;
 }
 
-/**/
-.el-select-dropdown__list .el-checkbox{
+/*--------------------------------------l-message组件的样式修改-------------------------------------------*/
+
+
+/*select下拉框里面的权限checkbox的样式*/
+.el-select-dropdown__list .el-checkbox {
     text-align: right;
     width: 100%;
     padding-right: 10px;
 }
 
-.icon-changfangxing-fill,.icon-changfangxing-empty{
+/*icon图标如果想设置宽高的话必须设置成block*/
+.icon-changfangxing-fill, .icon-changfangxing-empty {
     /*将icon图标设置为block的时候，就可以调节宽高*/
     display: inline-block;
     width: 10px;
     color: #ff9700;
 }
+
+/*---------------------------------------------------全局滚动条的样式start-----------------------------------------------------*/
+::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #f9c297;
+}
+::-webkit-scrollbar-thumb:hover { /*滚动条里面小方块*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #f6f6f6;
+}
+::-webkit-scrollbar-thumb:active { /*滚动条里面小方块*/
+    background: -webkit-gradient(linear,left top,left bottom,from(#e4e4e4),to(#f4f4f4));
+}
+
+::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background: rgba(0,0,0,0.21);
+}
+/*---------------------------------------------------全局滚动条的样式end-----------------------------------------------------*/
 
 .m10 {
     margin: 10px;
