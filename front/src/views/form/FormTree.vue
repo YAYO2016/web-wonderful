@@ -59,7 +59,7 @@
         .tree-wrapper {
             padding: 20px;
             width: 500px;
-            height: 500px;
+            height: 490px;
             overflow-y: auto;
             border: 1px solid #ccc;
             border-radius: 5px
