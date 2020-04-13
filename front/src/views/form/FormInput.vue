@@ -286,7 +286,8 @@
                 //步骤条数据
                 allsteps: [
                     {title: "会议创建", desc: ""},
-                    {title: "信息护卫", desc: ""},
+                    {title: "信息护卫",
+                        desc: "<div>2.1时间确认</div><div>2.2会议材料上传</div>"},
                     {title: "会议召开", desc: "", active:true},
                     {title: "资料归档", desc: ""},
                     {title: "后续事项跟进", desc: ""},
