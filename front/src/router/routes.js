@@ -161,19 +161,19 @@ export const asyncRoutes = [
             {
                 path: '/form/calendar',
                 name: 'Calendar',
-                meta: {title: '高级日历', icon: 'fa fa-wpforms'},
+                meta: {title: '高级日历', icon: 'fa fa-calendar'},
                 component: () => import('@/views/form/FormCalendar'),
             },
             {
                 path: '/form/calendar2',
                 name: 'Calendar2',
-                meta: {title: '高级日历2', icon: 'fa fa-wpforms'},
+                meta: {title: '高级日历2', icon: 'fa fa-calendar'},
                 component: () => import('@/views/form/FormCalendar2'),
             },
             {
                 path: '/form/tree',
                 name: 'FormTree',
-                meta: {title: '树形控件', icon: 'fa fa-wpforms'},
+                meta: {title: '树形控件', icon: 'fa fa-tree'},
                 component: () => import('@/views/form/FormTree'),
             },
 

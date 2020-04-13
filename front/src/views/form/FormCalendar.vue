@@ -299,7 +299,8 @@
                             //vm.meetingDialogVisible = false;
                             //获取最新的数据并且更新日历，并且清空表单数据
                             await vm.getData();
-                            vm.addMeetingForm = vm.initMeetingForm();
+                            vm.$refs[formName].resetFields();
+                            //vm.addMeetingForm = vm.initMeetingForm(); //这样子直接修改数据会导致数据修改的校验，然后报红
                             vm.$refs.calendar.fireMethod('rerenderEvents');
                         })
                     }).catch(() => {
@@ -319,10 +320,11 @@
                         type: 'warning'
                     }).then(() => {
                         vm.$api.editMeeting(vm.editMeetingForm).then(async res => {
-                            vm.$message("编辑成功");
+                            vm.$message.success("编辑成功");
                             //获取最新的数据并且更新日历，并且清空表单数据
                             await vm.getData();
-                            vm.editMeetingForm = vm.initMeetingForm();
+                            vm.$refs[formName].resetFields();
+                            //vm.editMeetingForm = vm.initMeetingForm();
                             vm.$refs.calendar.fireMethod('rerenderEvents');
                         })
                     }).catch(() => {
