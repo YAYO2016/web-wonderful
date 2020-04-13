@@ -40,6 +40,7 @@
         <g-split-l></g-split-l>
         <!--日历组件-->
         <full-calendar
+                id="calendar"
                 ref="calendar"
                 :events="events"
                 :config="config"
@@ -92,7 +93,10 @@
                     defaultView: 'agendaWeek',  //默认按周显示
                     //weekends:true,  //是否在日历中显示周末
                     height: 'auto', //高度
+                    //contentHeight://设置日历主体内容的高度，不包括header部分，默认未设置，高度根据aspectRatio值自适应。
+                    aspectRatio: 1.35,//设置日历单元格宽度与高度的比例。
                     fixedWeekCount: false,  //是否固定显示六周
+                    //hiddenDays:[],//隐藏一周中的某一天或某几天，数组形式，如隐藏周二和周五：[2,5]，默认不隐藏，除非weekends设置为false。
                     //weekMode:"liquid", //周数不定，每周的高度可变，整个日历的高度不变
                     header: false,
                     //header: { //表头信息
@@ -100,6 +104,11 @@
                     //    center: 'title',
                     //    right: 'custom',
                     //},
+                    //monthNames : ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"], //月份自定义命名
+                    //monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"], //月份缩略命名（英语比较实用：全称January可设置缩略为Jan）
+                    //dayNames: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],       //同理monthNames
+                    //dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],  //同理monthNamesShort
+                    //weekNumberTitle : "周",         //周的国际化,默认为"W"
                     /* agenda 模式 */
                     allDaySlot: false,
                     //allDay:false,
@@ -111,7 +120,6 @@
                     slotDuration: '00:30:00', //时间间隔
                     minTime: '9:00',  //表格开始时间
                     maxTime: '18:00',  //表格结束时间
-                    selectable: true,  //不允许用户点击拉取表格区域（生成事件交给上面的新建按钮弹框去做）
                     editable: false,  //不允许用户操作已经存在的时间
                     /* 设置按钮文字 */
                     buttonText: {
@@ -132,11 +140,23 @@
                             end: '18:00'
                         }
                     ],
+                    handleWindowResize: true,//是否随浏览器窗口大小变化而自动变化。
+                    //render:function(view){
+                    //    console.log('render',view)
+                    //},//method,绑定日历到id上。$('#id').fullCalendar('render');
                     //themeSystem: 'bootstrap3',  //指定日历使用哪种风格皮肤
+                    //viewRender : function(view,element){
+                    //    console.log(element);
+                    //    //在视图被渲染时触发（切换视图也触发） 参数view为视图对象，参数element为Jquery的视图Dom
+                    //},
+                    //noEventsMessage : "L没数据啊",   //listview视图下，无数据时显示提示
+                    selectable: true, //允许用户可以长按鼠标选择多个区域(比如月视图，可以选中多天；日视图可以选中多个小时)，默认false不能选择多区域的
+                    //selectHelper: false, //接selectable，周/日视图在选择时是否预先画出“日程区块”的样式出来
                     selectOverlap: false,  //确定是否允许用户选择事件占用的时间段
                     eventClick: this.eventClick, //点击事件
                     dayClick: this.dayClick, //点击日程表上面某一天
-                    selectAllow: this.selectAllow  //使用回调函数精确控制可选区域
+                    selectAllow: this.selectAllow,  //精确的编程控制用户可以选择的地方，返回true则表示可选择，false表示不可选择
+                    dayRender: this.dayRender
                 },
 
                 allowDates: [],
@@ -168,23 +188,28 @@
             //$(".fc-fri").css('backgroundColor','red');
 
             //然后回显的话，每个日期TD都会有一个唯一值data-date
-            $("td[data-date='"+this.gDateFormat("2020-4-8 9:00:00")+"']").css('backgroundColor','red');
+            //$("td[data-date='"+this.gDateFormat("2020-4-8 9:00:00")+"']").css('backgroundColor','red');
 
-            console.log(this.gDateFormat("2020-4-8 9:00:00"));
+            $('.fc-day[data-date="' + this.gDateFormat("2020-4-15 9:00:00") + '"]').css('background', "#f9c297");
+            //console.log($('.fc-day[data-date="' + this.gDateFormat("2020-4-15 9:00:00") + '"]'));
+            //console.log(this.gDateFormat("2020-4-8 9:00:00"));
             //$(".fc-mon .fc-widget-content .fc-day7 ").css('backgroundColor','red');
 
-            console.log(this.gTimeFormat("2020-4-8 9:00:00"));
-            console.log("td[data-date='"+this.gTimeFormat("2020-4-8 9:00:00")+"']");
+            //console.log(this.gTimeFormat("2020-4-8 9:00:00"));
+            //console.log("td[data-date='"+this.gTimeFormat("2020-4-8 9:00:00")+"']");
+
+            //dayRender解决
+
             vm.allowDates = [
                 {
-                    start: "2020-4-8 9:00:00",
-                    end: "2020-4-8 12:00:00",
+                    start: "2020-4-15 9:00:00",
+                    end: "2020-4-15 12:00:00",
                 },
                 {
-                    start: "2020-4-10 9:00:00",
-                    end: "2020-4-10 12:00:00",
+                    start: "2020-4-16 9:00:00",
+                    end: "2020-4-16 12:00:00",
                 }
-            ]
+            ];
 
 
 
@@ -205,7 +230,7 @@
                 let vm = this;
                 vm.$refs.calendar.fireMethod('gotoDate', date);
             },
-            // 点击当天
+             //点击当天
             dayClick(day, jsEvent) {
                 console.log('dayClick', day, jsEvent)
             },
@@ -213,28 +238,38 @@
                 let vm = this;
                 //console.log(dateinfo.start);
                 //console.log(dateinfo.end);
+                //console.log(dateinfo.resourceId);
                 //console.log(vm.allowDates);
                 let flag = false;
-                vm.allowDates.forEach(date => {
-                    //console.log(dateinfo.start.hours());
-                    //console.log(date.start.hours());
-                    //console.log(dateinfo.start.isAfter(date.start));
-                    //console.log(!dateinfo.start.isBefore(date.start) && dateinfo.end.isBefore(date.end));
-                    //console.log(dateinfo.start.isAfter(date.start));
-                    //console.log(dateinfo.end);
-                    //console.log(date.end);
-                    //console.log(dateinfo.end.isBefore(date.end));
-                    //console.log(vm.gTimeFormat(dateinfo.start));
-                    //console.log(date.start);
-                    //console.log(vm.$moment(vm.gTimeFormat(dateinfo.start)).isAfter(date.start)
-                    //    && vm.$moment(vm.gTimeFormat(dateinfo.end)).isBefore(date.end));
-                    if ((vm.$moment(vm.gTimeFormat(dateinfo.start)).isAfter(date.start) || vm.$moment(vm.gTimeFormat(dateinfo.start)).isSame(date.start))
-                        &&
-                        (vm.$moment(vm.gTimeFormat(dateinfo.end)).isBefore(date.end) || vm.$moment(vm.gTimeFormat(dateinfo.end)).isSame(date.end))) {
-                        flag = true;
-                    }
-                });
+                if (vm.allowDates && vm.allowDates.length > 0) {
+                    vm.allowDates.forEach(date => {
+                        //console.log(dateinfo.start.hours());
+                        //console.log(date.start.hours());
+                        //console.log(dateinfo.start.isAfter(date.start));
+                        //console.log(!dateinfo.start.isBefore(date.start) && dateinfo.end.isBefore(date.end));
+                        //console.log(dateinfo.start.isAfter(date.start));
+                        //console.log(dateinfo.end);
+                        //console.log(date.end);
+                        //console.log(dateinfo.end.isBefore(date.end));
+                        //console.log(vm.gTimeFormat(dateinfo.start));
+                        //console.log(date.start);
+                        //console.log(vm.$moment(vm.gTimeFormat(dateinfo.start)).isAfter(date.start)
+                        //    && vm.$moment(vm.gTimeFormat(dateinfo.end)).isBefore(date.end));
+                        if ((vm.$moment(vm.gTimeFormat(dateinfo.start)).isAfter(date.start) || vm.$moment(vm.gTimeFormat(dateinfo.start)).isSame(date.start))
+                            &&
+                            (vm.$moment(vm.gTimeFormat(dateinfo.end)).isBefore(date.end) || vm.$moment(vm.gTimeFormat(dateinfo.end)).isSame(date.end))) {
+                            flag = true;
+                        }
+                    });
+                } else {
+                    flag = true;
+                }
                 return flag;
+
+            },
+            dayRender(date, cell) {
+                console.log("dayRender");
+                console.log(date);
             }
 
 
@@ -245,5 +280,8 @@
 <style lang='scss' scoped>
     .FormCalendar {
         @include content-box;
+
+
+
     }
 </style>
