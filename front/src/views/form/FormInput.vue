@@ -220,6 +220,11 @@
                         :allsteps="allsteps"
                 ></g-steps>
             </el-form-item>
+            <div class="clearfix"></div>
+            <el-divider></el-divider>
+            <el-form-item label="上传文件：">
+                <UploadInput></UploadInput>
+            </el-form-item>
         </el-form>
     </div>
 </template>
@@ -228,9 +233,11 @@
     /**
      * Created by yanyue on 2019-11-16 19:29
      */
+    import UploadInput from "./components/UploadInput";
 
     export default {
         name: "FormInput",
+        components: {UploadInput},
         mounted() {
             let vm = this;
             vm.restaurants = vm.loadAll();
@@ -286,10 +293,12 @@
                 //步骤条数据
                 allsteps: [
                     {title: "会议创建", desc: ""},
-                    {title: "信息护卫",
-                        desc: "<div>2.1时间确认</div><div>2.2会议材料上传</div>"},
-                    {title: "会议召开", desc: "", active:true},
-                    {title: "资料归档", desc: ""},
+                    {
+                        title: "信息护卫",
+                        desc: "<div>2.1.时间确认</div><div>2.2.会议材料上传</div>"
+                    },
+                    {title: "会议召开", desc: ""},
+                    {title: "资料归档", desc: "", active: true},
                     {title: "后续事项跟进", desc: ""},
                     {title: "完成", desc: ""},
                 ]
