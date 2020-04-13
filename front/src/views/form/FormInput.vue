@@ -213,7 +213,12 @@
                     </i>
                     <!--<i class="iconfont icon-changfangxing-empty"></i>-->
                 </div>
-
+            </el-form-item>
+            <div class="clearfix"></div>
+            <el-form-item label="步骤条:">
+                <g-steps
+                        :allsteps="allsteps"
+                ></g-steps>
             </el-form-item>
         </el-form>
     </div>
@@ -278,6 +283,15 @@
                     value: '选项5',
                     label: '北京烤鸭'
                 }],
+                //步骤条数据
+                allsteps: [
+                    {title: "会议创建", desc: ""},
+                    {title: "信息护卫", desc: ""},
+                    {title: "会议召开", desc: "", active:true},
+                    {title: "资料归档", desc: ""},
+                    {title: "后续事项跟进", desc: ""},
+                    {title: "完成", desc: ""},
+                ]
             }
         },
         methods: {
