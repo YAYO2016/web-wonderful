@@ -80,8 +80,9 @@
                     //},
                     {
                         title: "严跃开会",
-                        start: this.$moment("2020-4-9 9:00:00"),
-                        end: this.$moment("2020-4-9 12:00:00"),
+                        //resourceIds: ['a', 'b'],
+                        start: this.$moment("2020-4-13 9:00:00"),
+                        end: this.$moment("2020-4-13 12:00:00"),
                         color: "#ff7900",
                     },
 
@@ -156,7 +157,36 @@
                     eventClick: this.eventClick, //点击事件
                     dayClick: this.dayClick, //点击日程表上面某一天
                     selectAllow: this.selectAllow,  //精确的编程控制用户可以选择的地方，返回true则表示可选择，false表示不可选择
-                    dayRender: this.dayRender
+                    //dayRender: this.dayRender
+
+
+                    //groupByResource:false,//多日议程或基本视图是否应显示资源列。如果是这样，将资源标题放在日期标题之上。
+                    //groupByDateAndResource:false,//多日议程或基本视图是否应显示资源列。如果是，将资源标题放在日期标题之下
+                    //resourceLabelText:'顶顶顶',
+                    //resources: [
+                    //    {
+                    //        id: 'a',
+                    //        title: 'Room A'
+                    //    },
+                    //    {
+                    //        id: 'b',
+                    //        title: 'Room B'
+                    //    }
+                    //],
+                    //resourceRender: function (resourceObj, labelTds, bodyTds) {//在资源呈现时触发
+                    //    $(labelTds).css({'cursor':'pointer'});
+                    //    $(labelTds).on('click',function(){
+                    //        console.log(resourceObj);
+                    //        var aaa=$('#makeCalendar').fullCalendar('refetchEventSources',function(Event){
+                    //            if(Event.resourceId==resourceObj.id){
+                    //                return Event;
+                    //            }
+                    //        });
+                    //        console.log(aaa);
+                    //        $('#makeCalendar').fullCalendar('changeView','agendaWeek'); //切换到不同视图
+                    //    })
+                    //},
+
                 },
 
                 allowDates: [],
@@ -267,9 +297,12 @@
                 return flag;
 
             },
+            //只有在切换月视图的时候才会执行
             dayRender(date, cell) {
                 console.log("dayRender");
                 console.log(date);
+                //console.log(date);
+                cell.css("background-color", "red");
             }
 
 

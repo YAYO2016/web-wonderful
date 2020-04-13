@@ -42,6 +42,7 @@
                 <g-split-l></g-split-l>
                 <!--日历组件-->
                 <full-calendar
+                        id="calendar"
                         ref="calendar"
                         :events="events"
                         :config="config"
@@ -56,7 +57,7 @@
                             <template slot="title">
                                 新增会议
                             </template>
-                            <el-form ref="addMeetingForm" :model="addMeetingForm" label-width="110px">
+                            <el-form ref="addMeetingForm" class="meeting-form" :model="addMeetingForm" label-width="110px">
                                 <el-form-item label="会议标题" prop="title"
                                               :rules="$rules.NotEmpty">
                                     <el-input v-model="addMeetingForm.title" placeholder="请输入会议标题"
@@ -164,11 +165,12 @@
      */
     import {FullCalendar} from 'vue-full-calendar'
     import 'fullcalendar/dist/fullcalendar.css'
-    //import $ from "jquery";
+    import $ from "jquery";
 
 
     export default {
         name: "FormCalendar",
+        //inject: ["reload"],
         components: {FullCalendar},
         data() {
             return {
@@ -202,14 +204,20 @@
                     slotDuration: '00:30:00', //时间间隔
                     minTime: '9:00',  //表格开始时间
                     maxTime: '18:00',  //表格结束时间
-                    selectable: false,  //不允许用户点击拉取表格区域（生成事件交给上面的新建按钮弹框去做）
+                    selectable: true,  //不允许用户点击拉取表格区域（生成事件交给上面的新建按钮弹框去做）
                     editable: false,  //不允许用户操作已经存在的时间
                     /* 设置按钮文字 */
                     buttonText: {
                         today: '今天',
                     },
                     eventClick: this.eventClick, //点击事件
-                    dayClick: this.dayClick, //点击日程表上面某一天
+                    //dayClick: this.dayClick, //点击日程表上面某一天
+                    unselectAuto: true,  //设置当点击页面其他地方的时候，是否清除已选择的区域，值为布尔类型，默认值 true。只有当 selectable 设置为true的时候才有效。
+                    //指定某些元素忽略 unselectAuto选项（貌似必须是form表单）。值为字符串类型，默认为空。遵循 Jquery selecter，点击元素，不会清除选中状态。
+                    // 例如页面上有一个“创建日程”按钮（class为btn）的时候，用户点击此按钮，就不能清除当前已经选中的。因此你要有个form表单
+                    //也就是说在该表单元素中点击操作，不会将当前时间框中选择的区域给自动消除掉
+                    unselectCancel: ".meeting-form",
+                    select: this.selectDate  //在日历中选择某个时间之后触发该回调函数
                 },
                 //meetingDialogVisible: false,
                 addMeetingForm: this.initMeetingForm(),
@@ -238,7 +246,17 @@
             getData() {
                 let vm = this;
                 vm.$api.getMeetings().then(res => {
-                    vm.events = res.data;
+                    let results = res.data;
+                    results.forEach(results => {
+                        results.color = "#ff7900";
+                    });
+                    vm.events = [...results];
+                    //vm.$refs.calendar.$emit('refetch-events');
+                    //vm.$refs.calendar.fireMethod('removeEventSource', vm.events);
+                    //vm.$refs.calendar.fireMethod('addEventSource', vm.events);
+                    //$('#calendar').fullCalendar( 'removeEventSource',vm.events);
+                    //$('#calendar').fullCalendar( 'refetchEvents');
+                    //$('#calendar').fullCalendar( 'addEventSource', vm.events);
                 })
             },
             // 点击事件
@@ -262,7 +280,7 @@
             },
             initMeetingForm() {
                 return {
-                    id:"",
+                    id: "",
                     title: "",
                     start: "",
                     end: ""
@@ -276,11 +294,11 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        vm.$api.addMeeting(vm.addMeetingForm).then(res => {
-                            vm.$message("新增成功");
+                        vm.$api.addMeeting(vm.addMeetingForm).then(async res => {
+                            vm.$message.success("新增成功");
                             //vm.meetingDialogVisible = false;
                             //获取最新的数据并且更新日历，并且清空表单数据
-                            vm.getData();
+                            await vm.getData();
                             vm.addMeetingForm = vm.initMeetingForm();
                             vm.$refs.calendar.fireMethod('rerenderEvents');
                         })
@@ -292,7 +310,7 @@
                     });
                 }
             },
-            handleEditMeeting(formName){
+            handleEditMeeting(formName) {
                 let vm = this;
                 if (vm.validateRules(formName, vm)) {
                     this.$confirm('是否确认编辑该会议?', '提示', {
@@ -300,10 +318,10 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        vm.$api.editMeeting(vm.editMeetingForm).then(res => {
+                        vm.$api.editMeeting(vm.editMeetingForm).then(async res => {
                             vm.$message("编辑成功");
                             //获取最新的数据并且更新日历，并且清空表单数据
-                            vm.getData();
+                            await vm.getData();
                             vm.editMeetingForm = vm.initMeetingForm();
                             vm.$refs.calendar.fireMethod('rerenderEvents');
                         })
@@ -314,7 +332,17 @@
                         });
                     });
                 }
-            }
+            },
+            selectDate(start, end, jsEvent, view) {
+                let vm = this;
+                vm.searchForm.activeNames = "addMeeting";
+                vm.addMeetingForm.start = vm.gTimeFormat(start);
+                vm.addMeetingForm.end = vm.gTimeFormat(end);
+            },
+        },
+        destroyed() {
+            let vm = this;
+            vm.$refs.calendar.fireMethod('destroy');
         }
     }
 </script>
