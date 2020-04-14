@@ -171,6 +171,12 @@ export const asyncRoutes = [
                 component: () => import('@/views/form/FormCalendar2'),
             },
             {
+                path: '/form/mycalendar',
+                name: 'MyCalendar',
+                meta: {title: '自定义日历', icon: 'fa fa-calendar'},
+                component: () => import('@/views/form/MyCalendar'),
+            },
+            {
                 path: '/form/tree',
                 name: 'FormTree',
                 meta: {title: '树形控件', icon: 'fa fa-tree'},

@@ -85,14 +85,14 @@
                     //    end: this.$moment("2020-4-13 12:00:00"),
                     //    color: "#ff7900",
                     //},
-                    {
-                        title: "严跃开会",
-                        //resourceIds: ['a', 'b'],
-                        start: this.$moment("2020-4-16 9:00:00"),
-                        end: this.$moment("2020-4-16 11:00:00"),
-                        color: "#ff7900",
-                        editable: false,
-                    },
+                    //{
+                    //    title: "严跃开会",
+                    //    //resourceIds: ['a', 'b'],
+                    //    start: this.$moment("2020-4-16 9:00:00"),
+                    //    end: this.$moment("2020-4-16 11:00:00"),
+                    //    color: "#ff7900",
+                    //    editable: false,
+                    //},
 
                 ],
                 config: {
@@ -137,7 +137,18 @@
                     //设置用户可选的时间段（selectable:true的时候才生效）
                     selectConstraint: "businessHours",
                     //强调日历中的某些时间段，比如默认情况下，工作日的时间周一-周五上午9点-下午5点。
-                    businessHours: [],
+                    //businessHours: [
+                    //    {
+                    //        dow: [1, 2, 3, 4, 5], // 周一 - 周四
+                    //        start: '9:00', // 上午10点开始
+                    //        end: '12:00', // 下午18点结束
+                    //    },
+                    //    {
+                    //        dow: [1, 2, 3, 4, 5],
+                    //        start: '13:30',
+                    //        end: '18:00'
+                    //    }
+                    //],
                     //限制日历可用日期范围，有效范围之外的日期会变灰，用户无法将时间拖动会调整到这些区域
                     //validRange: {
                     //    start: '2020-04-14',
@@ -210,7 +221,7 @@
                 }
             }
         },
-        mounted() {
+        created() {
             let vm = this;
 
             //$(".fc-sat").css('backgroundColor','red');//这个是周六的TD
@@ -234,58 +245,68 @@
 
             //dayRender解决
 
-            // 接口返回的运行选择的时间
+            // 接口返回的可以被选择的时间
             vm.allowDates = [
                 {
-                    start: "2020-4-15 9:00:00",
-                    end: "2020-4-15 12:00:00",
-                },
-                //{
-                //    start: "2020-4-16 9:00:00",
-                //    end: "2020-4-16 12:00:00",
-                //}
-            ];
-
-            let businessHours = [
-                {
-                    dow: [1, 2, 3, 4, 5], // 周一 - 周四
-                    start: '9:00', // 上午10点开始
-                    end: '12:00', // 下午18点结束
+                    start: "2020-4-14 10:00:00",
+                    end: "2020-4-14 12:00:00",
                 },
                 {
-                    dow: [1, 2, 3, 4, 5],
-                    start: '13:30',
-                    end: '18:00'
+                    start: "2020-4-15 10:00:00",
+                    end: "2020-4-17 12:00:00",
                 }
             ];
-            //vm.allowDates.forEach(date => {
-            //    // 获取周几
-            //    let days = [];
-            //    let start = vm.gHourFormat(date.start);  //获取HH:mm:ss时间格式
-            //    let end = vm.gHourFormat(date.end);
-            //    //console.log(vm.$moment(date.start).day());
-            //    //console.log(vm.$moment(date.end).day());
-            //    for(let i = vm.$moment(date.start).day();i<=vm.$moment(date.end).day();i++){
-            //        days.push(i);
-            //    }
-            //    console.log(days);
-            //    if(days && days.length === 1){
-            //        businessHours.push({
-            //            dow:[days[0]],
-            //            start:start,
-            //            end:end
-            //        })
-            //    }else if(days && days.length === 2){
-            //
-            //    }else{  //间隔超过3天的了
-            //
-            //    }
-            //
-            //});
-            //console.log(businessHours);
+            let businessHours = [];
+
+            //页面上设置businessHours，给出的时间范围
+            vm.allowDates.forEach(date => {
+                // 获取周几
+                let days = [];
+                let start = vm.gHourFormat(date.start);  //获取HH:mm:ss时间格式
+                let end = vm.gHourFormat(date.end);
+                for (let i = vm.$moment(date.start).day(); i <= vm.$moment(date.end).day(); i++) {
+                    days.push(i);
+                }
+                console.log(days);
+                if (days && days.length === 1) {
+                    businessHours.push({
+                        dow: [days[0]],
+                        start: start,
+                        end: end
+                    })
+                } else if (days && days.length === 2) {
+                    businessHours.push({
+                        dow: [days[0]],
+                        start: start,
+                        end: vm.config.maxTime
+                    });
+                    businessHours.push({
+                        dow: [days[1]],
+                        start: vm.config.minTime,
+                        end: end
+                    })
+                } else {  //间隔超过3天的了
+                    businessHours.push({
+                        dow: [days[0]],
+                        start: start,
+                        end: vm.config.maxTime
+                    });
+                    for (let i = days[0] + 1; i < days[days.length - 1]; i++) {
+                        businessHours.push({
+                            dow: [i],
+                            start: vm.config.minTime,
+                            end: vm.config.maxTime,
+                        })
+                    }
+                    businessHours.push({
+                        dow: [days[days.length - 1]],
+                        start: vm.config.minTime,
+                        end: end
+                    })
+                }
+
+            });
             vm.config.businessHours = businessHours;
-            vm.$refs.calendar.fireMethod('removeEvents');
-            vm.$refs.calendar.fireMethod('renderEvents',true);
 
 
         },
