@@ -70,6 +70,11 @@
                         placeholder="选择日期时间">
                 </el-date-picker>
             </el-form-item>
+            <el-divider></el-divider>
+            <el-form-item label="选择时间范围">
+                <!--该控件涉及到父子组件的传值，使用sync-->
+                <g-date-range :start-date.sync="form.startDate" :end-date.sync="form.endDate"></g-date-range>
+            </el-form-item>
         </el-form>
     </div>
 </template>
@@ -89,7 +94,9 @@
                     format: "YYYY-MM-DD HH:mm:ss",
                     selectDateType: '日',
                     selectCount: 0,
-                    datetime:""
+                    datetime:"",
+                    startDate:"",
+                    endDate:""
                 }
             }
         },

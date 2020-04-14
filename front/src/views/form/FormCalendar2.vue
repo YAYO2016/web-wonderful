@@ -78,12 +78,20 @@
                     //    borderColor: "#ff7900",
                     //    editable: false,
                     //},
+                    //{
+                    //    title: "严跃开会",
+                    //    //resourceIds: ['a', 'b'],
+                    //    start: this.$moment("2020-4-13 9:00:00"),
+                    //    end: this.$moment("2020-4-13 12:00:00"),
+                    //    color: "#ff7900",
+                    //},
                     {
                         title: "严跃开会",
                         //resourceIds: ['a', 'b'],
-                        start: this.$moment("2020-4-13 9:00:00"),
-                        end: this.$moment("2020-4-13 12:00:00"),
+                        start: this.$moment("2020-4-16 9:00:00"),
+                        end: this.$moment("2020-4-16 11:00:00"),
                         color: "#ff7900",
+                        editable: false,
                     },
 
                 ],
@@ -129,18 +137,12 @@
                     //设置用户可选的时间段（selectable:true的时候才生效）
                     selectConstraint: "businessHours",
                     //强调日历中的某些时间段，比如默认情况下，工作日的时间周一-周五上午9点-下午5点。
-                    businessHours: [
-                        {
-                            dow: [1, 2, 3, 4, 5], // 周一 - 周四
-                            start: '9:00', // 上午10点开始
-                            end: '12:00', // 下午18点结束
-                        },
-                        {
-                            dow: [1, 2, 3, 4, 5],
-                            start: '13:30',
-                            end: '18:00'
-                        }
-                    ],
+                    businessHours: [],
+                    //限制日历可用日期范围，有效范围之外的日期会变灰，用户无法将时间拖动会调整到这些区域
+                    //validRange: {
+                    //    start: '2020-04-14',
+                    //    end: '2020-04-16'
+                    //},
                     handleWindowResize: true,//是否随浏览器窗口大小变化而自动变化。
                     //render:function(view){
                     //    console.log('render',view)
@@ -159,6 +161,7 @@
                     selectAllow: this.selectAllow,  //精确的编程控制用户可以选择的地方，返回true则表示可选择，false表示不可选择
                     //dayRender: this.dayRender
 
+                    eventLimit: true, // 事件太多时, 折叠展示
 
                     //groupByResource:false,//多日议程或基本视图是否应显示资源列。如果是这样，将资源标题放在日期标题之上。
                     //groupByDateAndResource:false,//多日议程或基本视图是否应显示资源列。如果是，将资源标题放在日期标题之下
@@ -188,6 +191,7 @@
                     //},
 
                 },
+                //viewRender: this.viewRender,
 
                 allowDates: [],
 
@@ -208,7 +212,7 @@
         },
         mounted() {
             let vm = this;
-            // 接口返回的运行选择的时间
+
             //$(".fc-sat").css('backgroundColor','red');//这个是周六的TD
             //$(".fc-sun").css('backgroundColor','red');//这个是周日的TD
             //$(".fc-mon").css('backgroundColor','red');
@@ -220,7 +224,7 @@
             //然后回显的话，每个日期TD都会有一个唯一值data-date
             //$("td[data-date='"+this.gDateFormat("2020-4-8 9:00:00")+"']").css('backgroundColor','red');
 
-            $('.fc-day[data-date="' + this.gDateFormat("2020-4-15 9:00:00") + '"]').css('background', "#f9c297");
+            //$('.fc-day[data-date="' + this.gDateFormat("2020-4-15 9:00:00") + '"]').css('background', "#f9c297");
             //console.log($('.fc-day[data-date="' + this.gDateFormat("2020-4-15 9:00:00") + '"]'));
             //console.log(this.gDateFormat("2020-4-8 9:00:00"));
             //$(".fc-mon .fc-widget-content .fc-day7 ").css('backgroundColor','red');
@@ -230,21 +234,92 @@
 
             //dayRender解决
 
+            // 接口返回的运行选择的时间
             vm.allowDates = [
                 {
                     start: "2020-4-15 9:00:00",
                     end: "2020-4-15 12:00:00",
                 },
-                {
-                    start: "2020-4-16 9:00:00",
-                    end: "2020-4-16 12:00:00",
-                }
+                //{
+                //    start: "2020-4-16 9:00:00",
+                //    end: "2020-4-16 12:00:00",
+                //}
             ];
 
+            let businessHours = [
+                {
+                    dow: [1, 2, 3, 4, 5], // 周一 - 周四
+                    start: '9:00', // 上午10点开始
+                    end: '12:00', // 下午18点结束
+                },
+                {
+                    dow: [1, 2, 3, 4, 5],
+                    start: '13:30',
+                    end: '18:00'
+                }
+            ];
+            //vm.allowDates.forEach(date => {
+            //    // 获取周几
+            //    let days = [];
+            //    let start = vm.gHourFormat(date.start);  //获取HH:mm:ss时间格式
+            //    let end = vm.gHourFormat(date.end);
+            //    //console.log(vm.$moment(date.start).day());
+            //    //console.log(vm.$moment(date.end).day());
+            //    for(let i = vm.$moment(date.start).day();i<=vm.$moment(date.end).day();i++){
+            //        days.push(i);
+            //    }
+            //    console.log(days);
+            //    if(days && days.length === 1){
+            //        businessHours.push({
+            //            dow:[days[0]],
+            //            start:start,
+            //            end:end
+            //        })
+            //    }else if(days && days.length === 2){
+            //
+            //    }else{  //间隔超过3天的了
+            //
+            //    }
+            //
+            //});
+            //console.log(businessHours);
+            vm.config.businessHours = businessHours;
+            vm.$refs.calendar.fireMethod('removeEvents');
+            vm.$refs.calendar.fireMethod('renderEvents',true);
 
 
         },
         methods: {
+            //businessHours() {
+            //    let vm = this;
+            //    console.log(vm.allowDates);
+            //    vm.allowDates.forEach(date => {
+            //        // 获取周几
+            //        console.log(vm.$moment(date).week());
+            //
+            //    });
+            //
+            //    return [
+            //        {
+            //            dow: [1, 2, 3, 4, 5], // 周一 - 周四
+            //            start: '9:00', // 上午10点开始
+            //            end: '12:00', // 下午18点结束
+            //        },
+            //        {
+            //            dow: [1, 2, 3, 4, 5],
+            //            start: '13:30',
+            //            end: '18:00'
+            //        }
+            //    ]
+            //},
+            //viewRender(view, element) {
+            //    if (this.searchForm.view === 'agendaWeek') {
+            //        $('.fc-bg .fc-day.fc-widget-content.fc-sat').html("<div class='saturday'>some text</div>");
+            //        $('.fc-bg .fc-day.fc-widget-content.fc-mon').html("<div class='monday'>some text</div>");
+            //        $('.fc-bg .fc-day.fc-widget-content.fc-wed').html("<div class='wednesday'>some text</div>");
+            //    }
+            //},
+
             // 点击事件
             eventClick(event, jsEvent, pos) {
                 //console.log('eventClick', event, jsEvent, pos);
@@ -260,7 +335,7 @@
                 let vm = this;
                 vm.$refs.calendar.fireMethod('gotoDate', date);
             },
-             //点击当天
+            //点击当天
             dayClick(day, jsEvent) {
                 console.log('dayClick', day, jsEvent)
             },
@@ -313,7 +388,6 @@
 <style lang='scss' scoped>
     .FormCalendar {
         @include content-box;
-
 
 
     }

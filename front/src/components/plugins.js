@@ -11,8 +11,10 @@ import GTable from './table/Table'
 import GPagination from './pagination/Pagination'
 import GAutoComplete from './auto-complete/AutoComplete'
 import GAreaSelect from './areaslect/AreaSelect'
-import GAllCheckbox from './selectAll-checkbox/AllCheckbox'
+//import GAllCheckbox from './selectAll-checkbox/AllCheckbox'
 import GSteps from './steps/Steps'
+import GDateRange from './date/GDateRange'
+import GInputView from './form/InputView'
 export default {
     install(Vue, options) {
         Vue.component('g-dialog', GDialog);
@@ -24,7 +26,9 @@ export default {
         Vue.component('g-pagination',GPagination);
         Vue.component('g-areaSelect',GAreaSelect);
         Vue.component('g-auto-complete',GAutoComplete);
-        Vue.component('g-all-checkbox',GAllCheckbox);
+        //Vue.component('g-all-checkbox',GAllCheckbox);
         Vue.component('g-steps',GSteps);
+        Vue.component('g-date-range',GDateRange);
+        Vue.component('g-input-view',GInputView);
     }
 };

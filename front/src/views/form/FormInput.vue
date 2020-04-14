@@ -58,7 +58,7 @@
                     <!--
                         collapse-tags	多选时是否将选中值按文字的形式展示
                     -->
-                    <g-all-checkbox :selectData.sync="form.multiSelectData" :options="optionsList"></g-all-checkbox>
+                    <!--<g-all-checkbox :selectData.sync="form.multiSelectData" :options="optionsList"></g-all-checkbox>-->
                     <!--<el-checkbox v-model="form.checked" @change='selectAll(form.multiSelectData,optionsList)'>全选</el-checkbox>-->
                     <el-option
                             v-for="item in optionsList"
@@ -225,6 +225,22 @@
             <el-form-item label="上传文件：">
                 <UploadInput></UploadInput>
             </el-form-item>
+            <el-divider></el-divider>
+            <el-form-item label="测试表单公共组件：" label-width="160px">
+                <g-input-view :value.sync="form.name"></g-input-view>
+                <g-split-v></g-split-v>
+                <g-input-view type="select"
+                              :allSelect="true"
+                              :value.sync="form.multiSelectData"
+                              :options="optionsList"
+                              option-key="label"
+                              option-value="value"
+                ></g-input-view>
+                <g-split-l></g-split-l>
+                <g-input-view type="date" :value.sync="form.date"></g-input-view>
+                <g-split-v></g-split-v>
+                <g-input-view type="daterange" :startDate.sync="form.startDate" :endDate.sync="form.endDate"></g-input-view>
+            </el-form-item>
         </el-form>
     </div>
 </template>
@@ -269,6 +285,9 @@
                     switch: 0,
                     checked: false,
                     processRate: 4,
+                    date:'',
+                    startDate:"",
+                    endDate:"",
                 },
                 videoUploadPercent: 0,
                 videoFlag: false,
