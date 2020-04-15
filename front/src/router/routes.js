@@ -135,6 +135,12 @@ export const asyncRoutes = [
         component: Layout,
         children: [
             {
+                path: '/form/forminputtest',
+                name: 'FormInputTest',
+                meta: {title: '自定义表单公共空间测试', icon: 'fa  fa-pencil-square-o'},
+                component: () => import('@/views/form/FormInputTest'),
+            },
+            {
                 path: '/form/forminput',
                 name: 'forminput',
                 meta: {title: '表单输入', icon: 'fa  fa-pencil-square-o'},

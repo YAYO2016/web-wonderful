@@ -14,7 +14,7 @@
             <el-form-item>
                 <el-button-group>
                     <el-button type="primary" icon="el-icon-arrow-left"
-                               @click="$refs.calendar.fireMethod('prev')">上一{{computedViewWords}}
+                               @click="goPrev">上一{{computedViewWords}}
                     </el-button>
                     <el-button type="primary" @click="$refs.calendar.fireMethod('today')">
                         本{{computedViewWords}}
@@ -60,7 +60,7 @@
 
 
     export default {
-        name: "FormCalendar",
+        name: "FormCalendar2",
         components: {FullCalendar},
         data() {
             return {
@@ -137,18 +137,18 @@
                     //设置用户可选的时间段（selectable:true的时候才生效）
                     selectConstraint: "businessHours",
                     //强调日历中的某些时间段，比如默认情况下，工作日的时间周一-周五上午9点-下午5点。
-                    //businessHours: [
-                    //    {
-                    //        dow: [1, 2, 3, 4, 5], // 周一 - 周四
-                    //        start: '9:00', // 上午10点开始
-                    //        end: '12:00', // 下午18点结束
-                    //    },
-                    //    {
-                    //        dow: [1, 2, 3, 4, 5],
-                    //        start: '13:30',
-                    //        end: '18:00'
-                    //    }
-                    //],
+                    businessHours: [
+                        {
+                            //dow: [1, 2, 3, 4, 5], // 周一 - 周四
+                            start: '2020-4-15 9:00', // 上午10点开始
+                            end: '2020-4-15 12:00', // 下午18点结束
+                        },
+                        {
+                            //dow: [1, 2, 3, 4, 5],
+                            start: '13:30',
+                            end: '18:00'
+                        }
+                    ],
                     //限制日历可用日期范围，有效范围之外的日期会变灰，用户无法将时间拖动会调整到这些区域
                     //validRange: {
                     //    start: '2020-04-14',
@@ -169,7 +169,7 @@
                     selectOverlap: false,  //确定是否允许用户选择事件占用的时间段
                     eventClick: this.eventClick, //点击事件
                     dayClick: this.dayClick, //点击日程表上面某一天
-                    selectAllow: this.selectAllow,  //精确的编程控制用户可以选择的地方，返回true则表示可选择，false表示不可选择
+                    //selectAllow: this.selectAllow,  //精确的编程控制用户可以选择的地方，返回true则表示可选择，false表示不可选择
                     //dayRender: this.dayRender
 
                     eventLimit: true, // 事件太多时, 折叠展示
@@ -200,9 +200,9 @@
                     //        $('#makeCalendar').fullCalendar('changeView','agendaWeek'); //切换到不同视图
                     //    })
                     //},
+                    viewRender: this.viewRenderFun,
 
                 },
-                //viewRender: this.viewRender,
 
                 allowDates: [],
 
@@ -256,61 +256,81 @@
                     end: "2020-4-17 12:00:00",
                 }
             ];
-            let businessHours = [];
-
-            //页面上设置businessHours，给出的时间范围
-            vm.allowDates.forEach(date => {
-                // 获取周几
-                let days = [];
-                let start = vm.gHourFormat(date.start);  //获取HH:mm:ss时间格式
-                let end = vm.gHourFormat(date.end);
-                for (let i = vm.$moment(date.start).day(); i <= vm.$moment(date.end).day(); i++) {
-                    days.push(i);
-                }
-                console.log(days);
-                if (days && days.length === 1) {
-                    businessHours.push({
-                        dow: [days[0]],
-                        start: start,
-                        end: end
-                    })
-                } else if (days && days.length === 2) {
-                    businessHours.push({
-                        dow: [days[0]],
-                        start: start,
-                        end: vm.config.maxTime
-                    });
-                    businessHours.push({
-                        dow: [days[1]],
-                        start: vm.config.minTime,
-                        end: end
-                    })
-                } else {  //间隔超过3天的了
-                    businessHours.push({
-                        dow: [days[0]],
-                        start: start,
-                        end: vm.config.maxTime
-                    });
-                    for (let i = days[0] + 1; i < days[days.length - 1]; i++) {
-                        businessHours.push({
-                            dow: [i],
-                            start: vm.config.minTime,
-                            end: vm.config.maxTime,
-                        })
-                    }
-                    businessHours.push({
-                        dow: [days[days.length - 1]],
-                        start: vm.config.minTime,
-                        end: end
-                    })
-                }
-
-            });
-            vm.config.businessHours = businessHours;
+            //let businessHours = [
+            //    {
+            //        dow: [1, 2, 3, 4, 5],
+            //        start: "9:00:00",
+            //        end: "12:00:00",
+            //    },
+            //    {
+            //        dow: [1, 2, 3, 4, 5],
+            //        start: "13:30:00",
+            //        end: "18:00:00",
+            //    }
+            //];
+            //let businessHours = [];
+            //
+            ////页面上设置businessHours，给出的时间范围
+            //vm.allowDates.forEach(date => {
+            //    // 获取周几
+            //    let days = [];
+            //    let start = vm.gHourFormat(date.start);  //获取HH:mm:ss时间格式
+            //    let end = vm.gHourFormat(date.end);
+            //    for (let i = vm.$moment(date.start).day(); i <= vm.$moment(date.end).day(); i++) {
+            //        days.push(i);
+            //    }
+            //    console.log(days);
+            //    if (days && days.length === 1) {
+            //        businessHours.push({
+            //            dow: [days[0]],
+            //            start: start,
+            //            end: end
+            //        })
+            //    } else if (days && days.length === 2) {
+            //        businessHours.push({
+            //            dow: [days[0]],
+            //            start: start,
+            //            end: vm.config.maxTime
+            //        });
+            //        businessHours.push({
+            //            dow: [days[1]],
+            //            start: vm.config.minTime,
+            //            end: end
+            //        })
+            //    } else {  //间隔超过3天的了
+            //        businessHours.push({
+            //            dow: [days[0]],
+            //            start: start,
+            //            end: vm.config.maxTime
+            //        });
+            //        for (let i = days[0] + 1; i < days[days.length - 1]; i++) {
+            //            businessHours.push({
+            //                dow: [i],
+            //                start: vm.config.minTime,
+            //                end: vm.config.maxTime,
+            //            })
+            //        }
+            //        businessHours.push({
+            //            dow: [days[days.length - 1]],
+            //            start: vm.config.minTime,
+            //            end: end
+            //        })
+            //    }
+            //
+            //});
+            //vm.config.businessHours = businessHours;
 
 
         },
         methods: {
+            goPrev() {
+                let vm = this;
+                vm.config.businessHours = [];
+                vm.$refs.calendar.fireMethod('prev');
+
+
+            },
+
             //businessHours() {
             //    let vm = this;
             //    console.log(vm.allowDates);
@@ -333,13 +353,16 @@
             //        }
             //    ]
             //},
-            //viewRender(view, element) {
-            //    if (this.searchForm.view === 'agendaWeek') {
-            //        $('.fc-bg .fc-day.fc-widget-content.fc-sat').html("<div class='saturday'>some text</div>");
-            //        $('.fc-bg .fc-day.fc-widget-content.fc-mon').html("<div class='monday'>some text</div>");
-            //        $('.fc-bg .fc-day.fc-widget-content.fc-wed').html("<div class='wednesday'>some text</div>");
-            //    }
-            //},
+            viewRenderFun(view, element) {
+                console.log(view);
+                let vm = this;
+                vm.$set(vm.config, 'businessHours', []);
+                //if (this.searchForm.view === 'agendaWeek') {
+                //    $('.fc-bg .fc-day.fc-widget-content.fc-sat').html("<div class='saturday'>some text</div>");
+                //    $('.fc-bg .fc-day.fc-widget-content.fc-mon').html("<div class='monday'>some text</div>");
+                //    $('.fc-bg .fc-day.fc-widget-content.fc-wed').html("<div class='wednesday'>some text</div>");
+                //}
+            },
 
             // 点击事件
             eventClick(event, jsEvent, pos) {
