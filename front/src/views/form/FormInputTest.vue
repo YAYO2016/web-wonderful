@@ -30,6 +30,18 @@
                               width="350px"></g-input-view>
             </el-form-item>
             <div class="clearfix"></div>
+            <el-form-item label="性别（单选）：" class="fl">
+                <g-input-view type="radio" :value.sync="form.sex"
+                              :options="[{key:'男',value:1},{key:'女',value:0},{key:'保密',value:3}]"
+                              width="200px"></g-input-view>
+            </el-form-item>
+            <div class="clearfix"></div>
+            <el-form-item label="兴趣爱好（多选）：" class="fl">
+                <g-input-view type="checkbox" :value.sync="form.favourite"
+                              :options="[{key:'篮球',value:'lanqiu'},{key:'羽毛球',value:'yumaoq'},{key:'保龄球',value:'baolingqiu'}]"
+                              width="300px"></g-input-view>
+            </el-form-item>
+            <div class="clearfix"></div>
         </el-form>
     </div>
 </template>
@@ -50,6 +62,8 @@
                     birthday: '',
                     startDate: "",
                     endDate: "",
+                    sex: "",
+                    favourite: []
 
                 },
                 areasOptions: [

@@ -10,7 +10,7 @@
                 :clearable="clearable"
         ></el-input>
 
-        <!--选择框-->
+        <!--下拉单选和下拉多选选择框-->
         <el-select
                 class="Select"
                 v-if="type==='select'"
@@ -35,6 +35,34 @@
             >
             </el-option>
         </el-select>
+
+        <!--radio单选-->
+        <el-radio-group
+                class="Radio"
+                v-if="type==='radio'"
+                v-model="viewValue"
+                :placeholder="placeholder"
+                :style="{width: width}">
+            <el-radio v-for="(option,index) in options"
+                      :key="index"
+                      :label="option[optionValue]">
+                {{option[optionKey]}}
+            </el-radio>
+        </el-radio-group>
+
+        <!--多选框和全选-->
+        <el-checkbox-group
+                class="CheckBox"
+                v-if="type==='checkbox'"
+                v-model="viewValue"
+                :placeholder="placeholder"
+                :style="{width: width}">
+            <el-checkbox v-for="(option,index) in options"
+                         :key="index"
+                         :label="option[optionValue]"
+            > {{option[optionKey]}}
+            </el-checkbox>
+        </el-checkbox-group>
 
         <!--日期类-->
         <el-date-picker
@@ -143,7 +171,12 @@
                 if (this.isTrue(newVal)) {
                     this.$emit("update:value", newVal);
                 } else {
-                    this.$emit("update:value", "");
+                    //如果值是0的话，也会是false，但是有时候数据本身就是0，这是需要的
+                    if (newVal === 0) {
+                        this.$emit("update:value", 0);
+                    } else {
+                        this.$emit("update:value", "");
+                    }
                 }
                 if (this.allSelect) {
                     if (newVal.length === this.options.length) {

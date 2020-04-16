@@ -115,6 +115,12 @@
                 text-align: center;
                 line-height: $headerHeight;
             }
+            li{
+                /*菜单内容如果太长的话，使用省略号*/
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
         }
 
         .el-menu-slide {
