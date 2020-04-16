@@ -89,7 +89,7 @@
                           type="number"
                           oninput="value=value.replace(/\D|^0/g,'')"
                           v-model="form.numberMore"
-                          placeholder="请输入数字（大于0）">
+                          placeholder="请输入数字（大于1）">
 
                 </el-input>
             </el-form-item>

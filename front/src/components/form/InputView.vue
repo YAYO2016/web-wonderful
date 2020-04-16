@@ -51,34 +51,71 @@
         </el-radio-group>
 
         <!--多选框和全选-->
-        <el-checkbox-group
-                class="CheckBox"
-                v-if="type==='checkbox'"
-                v-model="viewValue"
-                :placeholder="placeholder"
-                :style="{width: width}">
-            <el-checkbox v-for="(option,index) in options"
-                         :key="index"
-                         :label="option[optionValue]"
-            > {{option[optionKey]}}
+        <div v-if="type==='checkbox'" class="CheckBox" :style="{width: width}">
+            <el-checkbox-group v-model="viewValue" style="display: inline-block">
+                <el-checkbox v-for="(option,index) in options"
+                             :key="index"
+                             :label="option[optionValue]"
+                > {{option[optionKey]}}
+                </el-checkbox>
+            </el-checkbox-group>
+            <el-checkbox v-if="allSelect"
+                         style="display: inline-block;margin-left: 20px"
+                         v-model="checked"
+                         @change='selectAll'>全选
             </el-checkbox>
-        </el-checkbox-group>
+        </div>
+
 
         <!--日期类-->
         <el-date-picker
-                v-if="type==='date'||type==='daterange'"
+                v-if="type==='date'||type==='daterange' || type==='datetimerange'"
                 v-model="viewValue"
                 :type="type"
                 :clearable="clearable"
                 :placeholder="placeholder"
-                :format="dateFormat"
-                :value-format="valueFormat"
+                :format="type==='datetimerange'?'yyyy-MM-dd HH:mm:ss':dateFormat"
+                :value-format="type==='datetimerange'?'yyyy-MM-dd HH:mm:ss  ':valueFormat"
                 :style="{width: width}"
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
         >
         </el-date-picker>
+
+        <!--数字类-->
+        <el-input-number
+                v-if="type==='number'"
+                v-model="viewValue"
+                :min="Number(min)"
+                :max="Number(max)"
+                :step="Number(step)"
+                :label="placeholder"
+                :precision="Number(precision)"
+                :controls-position="controlsPosition"
+        >
+        </el-input-number>
+        <el-input
+                v-if="type==='inputPositive'"
+                v-model="viewValue"
+                oninput="value=/^\d*(?:\.\d{0,})?$/.test(value)?value:''"
+        >
+            <!--只能输入数字>0的输入框（正数）-->
+        </el-input>
+        <el-input
+                v-if="type==='inputPositiveInt' || type==='inputInt'"
+                v-model="viewValue"
+                oninput="value=value.replace(/\D|^0/g,'')"
+        >
+            <!--只能输入数字，没有小数的的输入框（正整数）-->
+        </el-input>
+        <el-input
+                v-if="type==='money'"
+                v-model="viewValue"
+                oninput="value=(/^\d*(?:\.\d{0,})?$/.test(value)?value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'):'')"
+        >
+            <!--输入只能保留2位的正整数（一般用于货币）-->
+        </el-input>
     </div>
 </template>
 
@@ -130,12 +167,12 @@
             },
             //日期开始时间
             startDate: {
-                type: String,
+                type: [String, Date],
                 default: ""
             },
             //日期结束时间
             endDate: {
-                type: String,
+                type: [String, Date],
                 default: ""
             },
             //日期显示值的格式
@@ -143,7 +180,7 @@
                 type: String,
                 default: "yyyy-MM-dd"
             },
-            //日期返回值的格式
+            //默认的日期返回值的格式
             valueFormat: {
                 type: String,
                 default: "yyyy-MM-dd"
@@ -155,6 +192,26 @@
             clearable: {
                 type: Boolean,
                 default: true
+            },
+            max: {
+                type: [Number, String],
+                default: Infinity
+            },
+            min: {
+                type: [Number, String],
+                default: -Infinity
+            },
+            step: {
+                type: [Number, String],
+                default: 1
+            },
+            precision: {  //精度
+                type: [Number, String],
+                default: 1
+            },
+            controlsPosition: {
+                type: String,
+                default: ""
             }
         },
         data() {
@@ -165,6 +222,7 @@
         },
         mounted() {
             this.viewValue = this.value;
+            //console.log(this.numberRegExp('inputInt'));
         },
         watch: {
             viewValue(newVal) {
@@ -185,7 +243,7 @@
                         this.checked = false;
                     }
                 }
-                if (this.type === 'daterange') {
+                if (this.type === 'daterange' || this.type === 'datetimerange') {
                     if (this.isTrue(newVal)) {
                         this.$emit("update:startDate", newVal[0]);
                         this.$emit("update:endDate", newVal[1]);
