@@ -52,20 +52,21 @@
             <el-divider></el-divider>
             <el-form-item label="输入数字：" class="fl">
                 <g-input-view type="number" :value.sync="form.number" max="10" min="-3" step="0.1" precision="2"
-                              controls-position="right"
-                              width="350px"></g-input-view>
+                              controls-position="right"></g-input-view>
             </el-form-item>
             <el-form-item label="正数：" class="fl">
-                <g-input-view type="inputPositive" :value.sync="form.number"
-                              width="350px"></g-input-view>
+                <g-input-view type="inputPositive" :value.sync="form.number"></g-input-view>
             </el-form-item>
             <el-form-item label="正整数：" class="fl">
-                <g-input-view type="inputInt" :value.sync="form.number"
-                              width="350px"></g-input-view>
+                <g-input-view type="inputInt" :value.sync="form.number"></g-input-view>
             </el-form-item>
             <el-form-item label="金额（默认2位小数）：" class="fl">
-                <g-input-view type="money" :value.sync="form.money"
-                              width="350px"></g-input-view>
+                <g-input-view type="money" :value.sync="form.money"></g-input-view>
+            </el-form-item>
+            <div class="clearfix"></div>
+            <el-divider></el-divider>
+            <el-form-item label="区域选择：" class="fl">
+                <g-input-view type="areas" :value.sync="form.areas"></g-input-view>
             </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
@@ -92,7 +93,8 @@
                     sex: "",
                     favourite: [],
                     number: 0,
-                    money: 0
+                    money: 0,
+                    areas:"140421"
 
 
                 },
