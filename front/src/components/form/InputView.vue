@@ -8,6 +8,7 @@
                 :placeholder="placeholder"
                 :style="{width: width}"
                 :clearable="clearable"
+                :disabled="disabled"
         ></el-input>
 
         <!--下拉单选和下拉多选选择框-->
@@ -20,6 +21,7 @@
                 :clearable="clearable"
                 :multiple="multiple||allSelect"
                 collapse-tags
+                :disabled="disabled"
         >
             <!--全选框-->
             <el-checkbox
@@ -42,6 +44,7 @@
                 v-if="type==='radio'"
                 v-model="viewValue"
                 :placeholder="placeholder"
+                :disabled="disabled"
                 :style="{width: width}">
             <el-radio v-for="(option,index) in options"
                       :key="index"
@@ -52,7 +55,7 @@
 
         <!--多选框和全选-->
         <div v-if="type==='checkbox'" class="CheckBox" :style="{width: width}">
-            <el-checkbox-group v-model="viewValue" style="display: inline-block">
+            <el-checkbox-group v-model="viewValue" style="display: inline-block" :disabled="disabled">
                 <el-checkbox v-for="(option,index) in options"
                              :key="index"
                              :label="option[optionValue]"
@@ -80,6 +83,7 @@
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
+                :disabled="disabled"
         >
         </el-date-picker>
 
@@ -96,6 +100,7 @@
                 :label="placeholder"
                 :precision="Number(precision)"
                 :controls-position="controlsPosition"
+                :disabled="disabled"
         >
         </el-input-number>
         <el-input
@@ -105,6 +110,7 @@
                 :placeholder="placeholder"
                 v-model="viewValue"
                 oninput="value=/^\d*(?:\.\d{0,})?$/.test(value)?value:''"
+                :disabled="disabled"
         >
             <!--只能输入数字>0的输入框（正数）-->
         </el-input>
@@ -115,6 +121,7 @@
                 :placeholder="placeholder"
                 v-model="viewValue"
                 oninput="value=value.replace(/\D|^0/g,'')"
+                :disabled="disabled"
         >
             <!--只能输入数字，没有小数的的输入框（正整数）-->
         </el-input>
@@ -125,6 +132,7 @@
                 :style="{width: width}"
                 v-model="viewValue"
                 oninput="value=(/^\d*(?:\.\d{0,})?$/.test(value)?value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'):'')"
+                :disabled="disabled"
         >
             <!--输入只能保留2位的正整数（一般用于货币）-->
         </el-input>
@@ -138,8 +146,41 @@
                 :options="areaOptions"
                 v-model="viewValue"
                 :style="{width:width }"
+                :disabled="disabled"
         >
         </el-cascader>
+
+        <!--颜色选择-->
+        <el-color-picker
+                v-if="type==='color'"
+                v-model="viewValue"
+                :show-alpha="alpha"
+                :disabled="disabled"
+                :size="size?size:null"
+                :predefine="predefineColor?predefineColors:[]">
+        </el-color-picker>
+
+        <!--树形控件-->
+        <el-tree
+                v-if="type==='tree'"
+                :data="treeOptions"
+                show-checkbox
+                node-key="id"
+                :check-strictly="true"
+                ref="tree"
+                highlight-current
+                @check="checkTree"
+                :props="defaultProps">
+            <!--
+                check-stricty 父、子节点之间没有关联【不写这个，选了父节点，会默认选择全部的子节点】
+
+                props
+                label 指定 节点标签 为节点对象的某个属性值
+                children 指定 子树 为节点对象的某个属性值
+                disabled 指定节点选择框是否禁用为节点对象的某个属性值
+                isLeaf 指定节点是否为叶子节点，仅在指定了 lazy 属性的情况下生效
+            -->
+        </el-tree>
     </div>
 </template>
 
@@ -237,6 +278,24 @@
             controlsPosition: {
                 type: String,
                 default: ""
+            },
+            predefineColor: {
+                type: [Boolean, String],
+                default: false
+            },
+            //颜色选择器透明度的设置
+            alpha: {
+                type: Boolean,
+                default: false
+            },
+            size: {
+                type: String,
+                default: null
+                //medium / small / mini
+            },
+            disabled: {
+                type: Boolean,
+                default: null
             }
         },
         data() {
@@ -244,13 +303,46 @@
                 viewValue: "",
                 checked: false,
                 areaOptions: [],
+                predefineColors: [
+                    '#ff4500',
+                    '#ff8c00',
+                    '#ffd700',
+                    '#90ee90',
+                    '#00ced1',
+                    '#1e90ff',
+                    '#c71585',
+                    'rgba(255, 69, 0, 0.68)',
+                    'rgb(255, 120, 0)',
+                    'hsv(51, 100, 98)',
+                    'hsva(120, 40, 94, 0.5)',
+                    'hsl(181, 100%, 37%)',
+                    'hsla(209, 100%, 56%, 0.73)',
+                    '#c7158577'
+                ]
+            }
+        },
+        computed: {
+            defaultProps() {
+                return {
+                    children: this.optionValue,
+                    label: this.optionKey
+                }
+            },
+            treeOptions() {
+                //console.log("options",this.options);
+                //这里使用深拷贝 因为translateDataToTree递归函数会修改options本身，所以需要保持源数据options的纯净
+                let options = JSON.parse(JSON.stringify(this.options));
+                return this.translateDataToTree(options);
             }
         },
         mounted() {
-
             if (this.type === 'areas') {
                 this.areaOptions = this.getAreaList();
                 this.viewValue = this.getArea(this.value);
+            } else if (this.type === 'tree') {
+                //将树形结构一开始的数据加载到组织树上
+                this.viewValue = this.value;
+                this.$refs.tree.setCheckedKeys([...this.viewValue]);
             } else {
                 this.viewValue = this.value;
             }
@@ -462,7 +554,57 @@
                     }
                 }
                 return aName;
-            }
+            },
+            //把扁平数据转成树形数据
+            /**
+             * 该方法用于将有父子关系的数组转换成树形结构的数组
+             * 接收一个具有父子关系的数组作为参数
+             * 返回一个树形结构的数组
+             * data 待过滤的数组
+             * id 唯一性id
+             * parentId 所属于的父级的id
+             * children 子类的键名
+             */
+            translateDataToTree(data, id = 'id', parentId = 'parentId', children = 'children') {
+                //console.log("data", data);
+                //没有父节点的数据(parentId不存在或者是0的一般是最高级别的节点)
+                let parents = data.filter(value => value[parentId] == 'undefined' || value[parentId] == null || value[parentId] == 0);
+                //有父节点的数据
+                let childrens = data.filter(value => value[parentId] !== 'undefined' && value[parentId] != null && value[parentId] != 0);
+                //定义转换方法的具体实现
+                let translator = (parents, childrens) => {
+                    //遍历父节点数据
+                    parents.forEach((parent) => {
+                            //遍历子节点数据
+                            childrens.forEach((current, index) => {
+                                    //此时找到父节点对应的一个子节点
+                                    if (current[parentId] === parent[id]) {
+                                        //对子节点数据进行深复制，这里只支持部分类型的数据深复制，对深复制不了解的童靴可以先去了解下深复制
+                                        let temp = JSON.parse(JSON.stringify(childrens));
+                                        //让当前子节点从temp中移除，temp作为新的子节点数据，这里是为了让递归时，子节点的遍历次数更少，如果父子关系的层级越多，越有利
+                                        temp.splice(index, 1);
+                                        //让当前子节点作为唯一的父节点，去递归查找其对应的子节点
+                                        translator([current], temp);
+                                        //把找到子节点放入父节点的childrens属性中
+                                        typeof parent[children] !== 'undefined' ? parent[children].push(current) : parent[children] = [current]
+                                    }
+                                }
+                            )
+                        }
+                    )
+                };
+                //调用转换方法
+                translator(parents, childrens);
+                //返回最终的结果
+                //console.log(parents);
+                return parents;
+            },
+            checkTree() {
+                //树形接口选择节点，  返回key的集合，一般就是option的id集合
+                this.viewValue = this.$refs.tree.getCheckedKeys();
+                //返回node 节点本身对象的数组集合
+                //this.viewValue = this.$refs.tree.getCheckedNodes();
+            },
         }
 
     }
@@ -472,7 +614,5 @@
 <style lang='scss' scoped>
     .InputView {
         display: inline-block;
-
-
     }
 </style>

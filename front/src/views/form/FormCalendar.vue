@@ -342,10 +342,10 @@
                 vm.addMeetingForm.end = vm.gTimeFormat(end);
             },
         },
-        destroyed() {
-            let vm = this;
-            vm.$refs.calendar.fireMethod('destroy');
-        }
+        //destroyed() {
+        //    let vm = this;
+        //    vm.$refs.calendar.fireMethod('destroy');
+        //}
     }
 </script>
 

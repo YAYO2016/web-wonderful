@@ -4,6 +4,8 @@
         <el-form ref="InputViewForm" :model="form" label-width="180px">
             <el-form-item label="用户名（输入框）：" class="fl" label-width="140px">
                 <g-input-view :value.sync="form.name"></g-input-view>
+                <g-split-v></g-split-v>
+                <g-input-view :value.sync="form.name" disabled></g-input-view>
             </el-form-item>
             <el-form-item label="地址选择（单选）" class="fl">
                 <g-input-view type="select" :value.sync="form.address"
@@ -70,6 +72,25 @@
             </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
+            <el-form-item label="颜色选择：" class="fl">
+                <g-input-view type="color" :value.sync="form.color"
+                              predefineColor="true"
+                              size="large"
+                              alpha
+                ></g-input-view>
+            </el-form-item>
+            <div class="clearfix"></div>
+            <el-divider></el-divider>
+            <el-form-item label="树形结构选择：" class="fl">
+                <g-input-view type="tree" :value.sync="form.selectMenus"
+                              width="250px"
+                              :options="menuOptions"
+                              option-key="name"
+                              option-value="children"
+                ></g-input-view>
+            </el-form-item>
+            <div class="clearfix"></div>
+            <el-divider></el-divider>
         </el-form>
     </div>
 </template>
@@ -94,8 +115,9 @@
                     favourite: [],
                     number: 0,
                     money: 0,
-                    areas:"140421"
-
+                    areas: "140421",
+                    color: "",
+                    selectMenus: [3],
 
                 },
                 areasOptions: [
@@ -116,7 +138,23 @@
                         value: 'Dalian',
                         label: '大连'
                     }
-                ]
+                ],
+                menuOptions: [
+                    {id: 1, parentId: 0, name: "一级菜单A", rank: 1},
+                    {id: 2, parentId: 0, name: "一级菜单B", rank: 1},
+                    {id: 3, parentId: 0, name: "一级菜单C", rank: 1},
+                    {id: 4, parentId: 1, name: "二级菜单A-A", rank: 2},
+                    {id: 5, parentId: 1, name: "二级菜单A-B", rank: 2},
+                    {id: 6, parentId: 2, name: "二级菜单B-A", rank: 2},
+                    {id: 7, parentId: 4, name: "三级菜单A-A-A", rank: 3},
+                    {id: 8, parentId: 7, name: "四级菜单A-A-A-A", rank: 4},
+                    {id: 9, parentId: 8, name: "五级菜单A-A-A-A-A", rank: 5},
+                    {id: 10, parentId: 9, name: "六级菜单A-A-A-A-A-A", rank: 6},
+                    {id: 11, parentId: 10, name: "七级菜单A-A-A-A-A-A-A", rank: 7},
+                    {id: 12, parentId: 11, name: "八级菜单A-A-A-A-A-A-A-A", rank: 8},
+                    {id: 13, parentId: 12, name: "九级菜单A-A-A-A-A-A-A-A-A", rank: 9},
+                    {id: 14, parentId: 13, name: "十级菜单A-A-A-A-A-A-A-A-A-A", rank: 10},
+                ],
             }
         },
         methods: {}

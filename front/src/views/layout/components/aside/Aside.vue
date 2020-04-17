@@ -32,7 +32,7 @@
                               :key="item.children[0].path"
                               @click="clickMenu(item.children[0])">
                     <i v-if="item.children[0].meta.icon" :class="`${item.children[0].meta.icon}`"></i>
-                    <span slot="title">{{item.children[0].meta.title}}</span>
+                    <span slot="title" :title="item.children[0].meta.title">{{item.children[0].meta.title}}</span>
                 </el-menu-item>
 
                 <!--子菜单：多个子元素的-->
@@ -43,10 +43,11 @@
                         <span v-if="item.meta&&item.meta.title" slot="title">{{item.meta.title}}</span>
                     </template>
                     <!--子菜单名称-->
-                    <el-menu-item v-for="child in item.children" v-if="!child.hidden" :index='child.path' :key="child.path"
+                    <el-menu-item v-for="child in item.children" v-if="!child.hidden" :index='child.path'
+                                  :key="child.path"
                                   @click="clickMenu(child)">
                         <i v-if="child.meta.icon" :class="`${child.meta.icon}`"></i>
-                        <span v-if="child.meta&&child.meta.title" slot="title">{{child.meta.title}}</span>
+                        <span v-if="child.meta&&child.meta.title" slot="title" :title="child.meta.title">{{child.meta.title}}</span>
                     </el-menu-item>
                 </el-submenu>
             </template>
@@ -115,7 +116,8 @@
                 text-align: center;
                 line-height: $headerHeight;
             }
-            li{
+
+            li {
                 /*菜单内容如果太长的话，使用省略号*/
                 overflow: hidden;
                 white-space: nowrap;

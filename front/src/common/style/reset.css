@@ -209,8 +209,8 @@ html, body {
 /*------------------------------------------------------fullcalendar全日历组件样式start--------------------------------------*/
 /*!*.fc-day:hover {*!  无效*/
 /*在fullcalendar.min.css或fullcalendar.css中尝试此操作*/
-    /*background: lightblue!important;*/
-    /*cursor: pointer!important;*/
+/*background: lightblue!important;*/
+/*cursor: pointer!important;*/
 /*}*/
 /*------------------------------------------------------fullcalendar全日历组件样式end--------------------------------------*/
 
@@ -258,3 +258,21 @@ html, body {
     height: 0;
 }
 
+/*文本超过范围使用...省略号替代(单行)*/
+.line-ellipses {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/*文本超过范围使用...省略号替代(双行)*/
+.two-line-ellipses {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    /*//子元素应该被水平或垂直排列*/
+    -webkit-line-clamp: 2;
+    /*2行后显示省略号*/
+}
