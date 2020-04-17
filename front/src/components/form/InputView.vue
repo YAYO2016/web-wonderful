@@ -165,7 +165,7 @@
                 v-if="type==='tree'"
                 :data="treeOptions"
                 show-checkbox
-                node-key="id"
+                :node-key="optionId"
                 :check-strictly="true"
                 ref="tree"
                 highlight-current
@@ -296,6 +296,16 @@
             disabled: {
                 type: Boolean,
                 default: null
+            },
+            //options选项中的唯一性键名 一般就是id
+            optionId:{
+                type: String,
+                default: "id"
+            },
+            //options选项中的父级id
+            optionParentId:{
+                type: String,
+                default: "parentId"
             }
         },
         data() {
@@ -332,7 +342,7 @@
                 //console.log("options",this.options);
                 //这里使用深拷贝 因为translateDataToTree递归函数会修改options本身，所以需要保持源数据options的纯净
                 let options = JSON.parse(JSON.stringify(this.options));
-                return this.translateDataToTree(options);
+                return this.translateDataToTree(options,this.optionId,this.optionParentId);
             }
         },
         mounted() {

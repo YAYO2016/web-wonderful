@@ -87,6 +87,8 @@
                               :options="menuOptions"
                               option-key="name"
                               option-value="children"
+                              optionId="id"
+                              optionParentId="parentId"
                 ></g-input-view>
             </el-form-item>
             <div class="clearfix"></div>
