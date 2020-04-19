@@ -36,7 +36,6 @@ const dialogFormMixin = {
     },
     watch: {
         tempShow(newVal) {
-            console.log(newVal);
             this.$emit("update:show", newVal);
         },
         tempFormData: {
@@ -49,6 +48,5 @@ const dialogFormMixin = {
         }
     }
 };
-
 
 export default {commonMixin, dialogFormMixin};

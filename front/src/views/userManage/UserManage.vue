@@ -30,8 +30,8 @@
                     <el-table-column property="address" label="地址" show-overflow-tooltip></el-table-column>
                     <el-table-column label="操作栏">
                         <template slot-scope="scope">
-                            <el-button @click="handleModify(scope.row._id)">编辑</el-button>
-                            <el-button type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+                            <el-button type="text" @click="handleModify(scope.row._id)">编辑</el-button>
+                            <el-button type="text" @click="handleDelete(scope.row.id)">删除</el-button>
                         </template>
                     </el-table-column>
                 </g-table>
@@ -46,7 +46,9 @@
 
         <!--模态框区域-->
         <div class="dialog">
+            <!--模态框情形1：模态框中表单没有封装，直接编写-->
             <g-dialog :show.sync="addFormVisible" :width="'500px'" @closedDialog="addForm=formDemo()">
+                <!--@closedDialog=$refs.addForm.resetFields()这样是无效的  因为我使用了v-if去关闭dialog的，直接消失了表单，也就不存在$refs.addForm了-->
                 <el-form ref="addForm" :model="addForm" label-width="80px">
                     <el-form-item label="用户名" prop="username" :rules="$rules.NotEmpty">
                         <el-input v-model="addForm.username" placeholder="请输入"></el-input>
@@ -76,6 +78,11 @@
                         <el-button @click="addFormVisible=false">取消</el-button>
                     </el-form-item>
                 </el-form>
+            </g-dialog>
+
+            <!--模态框情形2：模态框中表单被单独封装，需要传递父组件给的表单参数formData，和关闭dialog的控制变量editFormVisible-->
+            <g-dialog :show.sync="editFormVisible" :width="'500px'" @closedDialog="editForm=formDemo()">
+                <EditForm :formData="editForm" :show.sync="editFormVisible"></EditForm>
             </g-dialog>
         </div>
     </div>
@@ -111,6 +118,7 @@
                 },
                 addFormVisible: false,
                 addForm: this.formDemo(),
+                editFormVisible: false,
                 editForm: this.formDemo(),
 
             }
@@ -144,8 +152,8 @@
             handleModify(id) {
                 let vm = this;
                 vm.$api.getSingleUser({id}).then(res => {
-                    vm.Form = res.data;
-                    vm.formVisible = true;
+                    vm.editForm = res.data;
+                    vm.editFormVisible = true;
                 })
             },
             //表格点击删除按钮
