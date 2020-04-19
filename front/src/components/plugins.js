@@ -2,7 +2,7 @@
  * Created by yanyue on 2019-09-25 20:48
  */
 
-import GDialog from './dialog/Dialog';
+import GDialog from './dialog/GDialog';
 import GECharts from './echarts/ECharts';
 import GSplitLevel from './split/SplitLevel';
 import GSplitVertical from './split/SplitVertical';

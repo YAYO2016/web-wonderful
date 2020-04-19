@@ -15,5 +15,40 @@ const commonMixin = {
     }
 };
 
+const dialogFormMixin = {
+    props: {
+        formData: {
+            type: Object,
+            default() {
+                return {}
+            }
+        },
+        show: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data() {
+        return {
+            tempFormData: this.formData,
+            tempShow: this.show
+        }
+    },
+    watch: {
+        tempShow(newVal) {
+            console.log(newVal);
+            this.$emit("update:show", newVal);
+        },
+        tempFormData: {
+            // immediate: true,  //刷新加载 立马触发一次handler
+            deep: true, // 可以深度检测到 tempFormData 对象的属性值的变化
+            handler(newVal, oldVal) {
+                this.$emit("update:formData", newVal);
+            }
 
-export default {commonMixin};
+        }
+    }
+};
+
+
+export default {commonMixin, dialogFormMixin};

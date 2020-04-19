@@ -1,18 +1,24 @@
 <template>
-    <div class="Dialog">
+    <div class="GDialog">
         <el-dialog
                 :title="title"
                 :visible.sync="visible"
+                v-if="visible"
                 @close="$emit('update:show', false)"
-                @closed="closedDialog"
-                @open="openDialog"
-                :show="show"
                 :width="width"
                 :modal-append-to-body='false'
                 :close-on-click-modal="false"
                 :close-on-press-escape="false"
                 :append-to-body="appendToBody"
         >
+            <!--
+                @closed="closedDialog"
+                @open="openDialog"
+
+                v-if="visible"
+                使用v-if的话，dialog关闭，里面的子组件也会关闭，下次打开的话，子组件中的方法会重新执行的
+                避免发生dialog中存在子组件的created或者mounted方法就执行一次的问题
+            -->
             <slot></slot>
         </el-dialog>
     </div>
@@ -20,7 +26,7 @@
 
 <script>
     export default {
-        name: 'BackDialog',
+        name: 'GDialog',
         props: {
             title: {
                 type: String,
@@ -47,23 +53,37 @@
         watch: {
             show() {
                 this.visible = this.show;
+            },
+            visible: {
+                //immediate: true,
+                handler(newVal, oldVal) {
+                    if (newVal) {
+                        //打开弹窗时候执行的操作
+                        //console.log("open dialog");
+                        this.$emit('openDialog');
+                    } else {
+                        //关闭弹窗的时候执行的操作
+                        //console.log("close dialog");
+                        this.$emit('closedDialog');
+                    }
+                }
             }
         },
         methods: {
-            closedDialog() {
-                let vm = this;
-                vm.$emit('closedDialog');
-            },
-            openDialog() {
-                let vm = this;
-                vm.$emit('openDialog');
-            }
+            //closedDialog() {
+            //    let vm = this;
+            //    //vm.$emit('closedDialog');
+            //},
+            //openDialog() {
+            //    let vm = this;
+            //    //vm.$emit('openDialog');
+            //}
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .Dialog {
+    .GDialog {
         /deep/ .el-dialog {
             border-radius: 5px;
             position: absolute;

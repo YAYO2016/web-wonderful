@@ -133,6 +133,18 @@ router.post('/getUsers', async (req, res, next) => {
     })
 });
 
+//获取指定用户的信息
+router.get('/getSingleUser', (req, res, next) => {
+    let reqBody = req.query;
+    User.findOne({_id: reqBody.id}).then(user => {
+        if (user) {
+            new Result(user, '用户查询成功').success(res);
+        } else {
+            new Result('用户查询失败').fail(res);
+        }
+    })
+});
+
 
 //读取本地json文件，然后生成数据并且返回的
 //const userPath = "./assets/json/user.json";
