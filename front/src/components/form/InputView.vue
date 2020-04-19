@@ -298,12 +298,12 @@
                 default: null
             },
             //options选项中的唯一性键名 一般就是id
-            optionId:{
+            optionId: {
                 type: String,
                 default: "id"
             },
             //options选项中的父级id
-            optionParentId:{
+            optionParentId: {
                 type: String,
                 default: "parentId"
             }
@@ -342,7 +342,7 @@
                 //console.log("options",this.options);
                 //这里使用深拷贝 因为translateDataToTree递归函数会修改options本身，所以需要保持源数据options的纯净
                 let options = JSON.parse(JSON.stringify(this.options));
-                return this.translateDataToTree(options,this.optionId,this.optionParentId);
+                return this.translateDataToTree(options, this.optionId, this.optionParentId);
             }
         },
         mounted() {
