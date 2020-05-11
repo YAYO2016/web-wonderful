@@ -79,6 +79,10 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 });
 
+//引入vee-validate校验组件
+//注意：新版本变化很大，安装老版本的  npm i vee-validate@2.0.0-rc.25 -S
+import '@/common/js/validate.js';
+
 //全局使用自定义的UI的组件
 import GUI from './components/plugins';
 Vue.use(GUI);

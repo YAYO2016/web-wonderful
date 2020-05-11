@@ -35,7 +35,7 @@ const dialogFormMixin = {
         }
     },
     watch: {
-        tempShow(newVal) {
+        tempShow(newVal,oldVal) {
             this.$emit("update:show", newVal);
         },
         tempFormData: {

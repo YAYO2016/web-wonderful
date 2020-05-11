@@ -103,7 +103,7 @@ http.interceptors.response.use(
             if (response.data.code == 200) {  //业务code OK
                 return Promise.resolve(response.data) //直接返回data字段中的数据
             } else {
-                Message.error(response.data.message);
+                Message.error(response.data.message || "请求失败");
                 return Promise.reject(response)
             }
         } else {
@@ -160,8 +160,7 @@ function get(url, params = {}, options = {}) {
 }
 
 //封装post请求
-function post(url, data = {}, options = {}, callback = () => {
-}) {
+function post(url, data = {}, options = {}, callback = () => {}) {
     return http({
         url,
         method: 'POST',

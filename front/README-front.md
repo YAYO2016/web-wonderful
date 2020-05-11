@@ -88,8 +88,8 @@ npm i moment -S
 安装concurrently，可以同时执行多个脚本
 npm i concurrently -S
 
-
-
 npm install --save @fullcalendar/core @fullcalendar/daygrid
 npm install @fullcalendar/core @fullcalendar/daygrid @fullcalendar/timegrid @fullcalendar/list
+
+npm i vee-validate@2.0.0-rc.25 -S
 
