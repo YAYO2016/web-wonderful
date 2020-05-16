@@ -20,11 +20,11 @@
                 :style="{width: width}"
                 :clearable="clearable"
                 :multiple="multiple||allSelect"
-                collapse-tags
                 :disabled="disabled"
         >
             <!--全选框-->
             <el-checkbox
+                    class="SelectAll"
                     v-if="allSelect"
                     v-model="checked"
                     @change='selectAll'
@@ -233,12 +233,12 @@
             },
             //日期开始时间
             startDate: {
-                type: [String, Date],
+                type: [String, Date, Number],
                 default: ""
             },
             //日期结束时间
             endDate: {
-                type: [String, Date],
+                type: [String, Date, Number],
                 default: ""
             },
             //日期显示值的格式
@@ -346,6 +346,7 @@
             }
         },
         mounted() {
+            //回显数据
             if (this.type === 'areas') {
                 this.areaOptions = this.getAreaList();
                 this.viewValue = this.getArea(this.value);
@@ -353,6 +354,9 @@
                 //将树形结构一开始的数据加载到组织树上
                 this.viewValue = this.value;
                 this.$refs.tree.setCheckedKeys([...this.viewValue]);
+            }
+            if ((this.type === 'daterange' || this.type === 'datetimerange')) {
+                this.viewValue = [this.startDate, this.endDate];
             } else {
                 this.viewValue = this.value;
             }

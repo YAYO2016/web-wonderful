@@ -61,6 +61,15 @@ html, body {
     font-family: 'PingFangSC-Light', 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', 'Arial', 'sans-serif';
 }
 
+
+/*icon图标如果想设置宽高的话必须设置成block*/
+.icon-changfangxing-fill, .icon-changfangxing-empty {
+    /*将icon图标设置为block的时候，就可以调节宽高*/
+    display: inline-block;
+    width: 10px;
+    color: #ff9700;
+}
+
 /*el-switch如果文字要显示在颜色条中的话 加上demo*/
 .switchStyle .el-switch__label {
     position: absolute;
@@ -104,7 +113,7 @@ html, body {
     width: 700px !important;
 }
 
-/*--------------------------------------l-message组件的样式修改-------------------------------------------*/
+/*--------------------------------------l-message组件的样式修改start-------------------------------------------*/
 .el-message {
     border-radius: 0;
     border: none !important;
@@ -157,24 +166,20 @@ html, body {
     line-height: 20px;
 }
 
-/*--------------------------------------l-message组件的样式修改-------------------------------------------*/
+/*--------------------------------------l-message组件的样式修改end-------------------------------------------*/
 
 
+/*--------------------------------------通用输入控件InputView的样式start-------------------------------------------*/
 /*select下拉框里面的权限checkbox的样式*/
-.el-select-dropdown__list .el-checkbox {
+.SelectAll.el-checkbox {
     text-align: right;
     width: 100%;
     padding-right: 10px;
     box-sizing: border-box;
 }
 
-/*icon图标如果想设置宽高的话必须设置成block*/
-.icon-changfangxing-fill, .icon-changfangxing-empty {
-    /*将icon图标设置为block的时候，就可以调节宽高*/
-    display: inline-block;
-    width: 10px;
-    color: #ff9700;
-}
+
+/*--------------------------------------通用输入控件InputView的样式end-------------------------------------------*/
 
 /*---------------------------------------------------全局滚动条的样式start-----------------------------------------------------*/
 ::-webkit-scrollbar { /*滚动条整体样式*/

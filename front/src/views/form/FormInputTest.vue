@@ -109,10 +109,10 @@
                 form: {
                     name: "",
                     address: "",
-                    loverAddress: [],
+                    loverAddress: ['nanjing','Chengdu'],
                     birthday: '',
-                    startDate: "",
-                    endDate: "",
+                    startDate:new Date(),
+                    endDate:new Date(),
                     sex: "",
                     favourite: [],
                     number: 0,
