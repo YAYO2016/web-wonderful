@@ -178,13 +178,17 @@ html, body {
     box-sizing: border-box;
 }
 
+.InputView .el-select__tags {
+    flex-wrap: unset !important;
+    overflow: auto !important;
+}
 
 /*--------------------------------------通用输入控件InputView的样式end-------------------------------------------*/
 
 /*---------------------------------------------------全局滚动条的样式start-----------------------------------------------------*/
 ::-webkit-scrollbar { /*滚动条整体样式*/
     width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
-    height: 1px;
+    height: 4px;
     box-sizing: border-box;
 }
 
