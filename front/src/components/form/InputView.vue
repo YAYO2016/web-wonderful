@@ -38,6 +38,36 @@
             </el-option>
         </el-select>
 
+        <!--下拉单选和下拉多选选择框--通过样式将选中框变为checkbox  -->
+        <el-select
+                class="Select-CheckBox"
+                v-if="type==='select-checkbox'"
+                v-model="viewValue"
+                :placeholder="placeholder"
+                :style="{width: width}"
+                :clearable="clearable"
+                :multiple="multiple||allSelect"
+                :disabled="disabled"
+        >
+            <!--全选框-->
+            <el-checkbox
+                    class="SelectAll"
+                    v-if="allSelect"
+                    v-model="checked"
+                    @change='selectAll'
+            >全选
+            </el-checkbox>
+            <el-option v-for="(option,index) in options"
+                       class="G-CheckBox"
+                       :key="index"
+                       :value="option[optionValue]"
+                       :label="option[optionKey]"
+            >
+                <span class="check"></span>
+                <span style="margin-left: 8px">{{option[optionKey]}}</span>
+            </el-option>
+        </el-select>
+
         <!--radio单选-->
         <el-radio-group
                 class="Radio"
@@ -362,6 +392,9 @@
             }
         },
         watch: {
+            value(newVal){
+                this.viewValue = newVal;
+            },
             viewValue(newVal) {
                 if (this.isTrue(newVal)) {
                     this.$emit("update:value", newVal);

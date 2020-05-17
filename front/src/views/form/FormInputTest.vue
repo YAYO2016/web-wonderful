@@ -23,6 +23,26 @@
                               option-value="value"
                 ></g-input-view>
             </el-form-item>
+            <el-form-item label="喜欢的城市（多选）" class="fl">
+                <g-input-view type="select-checkbox"
+                              allSelect
+                              :value.sync="form.loverAddress"
+                              :options="areasOptions"
+                              option-key="label"
+                              option-value="value"
+                ></g-input-view>
+                <!--<el-select v-model="form.loverAddress" placeholder="placeholder" collapse-tags multiple>-->
+                    <!--<el-option-->
+                            <!--class="G-CheckBox"-->
+                            <!--v-for="(option,index) in areasOptions"-->
+                               <!--:key="index"-->
+                               <!--:label="option.label"-->
+                               <!--:value="option.value">-->
+                        <!--<span class="check"></span>-->
+                        <!--<span style="margin-left: 8px">{{option.label}}</span>-->
+                    <!--</el-option>-->
+                <!--</el-select>-->
+            </el-form-item>
             <div class="clearfix"></div>
             <el-divider></el-divider>
             <el-form-item label="生日(日期)：" class="fl" label-width="140px">
@@ -109,10 +129,10 @@
                 form: {
                     name: "",
                     address: "",
-                    loverAddress: ['nanjing','Chengdu'],
+                    loverAddress: ['nanjing', 'Chengdu'],
                     birthday: '',
-                    startDate:new Date(),
-                    endDate:new Date(),
+                    startDate: new Date(),
+                    endDate: new Date(),
                     sex: "",
                     favourite: [],
                     number: 0,
