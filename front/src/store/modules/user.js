@@ -1,9 +1,6 @@
 /**
  * Created by yanyue on 2020/3/15 16:48
  */
-/**
- * Created by yanyue on 2019-11-16 11:21
- */
 import router, {resetRouter} from '../../router'
 import {setToken, getToken, removeToken} from "../../common/js/auth";
 import api from "@/api"
