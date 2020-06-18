@@ -72,6 +72,7 @@ mathjs.config({
   precision: 20
   //BigNumbers的最大有效位数
 });
+Vue.prototype.$mathjs = mathjs;
 
 //引入全局过滤器
 import * as filters from './common/js/filter.js'

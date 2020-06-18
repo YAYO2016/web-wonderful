@@ -81,7 +81,7 @@
             },
             fileMaxSize: {
                 type: Number,
-                default: 50
+                default: 300
             },
             fileUploadText: {
                 type: String,
