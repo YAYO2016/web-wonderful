@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run front-start\" \"npm run server-start\""
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "babel-polyfill": "^6.26.0",
     "concurrently": "^5.1.0",
     "core-js": "^3.6.4",
